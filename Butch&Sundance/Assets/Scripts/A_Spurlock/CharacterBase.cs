@@ -8,24 +8,28 @@ public class CharacterBase : MonoBehaviour, I_Damage
     [SerializeField] public Color OriginalColor;
     [SerializeField] public Color FlashColor;
 
-    float CurrHealth;
+    public float CurrHealth;
     [SerializeField] public float MaxHealth;
 
     [SerializeField] public GameObject WeaponArm;
     [SerializeField] public GameObject WeaponSlot;
     [SerializeField] public GameObject ActiveWeapon;
     public Gun Weapon;
-
     [SerializeField] public float AimSpeed;
 
 
     [SerializeField] float CritMulti;
+    [SerializeField] public float DamageReducBase;
+    public float DamageReduc;
+
 
     public bool IsAiming;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public virtual void Start()
     {
+        DamageReduc = DamageReducBase;
+
         // Set the Material Color as the Original Color, Modular Version
         Body.material.color = OriginalColor;
 
@@ -51,13 +55,13 @@ public class CharacterBase : MonoBehaviour, I_Damage
         
     }
 
-    public void TakeDamage(int amount, string BodyPart) // Take Damage, Damage Interface Override
+    public virtual void TakeDamage(int Amount, string BodyPart) // Take Damage, Damage Interface Override
     {
         if (BodyPart == "Head") { CritMulti += Random.Range(1, 1.5f); }
         if (BodyPart == "Arm_R" || BodyPart == "Arm_L") { CritMulti += Random.Range(.25f, .6f); }
         if (BodyPart == "Leg_R" || BodyPart == "Leg_L") { CritMulti += Random.Range(.5f, .8f); }
 
-        CurrHealth -= amount * CritMulti; // Subtract Health by Amount
+        CurrHealth -= (Amount * CritMulti) * DamageReduc; // Subtract Health by Amount
 
         if (CurrHealth <= 0) // If Health is Less Than or Equal To 0...
         { Death(); } // Destroy the Object

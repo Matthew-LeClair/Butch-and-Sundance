@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 
     float TimeScale_Original; // Chached Original Time Scale for better setting
 
-    int GameGoalCount;
+    public int KillCount;
 
 
     // Awake is called once before the first execution of Start after the MonoBehaviour is created
@@ -69,8 +69,8 @@ public class GameManager : MonoBehaviour
 
     public void UpdateGameGoal(int Amount) 
     {
-        GameGoalCount += Amount; // Dynamically Increment or Decrement GameGoalCount
-        if (GameGoalCount <= 0) // If Goal is MET
+        KillCount += Amount; // Dynamically Increment or Decrement GameGoalCount
+        if (KillCount <= 0) // If Goal is MET
         { // WIN!!
             StatePause(true); // Pause Game
             MenuActive = MenuWin; // Set MenuActive as MenuWin
