@@ -4,11 +4,11 @@ public class PlayerController : CharacterBase
 {
     [SerializeField] CharacterController Controller;
 
-    [SerializeField] float SpeedBase;
-    float Speed;
+    [SerializeField] public float SpeedBase;
+    public float Speed;
 
-    [SerializeField] float BaseMomentumBuildRate;
-    float MomentumBuildRate;
+    [SerializeField] public float BaseMomentumBuildRate;
+    public float MomentumBuildRate;
     float CurrMomentum = 0;
     float MaxMomentum = 300;
 

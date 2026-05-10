@@ -1,8 +1,13 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
     [SerializeField] GameObject Bullet;
+    [SerializeField] bool Spread;
+    [SerializeField] int PelletCount;
+    [SerializeField] int SpreadAngle;
 
     [SerializeField] float ShootRate;
     float ShootTimer;
@@ -15,12 +20,23 @@ public class Gun : MonoBehaviour
     [SerializeField] int MaxAmmo;
     [SerializeField] float ReloadSpeed;
 
+    [SerializeField] int DamageMin;
+    [SerializeField] int DamageMax;
+
+    List<WeaponMod> Mods;
+
     bool IsOut;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         CurrAmmo = MaxAmmo;
+
+        if (!Mods.IsUnityNull())
+        {
+            foreach (var Mod in Mods)
+            { Mod.ApplyBonus(); }
+        }
     }
 
     // Update is called once per frame
@@ -40,11 +56,41 @@ public class Gun : MonoBehaviour
         if (CurrAmmo > 0 && ShootTimer >= ShootRate)
         {
             ShootTimer = 0; // Reset Shoot Timer
-            if (CurrAmmo-- > 0) { CurrAmmo--; } // Decrement Ammo
+            if (CurrAmmo - 1 > 0) { CurrAmmo--; } // Decrement Ammo
             else { IsOut = true; }
 
-            // Spawn Bullet at the Shoot Pos at the Gun Pivot Rotation
-            Instantiate(Bullet, ShootPos.position, GunPivot.rotation);
+            Bullet.GetComponent<Damage>().DamageAmount = Random.Range(DamageMin, DamageMax);
+
+            if (!Spread) 
+            {
+                // Spawn Bullet at the Shoot Pos at the Gun Pivot Rotation
+                Instantiate(Bullet, ShootPos.position, GunPivot.rotation);
+            }
+            else 
+            {
+                Bullet.GetComponent<Damage>().DamageAmount /= PelletCount;
+                
+                for (int i = 0; i < PelletCount; i++)
+                {
+                    float SpreadX = Random.Range(-SpreadAngle, SpreadAngle);
+                    float SpreadY = Random.Range(-SpreadAngle, SpreadAngle);
+
+                    Quaternion SpreadRot = 
+                        GunPivot.rotation * 
+                        Quaternion.Euler(SpreadX, SpreadY, 0);
+
+                    Instantiate(Bullet, ShootPos.position, SpreadRot);
+                }
+            }
+
         }
+    }
+
+    // Mayne use this Function for the UI when you buy Mods
+    public void AddMod(WeaponMod.Type ModType, float ModAmount) 
+    {
+        WeaponMod NewMod = new WeaponMod();
+        NewMod.InitMod(ModType, ModAmount);
+        Mods.Add(NewMod);
     }
 }

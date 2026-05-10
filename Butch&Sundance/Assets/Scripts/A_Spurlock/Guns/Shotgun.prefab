@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4175079338777069721
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6860211766224948355, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: Spread
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860211766224948355, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: MaxAmmo
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860211766224948355, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: DamageMax
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860211766224948355, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: DamageMin
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860211766224948355, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: ShootRate
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860211766224948355, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: PelletCount
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860211766224948355, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: ReloadSpeed
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860211766224948355, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: SpreadAngle
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860211766224948355, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: ShootDistance
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7342528574767976957, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b89a61edde076e7408cabb2560788417, type: 2}
+    - target: {fileID: 7664178544780756401, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.182
+      objectReference: {fileID: 0}
+    - target: {fileID: 7664178544780756401, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.05000004
+      objectReference: {fileID: 0}
+    - target: {fileID: 7664178544780756401, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.6554792
+      objectReference: {fileID: 0}
+    - target: {fileID: 7664178544780756401, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7664178544780756401, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7664178544780756401, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7664178544780756401, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7664178544780756401, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7664178544780756401, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7664178544780756401, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7990298833152522492, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: m_Name
+      value: Shotgun Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
