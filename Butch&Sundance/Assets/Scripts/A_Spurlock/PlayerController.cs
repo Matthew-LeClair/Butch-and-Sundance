@@ -50,15 +50,18 @@ public class PlayerController : CharacterBase
     {
         IsMoving = Mathf.Abs(Input.GetAxis("Horizontal")) > 0.1f
             || Mathf.Abs(Input.GetAxis("Vertical")) > 0.1f;
-
-        HandleMomentum();
+        if (GameManager.Instance != null) { HandleMomentum(); }
 
         Movement(); // Moves once per frame for better smoothing
     }
 
     void Movement() 
     {
+        if (Input.GetAxis("Mouse ScrollWheel") != 0)
+        { Weapon.Reload(); }
+
         if (Input.GetButtonDown("Fire2")) { Aim(); }
+        if (Input.GetButtonUp("Fire2")) { Aim(); }
 
         if (Input.GetButton("Fire1") && IsAiming) // If Left Click is Pressed while Aiming...
         { Weapon.Shoot(); } // Call Shoot Function
@@ -129,7 +132,6 @@ public class PlayerController : CharacterBase
 
     void HandleKillStreak()
     {
-
         if (KillStreak != GameManager.Instance.KillCount) { KillStreak = GameManager.Instance.KillCount; KillStreakDecayTimer = 0; }
         else
         { 

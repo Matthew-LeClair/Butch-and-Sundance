@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6860211766224948355, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
       propertyPath: ShootRate
-      value: 1.25
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6860211766224948355, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
       propertyPath: ReloadSpeed
@@ -78,7 +78,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7990298833152522492, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
       propertyPath: m_Name
-      value: Pistol Variant
+      value: Pistol
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

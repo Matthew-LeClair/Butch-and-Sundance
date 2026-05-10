@@ -16,21 +16,23 @@ public class Gun : MonoBehaviour
     [SerializeField] Transform ShootPos;
     [SerializeField] int ShootDistance;
 
-    int CurrAmmo;
+    public int CurrAmmo;
     [SerializeField] int MaxAmmo;
     [SerializeField] float ReloadSpeed;
+    int AmmoReserve;
 
     [SerializeField] int DamageMin;
     [SerializeField] int DamageMax;
 
     List<WeaponMod> Mods;
 
-    bool IsOut;
+    public bool IsOut;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         CurrAmmo = MaxAmmo;
+        AmmoReserve = MaxAmmo;
 
         if (!Mods.IsUnityNull())
         {
@@ -53,36 +55,40 @@ public class Gun : MonoBehaviour
 
     public void Shoot()
     {
-        if (CurrAmmo > 0 && ShootTimer >= ShootRate)
+        if (ShootTimer > ShootRate) 
         {
-            ShootTimer = 0; // Reset Shoot Timer
-            if (CurrAmmo - 1 > 0) { CurrAmmo--; } // Decrement Ammo
-            else { IsOut = true; }
+            if (CurrAmmo <= 0) { IsOut = true; }
 
-            Bullet.GetComponent<Damage>().DamageAmount = Random.Range(DamageMin, DamageMax);
+            if (CurrAmmo > 0)
+            {
+                ShootTimer = 0; // Reset Shoot Timer
+                CurrAmmo -= 1; // Decrement Ammo
 
-            if (!Spread) 
-            {
-                // Spawn Bullet at the Shoot Pos at the Gun Pivot Rotation
-                Instantiate(Bullet, ShootPos.position, GunPivot.rotation);
-            }
-            else 
-            {
-                Bullet.GetComponent<Damage>().DamageAmount /= PelletCount;
-                
-                for (int i = 0; i < PelletCount; i++)
+                Bullet.GetComponent<Damage>().DamageAmount = Random.Range(DamageMin, DamageMax);
+
+                if (!Spread)
                 {
-                    float SpreadX = Random.Range(-SpreadAngle, SpreadAngle);
-                    float SpreadY = Random.Range(-SpreadAngle, SpreadAngle);
-
-                    Quaternion SpreadRot = 
-                        GunPivot.rotation * 
-                        Quaternion.Euler(SpreadX, SpreadY, 0);
-
-                    Instantiate(Bullet, ShootPos.position, SpreadRot);
+                    // Spawn Bullet at the Shoot Pos at the Gun Pivot Rotation
+                    Instantiate(Bullet, ShootPos.position, GunPivot.rotation);
                 }
-            }
+                else
+                {
+                    Bullet.GetComponent<Damage>().DamageAmount /= PelletCount;
 
+                    for (int i = 0; i < PelletCount; i++)
+                    {
+                        float SpreadX = Random.Range(-SpreadAngle, SpreadAngle);
+                        float SpreadY = Random.Range(-SpreadAngle, SpreadAngle);
+
+                        Quaternion SpreadRot =
+                            GunPivot.rotation *
+                            Quaternion.Euler(SpreadX, SpreadY, 0);
+
+                        Instantiate(Bullet, ShootPos.position, SpreadRot);
+                    }
+                }
+
+            }
         }
     }
 
@@ -92,5 +98,17 @@ public class Gun : MonoBehaviour
         WeaponMod NewMod = new WeaponMod();
         NewMod.InitMod(ModType, ModAmount);
         Mods.Add(NewMod);
+    }
+
+    public void Reload() 
+    {
+        Debug.Log("Trying Reload");
+        if (MaxAmmo > CurrAmmo && AmmoReserve > 0) 
+        {
+            AmmoReserve = MaxAmmo - CurrAmmo;
+            CurrAmmo = MaxAmmo;
+        }
+        Debug.Log("Reload Results Below!");
+        Debug.Log(CurrAmmo);
     }
 }

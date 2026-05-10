@@ -117,8 +117,6 @@ public class CharacterBase : MonoBehaviour, I_Damage
             Quaternion Aim = Quaternion.Euler(OriginalRot);
             WeaponArm.transform.localRotation = Aim;
 
-            Debug.Log("Should be aiming");
-
             Debug.Log("Should NOT be aiming");
         }
     }
