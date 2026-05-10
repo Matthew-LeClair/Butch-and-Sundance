@@ -34,7 +34,7 @@ public class Damage : MonoBehaviour
         I_Damage Damage = other.GetComponent<I_Damage>();
 
         if (Damage != null && DamageType != eDamageType.DOT)
-        { Damage.TakeDamage(DamageAmount); }
+        { Damage.TakeDamage(DamageAmount, other.name); }
 
         if (DamageType == eDamageType.Bullet) 
         {
@@ -43,7 +43,7 @@ public class Damage : MonoBehaviour
                 transform.position, 
                 Quaternion.identity); }
 
-            Damage.TakeDamage(DamageAmount);
+            Damage.TakeDamage(DamageAmount, other.name);
 
             Destroy(gameObject);
         }
@@ -56,13 +56,13 @@ public class Damage : MonoBehaviour
         I_Damage Damage = other.GetComponent<I_Damage>();
 
         if (Damage != null && DamageType == eDamageType.DOT && !IsDamaging) 
-        { StartCoroutine(DamageOther(Damage)); }
+        { StartCoroutine(DamageOther(Damage, other)); }
     }
 
-    IEnumerator DamageOther(I_Damage Damage) 
+    IEnumerator DamageOther(I_Damage Damage, Collider Object) 
     {
         IsDamaging = true;
-        Damage.TakeDamage(DamageAmount);
+        Damage.TakeDamage(DamageAmount, Object.name);
         yield return new WaitForSeconds(DamageRate);
         IsDamaging = false;
     }

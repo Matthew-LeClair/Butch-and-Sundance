@@ -112,6 +112,37 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &3290961605504682649
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2737985871932922358}
+  m_Layer: 0
+  m_Name: GunSocket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2737985871932922358
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3290961605504682649}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: 0.000000013038516, w: 1}
+  m_LocalPosition: {x: -0, y: -0.699, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4902675760226133648}
+  m_LocalEulerAnglesHint: {x: 14, y: 0, z: 77.971}
 --- !u!1 &3730203436593769581
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,13 +170,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3730203436593769581}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.12186928, y: -0, z: -0, w: 0.9925462}
-  m_LocalPosition: {x: 0, y: 0.048000097, z: -0.6010001}
+  m_LocalRotation: {x: 0.09472994, y: -0.07667046, z: 0.6244312, w: 0.7715138}
+  m_LocalPosition: {x: 0.502, y: 0.527, z: -0.486}
   m_LocalScale: {x: 0.4, y: 0.75000006, z: 0.40000004}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2737985871932922358}
   m_Father: {fileID: 7275441182604779445}
-  m_LocalEulerAnglesHint: {x: 14, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 14, y: 0, z: 77.971}
 --- !u!33 &8116960653860129096
 MeshFilter:
   m_ObjectHideFlags: 0
