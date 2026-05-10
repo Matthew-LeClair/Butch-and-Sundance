@@ -7,7 +7,7 @@ public class Gun : MonoBehaviour
     [SerializeField] float ShootRate;
     float ShootTimer;
 
-    [SerializeField] Transform GunPivot;
+    [SerializeField] public Transform GunPivot;
     [SerializeField] Transform ShootPos;
     [SerializeField] int ShootDistance;
 
@@ -15,10 +15,12 @@ public class Gun : MonoBehaviour
     [SerializeField] int MaxAmmo;
     [SerializeField] float ReloadSpeed;
 
+    bool IsOut;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        CurrAmmo = MaxAmmo;
     }
 
     // Update is called once per frame
@@ -35,9 +37,14 @@ public class Gun : MonoBehaviour
 
     public void Shoot()
     {
-        ShootRate = 0; // Reset Shoot Timer
+        if (CurrAmmo > 0 && ShootTimer >= ShootRate)
+        {
+            ShootTimer = 0; // Reset Shoot Timer
+            if (CurrAmmo-- > 0) { CurrAmmo--; } // Decrement Ammo
+            else { IsOut = true; }
 
-        // Spawn Bullet at the Shoot Pos at the Gun Pivot Rotation
-        Instantiate(Bullet, ShootPos.position, GunPivot.rotation);
+            // Spawn Bullet at the Shoot Pos at the Gun Pivot Rotation
+            Instantiate(Bullet, ShootPos.position, GunPivot.rotation);
+        }
     }
 }

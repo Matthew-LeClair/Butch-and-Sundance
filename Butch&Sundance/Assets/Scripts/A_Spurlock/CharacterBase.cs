@@ -11,16 +11,20 @@ public class CharacterBase : MonoBehaviour, I_Damage
     float CurrHealth;
     [SerializeField] public float MaxHealth;
 
+    [SerializeField] public GameObject WeaponArm;
     [SerializeField] public GameObject WeaponSlot;
     [SerializeField] public GameObject ActiveWeapon;
     public Gun Weapon;
 
+    [SerializeField] public float AimSpeed;
+
+
     [SerializeField] float CritMulti;
 
-
+    public bool IsAiming;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public virtual void Start()
     {
         // Set the Material Color as the Original Color, Modular Version
         Body.material.color = OriginalColor;
@@ -36,7 +40,9 @@ public class CharacterBase : MonoBehaviour, I_Damage
         ActiveGun.transform.localRotation = Quaternion.identity;
         ActiveGun.transform.localScale = Vector3.one;
 
-        Weapon = ActiveWeapon.GetComponent<Gun>();
+        Weapon = ActiveGun.GetComponent<Gun>();
+
+        Weapon.GunPivot = WeaponSlot.transform;
     }
 
     // Update is called once per frame
@@ -78,6 +84,40 @@ public class CharacterBase : MonoBehaviour, I_Damage
         rPart.material.color = OriginalColor;
     }
 
+    public void Aim()
+    {
+        Vector3 OriginalPos = new Vector3(.6f, .1f, 0);
+        Vector3 AimPos = new Vector3(.47f, .6f, .47f);
 
-    public virtual void Death() { }
+        Vector3 OriginalRot = new Vector3(-14, 90, 0);
+        Vector3 AimRot = new Vector3(-14, 90, -90);
+
+
+        if (!IsAiming) 
+        {
+            IsAiming = true;
+
+            WeaponArm.transform.localPosition = AimPos;
+
+            Quaternion Aim = Quaternion.Euler(AimRot);
+            WeaponArm.transform.localRotation = Aim;
+
+            Debug.Log("Should be aiming");
+        } 
+        else
+        {
+            IsAiming = false;
+
+            WeaponArm.transform.localPosition = OriginalPos;
+
+            Quaternion Aim = Quaternion.Euler(OriginalRot);
+            WeaponArm.transform.localRotation = Aim;
+
+            Debug.Log("Should be aiming");
+
+            Debug.Log("Should NOT be aiming");
+        }
+    }
+
+    public virtual void Death() { Debug.Log("Blegh! I'm dead! :)"); Destroy(gameObject); }
 }

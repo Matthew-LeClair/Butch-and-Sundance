@@ -36,7 +36,7 @@ public class Damage : MonoBehaviour
         if (Damage != null && DamageType != eDamageType.DOT)
         { Damage.TakeDamage(DamageAmount, other.name); }
 
-        if (DamageType == eDamageType.Bullet) 
+        if (DamageType == eDamageType.Bullet && Damage != null) 
         {
             if (ImpactFX != null) 
             { ImpactFX = Instantiate(ImpactFX, 

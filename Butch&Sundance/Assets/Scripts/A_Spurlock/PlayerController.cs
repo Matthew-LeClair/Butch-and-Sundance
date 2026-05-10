@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerController : CharacterBase
 {
     [SerializeField] CharacterController Controller;
+    
 
     [SerializeField] LayerMask IgnoreLayer;
 
@@ -17,13 +18,13 @@ public class PlayerController : CharacterBase
     Vector3 MoveDir;
     Vector3 PlayerVel;
 
-    bool IsAiming;
+    
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public override void Start()
     {
-
+        base.Start();
     }
 
     // Update is called once per frame
@@ -36,7 +37,10 @@ public class PlayerController : CharacterBase
 
     void Movement() 
     {
-        if (Input.GetButton("Fire1")) // If Left Click is Pressed...
+        if (Input.GetButtonDown("Fire2")) { Aim(); }
+        if (Input.GetButtonUp("Fire2")) { Aim(); }
+
+        if (Input.GetButton("Fire1") && IsAiming) // If Left Click is Pressed while Aiming...
         { Weapon.Shoot(); } // Call Shoot Function
 
         if (Controller.isGrounded)  // Checks if the Player Character is on the ground
@@ -75,11 +79,13 @@ public class PlayerController : CharacterBase
 
     void HandleMomentum() 
     {
-
+        
     }
 
     public override void Death()
     {
 
     }
+
+    
 }
