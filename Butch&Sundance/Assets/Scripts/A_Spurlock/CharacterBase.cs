@@ -63,6 +63,8 @@ public class CharacterBase : MonoBehaviour, I_Damage
 
         CurrHealth -= (Amount * CritMulti) * DamageReduc; // Subtract Health by Amount
 
+        CritMulti = 1; //Resets crit multi after damage
+
         if (CurrHealth <= 0) // If Health is Less Than or Equal To 0...
         { Death(); } // Destroy the Object
         else { StartCoroutine(Flash(BodyPart)); } // Call the Flash Function, Modular Version
