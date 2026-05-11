@@ -14,7 +14,7 @@ public class Gun : MonoBehaviour
 
     [SerializeField] public Transform GunPivot;
     [SerializeField] Transform ShootPos;
-    [SerializeField] int ShootDistance;
+    [SerializeField] public int ShootDistance;
 
     public int CurrAmmo;
     [SerializeField] int MaxAmmo;

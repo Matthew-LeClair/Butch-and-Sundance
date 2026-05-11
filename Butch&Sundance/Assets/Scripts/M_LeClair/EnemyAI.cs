@@ -7,12 +7,15 @@ public class EnemyAI : CharacterBase
 
     bool seePlayer;
     Vector3 playerDir;
+    float DistanceToPlayer;
+    [SerializeField] int MoveSpeed;
 
     // Update is called once per frame
     void Update()
     {
         if (seePlayer)
         {
+            DistanceToPlayer = Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position);
             playerDir = GameManager.Instance.Player.transform.position - transform.position;
             rotateToTarget();
             if (!IsAiming)
@@ -25,7 +28,14 @@ public class EnemyAI : CharacterBase
                 Vector3 dir = targetPos - WeaponArm.transform.position;
                 Quaternion rot = Quaternion.LookRotation(dir) * Quaternion.Euler(-28, 70, -70);
                 WeaponArm.transform.rotation = Quaternion.Lerp(WeaponArm.transform.rotation, rot, Time.deltaTime * AimSpeed);
-                Weapon.Shoot();
+                if (DistanceToPlayer <= Weapon.ShootDistance)
+                {
+                    Weapon.Shoot();
+                }
+                else
+                {
+                    Movement();
+                }
             }
         }
         else
@@ -63,5 +73,12 @@ public class EnemyAI : CharacterBase
     {
         Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime);
+    }
+
+    void Movement()
+    {
+        Vector3 dir = playerDir;
+        dir.y = 0f;
+        transform.position += dir.normalized * Time.deltaTime * MoveSpeed;
     }
 }
