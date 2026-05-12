@@ -223,7 +223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DynamiteCrate
   crateMaxHP: 1
   explodeRadius: 20
-  explodeDamage: 1
+  explodeDamage: 10
 --- !u!33 &334620348
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -513,7 +513,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1881548456421821062, guid: 54e90c72d04981444830c894b912220e, type: 3}
       propertyPath: CritMulti
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1881548456421821062, guid: 54e90c72d04981444830c894b912220e, type: 3}
       propertyPath: MaxHealth
