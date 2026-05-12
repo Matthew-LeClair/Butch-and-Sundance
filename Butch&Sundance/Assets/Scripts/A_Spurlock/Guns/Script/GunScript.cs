@@ -14,7 +14,7 @@ public class Gun : MonoBehaviour
 
     [SerializeField] public Transform GunPivot;
     [SerializeField] Transform ShootPos;
-    [SerializeField] int ShootDistance;
+    [SerializeField] public int ShootDistance;
 
     public int CurrAmmo;
     [SerializeField] int MaxAmmo;
@@ -69,7 +69,7 @@ public class Gun : MonoBehaviour
                 if (!Spread)
                 {
                     // Spawn Bullet at the Shoot Pos at the Gun Pivot Rotation
-                    Instantiate(Bullet, ShootPos.position, GunPivot.rotation);
+                    Instantiate(Bullet, ShootPos.position, ShootPos.rotation);
                 }
                 else
                 {
@@ -81,7 +81,7 @@ public class Gun : MonoBehaviour
                         float SpreadY = Random.Range(-SpreadAngle, SpreadAngle);
 
                         Quaternion SpreadRot =
-                            GunPivot.rotation *
+                            ShootPos.rotation *
                             Quaternion.Euler(SpreadX, SpreadY, 0);
 
                         Instantiate(Bullet, ShootPos.position, SpreadRot);
