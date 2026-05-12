@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5921076003239000377}
   - component: {fileID: 6182571704005511783}
   - component: {fileID: 5340583269168895995}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Arm_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 3662665463081126999}
   - component: {fileID: 4542989705525218325}
   - component: {fileID: 5901237288655486483}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: 8591504282909083686}
   - component: {fileID: 8589300715072898113}
   - component: {fileID: 2901977442618081805}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Goon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -470,7 +470,7 @@ GameObject:
   - component: {fileID: 1328986438037573787}
   - component: {fileID: 5160941892139282787}
   - component: {fileID: 404190827775508234}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -579,7 +579,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6164898522260803791}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GunSocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -614,7 +614,7 @@ GameObject:
   - component: {fileID: 788268133487973414}
   - component: {fileID: 6853614901027489185}
   - component: {fileID: 5333877752656555596}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Arm_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -728,7 +728,7 @@ GameObject:
   - component: {fileID: 4923180958626192248}
   - component: {fileID: 5930067293089183067}
   - component: {fileID: 1371933970724779503}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leg_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -842,7 +842,7 @@ GameObject:
   - component: {fileID: 1131878841892250908}
   - component: {fileID: 3038061266903283138}
   - component: {fileID: 2114910877816395470}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leg_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -995,6 +995,14 @@ PrefabInstance:
     - target: {fileID: 6274608284521951333, guid: 154415a30c17b6e4289ecc7057598a56, type: 3}
       propertyPath: m_Name
       value: Shotgun
+      objectReference: {fileID: 0}
+    - target: {fileID: 6274608284521951333, guid: 154415a30c17b6e4289ecc7057598a56, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6485668066630661094, guid: 154415a30c17b6e4289ecc7057598a56, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7405187486586651674, guid: 154415a30c17b6e4289ecc7057598a56, type: 3}
       propertyPath: GunPivot

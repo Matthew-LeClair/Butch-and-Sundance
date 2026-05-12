@@ -6,37 +6,54 @@ using UnityEngine;
 public class EnemyAI : CharacterBase
 {
 
-    bool seePlayer;
+    Transform player;
+    bool seePlayer = false;
     Vector3 playerDir;
     float DistanceToPlayer;
     [SerializeField] int MoveSpeed;
     [SerializeField] EnemyMovement movement;
     [SerializeField] AimControl[] aimControllers;
+    [SerializeField] LayerMask masks;
 
     // Update is called once per frame
     void Update()
     {
+        if (player == null)
+        {
+            return;
+        }
+        playerDir = player.position - transform.position;
+        DistanceToPlayer = Vector3.Distance(transform.position, player.position);
+        Debug.DrawRay(transform.position, playerDir.normalized * DistanceToPlayer, Color.red);
+        if (Physics.Raycast(transform.position, playerDir.normalized, out RaycastHit see, DistanceToPlayer, masks))
+        {
+            Debug.Log("HIT: " + see.transform.name);
+            seePlayer = see.transform.CompareTag("Player");
+        }
+        else
+        {
+            Debug.Log("No hit");
+            seePlayer = false;
+        }
         if (seePlayer)
         {
-            playerDir = GameManager.Instance.Player.transform.position - transform.position;
-            DistanceToPlayer = Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position);
             rotateToTarget();
             bool rightInRange = Weapon_R != null && DistanceToPlayer < Weapon_R.ShootDistance;
             bool leftInRange = Weapon_L != null && DistanceToPlayer < Weapon_L.ShootDistance;
             foreach (AimControl aim in aimControllers)
             {
                 aim.SetAiming(true);
-                aim.AimAtTarget(GameManager.Instance.Player.transform.position);
-            }    
+                aim.AimAtTarget(player.position);
+            }
             if (rightInRange)
-                {
-                    Weapon_R.Shoot();
-                }
-                if (leftInRange)
-                {
-                    Weapon_L.Shoot();
-                }
-            if(!rightInRange && !leftInRange)
+            {
+                Weapon_R.Shoot();
+            }
+            if (leftInRange)
+            {
+                Weapon_L.Shoot();
+            }
+            if (!rightInRange && !leftInRange)
             {
                 movement.Move(playerDir, MoveSpeed);
             }
@@ -52,17 +69,16 @@ public class EnemyAI : CharacterBase
         {
             Weapon_R.Reload();
         }
-            if (Weapon_L != null && Weapon_L.IsOut)
+        if (Weapon_L != null && Weapon_L.IsOut)
         {
             Weapon_L.Reload();
-        } 
-  }
-
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            seePlayer = true;
+            player = other.transform;
         }
     }
 
@@ -70,7 +86,7 @@ public class EnemyAI : CharacterBase
     {
         if (other.CompareTag("Player"))
         {
-            seePlayer = false;
+            player = null;
         }
     }
 

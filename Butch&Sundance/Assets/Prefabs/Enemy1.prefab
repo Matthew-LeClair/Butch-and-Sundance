@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2757973166230029558}
   - component: {fileID: 6975576288902919836}
   - component: {fileID: 2823660760248900711}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leg_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 6227926804602116797}
   - component: {fileID: 1614235720273023825}
   - component: {fileID: 7207320806498539161}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,17 +175,21 @@ MonoBehaviour:
   FlashColor: {r: 0, g: 0, b: 0, a: 0}
   CurrHealth: 10
   MaxHealth: 10
-  WeaponArm: {fileID: 7664278734643456936}
-  WeaponSlot: {fileID: 4540366931382632133}
-  ActiveWeapon: {fileID: 7735365638636657256}
-  Weapon: {fileID: 1894587360226214929}
+  WeaponArm_R: {fileID: 0}
+  WeaponSlot_R: {fileID: 0}
+  ActiveWeapon_R: {fileID: 0}
+  Weapon_R: {fileID: 0}
+  WeaponArm_L: {fileID: 0}
+  WeaponSlot_L: {fileID: 0}
+  ActiveWeapon_L: {fileID: 0}
+  Weapon_L: {fileID: 0}
   CritMulti: 0
   DamageReducBase: 1
   DamageReduc: 1
   IsAiming: 0
   MoveSpeed: 2
   movement: {fileID: 4684842593404395853}
-  aimControl: {fileID: 2016087091004138893}
+  aimControllers: []
 --- !u!114 &4684842593404395853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,7 +355,7 @@ GameObject:
   - component: {fileID: 9040994461710093441}
   - component: {fileID: 6476041868328635424}
   - component: {fileID: 3821455805827215082}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Arm_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -462,7 +466,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5578546573032143469}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GunSocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -496,7 +500,7 @@ GameObject:
   - component: {fileID: 1361884204591449986}
   - component: {fileID: 3481421506296367739}
   - component: {fileID: 389386891000756713}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -608,7 +612,7 @@ GameObject:
   - component: {fileID: 8281470402169428975}
   - component: {fileID: 5801478014777354839}
   - component: {fileID: 5544941949732342273}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -718,7 +722,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3580503406151065441}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ShootPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -752,7 +756,7 @@ GameObject:
   - component: {fileID: 7215712305158975863}
   - component: {fileID: 2896804349600862950}
   - component: {fileID: 4609827287614183999}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leg_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -866,7 +870,7 @@ GameObject:
   - component: {fileID: 3786736436527087659}
   - component: {fileID: 3373851053166401574}
   - component: {fileID: 1178361755600012158}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Arm_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -983,7 +987,7 @@ GameObject:
   - component: {fileID: 2395725989839466810}
   - component: {fileID: 8530918153581486093}
   - component: {fileID: 8314769184831001970}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
