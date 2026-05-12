@@ -36,8 +36,6 @@ public class PlayerController : CharacterBase
     Vector3 MoveDir;
     Vector3 PlayerVel;
 
-
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void Start()
     {

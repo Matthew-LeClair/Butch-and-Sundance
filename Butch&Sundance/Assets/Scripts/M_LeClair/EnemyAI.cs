@@ -9,44 +9,32 @@ public class EnemyAI : CharacterBase
     Vector3 playerDir;
     float DistanceToPlayer;
     [SerializeField] int MoveSpeed;
+    [SerializeField] EnemyMovement movement;
+    [SerializeField] AimControl aimControl;
 
     // Update is called once per frame
     void Update()
     {
         if (seePlayer)
         {
-            DistanceToPlayer = Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position);
             playerDir = GameManager.Instance.Player.transform.position - transform.position;
+            DistanceToPlayer = Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position);
             rotateToTarget();
-            if (!IsAiming)
+            aimControl.SetAiming(true);
+            aimControl.AimAtTarget(GameManager.Instance.Player.transform.position);
+            if (DistanceToPlayer < Weapon.ShootDistance)
             {
-                Aim();
+                Weapon.Shoot();
             }
             else
             {
-                Vector3 targetPos = GameManager.Instance.Player.transform.position + Vector3.up;
-                Vector3 dir = targetPos - WeaponArm.transform.position;
-                Quaternion rot = Quaternion.LookRotation(dir) * Quaternion.Euler(-28, 70, -70);
-                WeaponArm.transform.rotation = Quaternion.Lerp(WeaponArm.transform.rotation, rot, Time.deltaTime * AimSpeed);
-                if (DistanceToPlayer <= Weapon.ShootDistance)
-                {
-                    Weapon.Shoot();
-                }
-                else
-                {
-                    Movement();
-                }
+                movement.Move(playerDir, MoveSpeed);
             }
         }
         else
         {
-            if (IsAiming)
-            {
-                Aim();
-                Weapon.Reload();
-            }
+            aimControl.ResetAim();
         }
-
         if (Weapon.IsOut)
         {
             Weapon.Reload();
@@ -72,13 +60,6 @@ public class EnemyAI : CharacterBase
     void rotateToTarget()
     {
         Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
-        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime);
-    }
-
-    void Movement()
-    {
-        Vector3 dir = playerDir;
-        dir.y = 0f;
-        transform.position += dir.normalized * Time.deltaTime * MoveSpeed;
+        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * MoveSpeed);
     }
 }

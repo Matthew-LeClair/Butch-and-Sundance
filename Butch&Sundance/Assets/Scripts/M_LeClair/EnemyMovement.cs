@@ -1,16 +1,11 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class EnemyDetection : MonoBehaviour
+public class EnemyMovement : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void Move(Vector3 direction, int speed)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        direction.y = 0f;
+        transform.position += direction.normalized * Time.deltaTime * speed;
     }
 }

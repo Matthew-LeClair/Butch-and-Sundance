@@ -15,7 +15,7 @@ public class CharacterBase : MonoBehaviour, I_Damage
     [SerializeField] public GameObject WeaponSlot;
     [SerializeField] public GameObject ActiveWeapon;
     public Gun Weapon;
-    [SerializeField] public float AimSpeed;
+
 
 
     [SerializeField] float CritMulti;
