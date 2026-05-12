@@ -15,7 +15,7 @@ public class AimControl : MonoBehaviour
 
     private void Start()
     {
-        origRotation = transform.rotation;
+        origRotation = WeaponArm.rotation;
     }
     public void SetAiming(bool value)
     {
