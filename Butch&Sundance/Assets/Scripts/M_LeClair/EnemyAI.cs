@@ -1,12 +1,9 @@
-using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyAI : CharacterBase
 {
     public AimControl[] aimControllers;
-    public EnemyMovement movement;
     public int MoveSpeed;
     public LayerMask masks;
     public Transform player;
@@ -14,7 +11,14 @@ public class EnemyAI : CharacterBase
     public Vector3 playerDir;
     public float DistanceToPlayer;
     [SerializeField] EnemyBehavior behavior;
+    [SerializeField] public NavMeshAgent agent;
 
+    void Start()
+    {
+        agent.speed = MoveSpeed;
+        agent.angularSpeed = MoveSpeed;
+        agent.stoppingDistance = Weapon_R.ShootDistance;
+    }
     // Update is called once per frame
     void Update()
     {

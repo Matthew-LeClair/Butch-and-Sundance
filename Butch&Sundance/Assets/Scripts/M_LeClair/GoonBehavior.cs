@@ -6,6 +6,7 @@ public class GoonBehavior : EnemyBehavior
     {
         if (ai.seePlayer)
         {
+            ai.agent.SetDestination(ai.player.transform.position);
             ai.rotateToTarget();
             bool rightInRange = ai.Weapon_R != null && ai.DistanceToPlayer < ai.Weapon_R.ShootDistance;
             foreach (AimControl aim in ai.aimControllers)
@@ -16,10 +17,6 @@ public class GoonBehavior : EnemyBehavior
             if (rightInRange)
             {
                 ai.Weapon_R.Shoot("Enemy");
-            }
-            else
-            {
-                ai.movement.Move(ai.playerDir, ai.MoveSpeed, ai.CanFly);
             }
         }
         else

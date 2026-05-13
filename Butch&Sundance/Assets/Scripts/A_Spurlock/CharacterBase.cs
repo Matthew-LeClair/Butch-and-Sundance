@@ -24,8 +24,6 @@ public class CharacterBase : MonoBehaviour, I_Damage
     [SerializeField] public float DamageReducBase;
     public float DamageReduc;
 
-    [SerializeField] public bool CanFly;
-
     public bool IsAiming;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
