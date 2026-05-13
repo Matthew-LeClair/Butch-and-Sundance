@@ -20,12 +20,9 @@ public class CharacterBase : MonoBehaviour, I_Damage
     [SerializeField] public GameObject ActiveWeapon_L;
     public Gun Weapon_L;
 
-
-
     [SerializeField] float CritMulti;
     [SerializeField] public float DamageReducBase;
     public float DamageReduc;
-
 
     public bool IsAiming;
 
