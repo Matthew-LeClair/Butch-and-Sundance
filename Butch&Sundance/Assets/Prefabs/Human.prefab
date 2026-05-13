@@ -811,19 +811,28 @@ MonoBehaviour:
   Body: {fileID: 4969262746497682689}
   OriginalColor: {r: 0, g: 0, b: 0, a: 0}
   FlashColor: {r: 0, g: 0, b: 0, a: 0}
+  CurrHealth: 0
   MaxHealth: 0
-  WeaponSlot: {fileID: 2489222888183564969}
-  ActiveWeapon: {fileID: 0}
-  Weapon: {fileID: 0}
+  WeaponArm_R: {fileID: 0}
+  WeaponSlot_R: {fileID: 0}
+  ActiveWeapon_R: {fileID: 0}
+  Weapon_R: {fileID: 0}
+  WeaponArm_L: {fileID: 0}
+  WeaponSlot_L: {fileID: 0}
+  ActiveWeapon_L: {fileID: 0}
+  Weapon_L: {fileID: 0}
   CritMulti: 0
+  DamageReducBase: 0
+  DamageReduc: 0
+  IsAiming: 0
   Controller: {fileID: 56450232043430834}
-  IgnoreLayer:
-    serializedVersion: 2
-    m_Bits: 0
+  SpeedBase: 0
   Speed: 5
-  JumpSpeed: 0
-  JumpMax: 0
-  Gravity: 0
+  BaseMomentumBuildRate: 0
+  MomentumBuildRate: 0
+  TimeMoveDecayRate: 0
+  KillStreakDecayRate: 0
+  ParkourComboDecayRate: 0
 --- !u!33 &5494059367164988779
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -896,7 +905,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2

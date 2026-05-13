@@ -53,7 +53,7 @@ public class Gun : MonoBehaviour
             Color.red); // Make the Ray red
     }
 
-    public void Shoot()
+    public void Shoot(string cOwnerTag)
     {
         if (ShootTimer > ShootRate) 
         {
@@ -85,6 +85,8 @@ public class Gun : MonoBehaviour
                             Quaternion.Euler(SpreadX, SpreadY, 0);
 
                         Instantiate(Bullet, ShootPos.position, SpreadRot);
+                        Damage cDamage = Bullet.GetComponent<Damage>();
+                        cDamage.OwnerTag = cOwnerTag;
                     }
                 }
 

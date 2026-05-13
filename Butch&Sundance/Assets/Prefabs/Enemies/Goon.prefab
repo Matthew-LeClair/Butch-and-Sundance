@@ -300,11 +300,15 @@ MonoBehaviour:
   CritMulti: 0
   DamageReducBase: 1
   DamageReduc: 1
+  CanFly: 0
   IsAiming: 0
   MoveSpeed: 2
   movement: {fileID: 350175239920795127}
   aimControllers:
   - {fileID: 5622418823241548529}
+  masks:
+    serializedVersion: 2
+    m_Bits: 520
 --- !u!114 &350175239920795127
 MonoBehaviour:
   m_ObjectHideFlags: 0

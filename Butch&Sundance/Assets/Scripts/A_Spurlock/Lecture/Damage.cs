@@ -13,7 +13,7 @@ public class Damage : MonoBehaviour
     [SerializeField] int BulletSpeed;
     [SerializeField] int BulletDeathClock;
     [SerializeField] ParticleSystem ImpactFX;
-
+    public string OwnerTag;
     bool IsDamaging;
 
 
@@ -30,39 +30,55 @@ public class Damage : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.isTrigger) { return; }
-
-        I_Damage Damage = other.GetComponent<I_Damage>();
-
-        if (Damage != null && DamageType != eDamageType.DOT)
-        { Damage.TakeDamage(DamageAmount, other.name); }
-
-        if (DamageType == eDamageType.Bullet && Damage != null) 
+        if (other.tag != OwnerTag)
         {
-            if (ImpactFX != null) 
-            { ImpactFX = Instantiate(ImpactFX, 
-                transform.position, 
-                Quaternion.identity); }
+            I_Damage Damage = other.GetComponent<I_Damage>();
 
-            Damage.TakeDamage(DamageAmount, other.name);
+            if (Damage != null && DamageType != eDamageType.DOT)
+            {
+                if (DamageType != eDamageType.Bullet)
+                { Damage.TakeDamage(DamageAmount, other.name, true); }
+                else { Damage.TakeDamage(DamageAmount, other.name, false); }
+            }
 
-            Destroy(gameObject);
+            if (DamageType == eDamageType.Bullet && Damage != null)
+            {
+                if (ImpactFX != null)
+                {
+                    ImpactFX = Instantiate(ImpactFX,
+                    transform.position,
+                    Quaternion.identity);
+                }
+                if (DamageType != eDamageType.Bullet)
+                { Damage.TakeDamage(DamageAmount, other.name, true); }
+                else { Damage.TakeDamage(DamageAmount, other.name, false); }
+
+
+                Destroy(gameObject);
+            }
         }
+       
     }
 
     private void OnTriggerStay(Collider other)
     {
         if (other.isTrigger) { return; }
+        if (other.tag != OwnerTag)
+        {
+            I_Damage Damage = other.GetComponent<I_Damage>();
 
-        I_Damage Damage = other.GetComponent<I_Damage>();
+            if (Damage != null && DamageType == eDamageType.DOT && !IsDamaging)
+            { StartCoroutine(DamageOther(Damage, other)); }
+        }
 
-        if (Damage != null && DamageType == eDamageType.DOT && !IsDamaging) 
-        { StartCoroutine(DamageOther(Damage, other)); }
     }
 
     IEnumerator DamageOther(I_Damage Damage, Collider Object) 
     {
         IsDamaging = true;
-        Damage.TakeDamage(DamageAmount, Object.name);
+        if (DamageType != eDamageType.Bullet) 
+        { Damage.TakeDamage(DamageAmount, Object.name, true); }
+        else { Damage.TakeDamage(DamageAmount, Object.name, false); }
         yield return new WaitForSeconds(DamageRate);
         IsDamaging = false;
     }
