@@ -22,5 +22,12 @@ public class GoonBehavior : EnemyBehavior
                 ai.movement.Move(ai.playerDir, ai.MoveSpeed, ai.CanFly);
             }
         }
+        else
+        {
+            foreach (AimControl aim in ai.aimControllers)
+            {
+                aim.ResetAim();
+            }
+        }
     }
 }

@@ -7,6 +7,8 @@ public class AverageBehavior : EnemyBehavior
         if (ai.seePlayer)
         {
             ai.rotateToTarget();
+            ai.playerDir = ai.player.position - ai.transform.position;
+            ai.DistanceToPlayer = ai.playerDir.magnitude;
             bool rightInRange = ai.Weapon_R != null && ai.DistanceToPlayer < ai.Weapon_R.ShootDistance;
             foreach (AimControl aim in ai.aimControllers)
             {
@@ -20,6 +22,13 @@ public class AverageBehavior : EnemyBehavior
             else
             {
                 ai.movement.Move(ai.playerDir, ai.MoveSpeed, ai.CanFly);
+            }
+        }
+        else
+        {
+            foreach(AimControl aim in ai.aimControllers)
+            {
+                aim.ResetAim();
             }
         }
     }

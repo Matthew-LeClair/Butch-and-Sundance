@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3032071597850724554}
   - component: {fileID: 3761552919016575686}
   - component: {fileID: 5721782698203626994}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leg_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 2558410336235984024}
   - component: {fileID: 5241586191470387224}
   - component: {fileID: 1396951083940252988}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,7 +239,7 @@ GameObject:
   - component: {fileID: 6230326499042687868}
   - component: {fileID: 5131773925224076211}
   - component: {fileID: 8828235325528230646}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,7 +379,7 @@ GameObject:
   - component: {fileID: 1602092089802342550}
   - component: {fileID: 7971875426625435310}
   - component: {fileID: 9073996482451867106}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -515,7 +515,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4901470787175323539}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GunSocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -549,7 +549,7 @@ GameObject:
   - component: {fileID: 2966452436065598421}
   - component: {fileID: 8867432547953621475}
   - component: {fileID: 5544326626238065513}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leg_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -663,7 +663,7 @@ GameObject:
   - component: {fileID: 1874841602274203321}
   - component: {fileID: 1284953130623214695}
   - component: {fileID: 5430871464363101022}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Arm_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -776,7 +776,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3195298220457850955}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ShootPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -810,7 +810,7 @@ GameObject:
   - component: {fileID: 774080438331876826}
   - component: {fileID: 813173771968943264}
   - component: {fileID: 4624048460077982009}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Arm_L Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -923,7 +923,7 @@ GameObject:
   - component: {fileID: 4639889303500283223}
   - component: {fileID: 2842057455989739293}
   - component: {fileID: 2744095744835724154}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Arm_R Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1043,7 +1043,7 @@ GameObject:
   - component: {fileID: 6024273142122438246}
   - component: {fileID: 7944816074656298155}
   - component: {fileID: 6380067200894708041}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Dual Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1302,7 +1302,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2480444455647625645}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ShootPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1336,7 +1336,7 @@ GameObject:
   - component: {fileID: 768211992466885710}
   - component: {fileID: 6164442748312557027}
   - component: {fileID: 1758830405097012432}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Arm_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1449,7 +1449,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4981888872231017920}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GunSocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}

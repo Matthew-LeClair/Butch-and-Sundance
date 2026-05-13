@@ -15,32 +15,25 @@ public class EnemyAI : CharacterBase
     public float DistanceToPlayer;
     [SerializeField] EnemyBehavior behavior;
 
-
     // Update is called once per frame
     void Update()
     {
         if(player == null)
         {
-            foreach(AimControl aim in aimControllers)
-            {
-                aim.ResetAim();
-            }
-            return;
-        }
-        playerDir = player.position - transform.position;
-        DistanceToPlayer = playerDir.magnitude;
-        Debug.DrawRay(transform.position, playerDir.normalized * DistanceToPlayer, Color.red);
-        if (Physics.Raycast(transform.position,playerDir.normalized, out RaycastHit see, DistanceToPlayer, masks))
-        {
-            Debug.Log("HIT: " + see.transform.name);
-            seePlayer = see.transform.CompareTag("Player");
+            seePlayer = false;
         }
         else
         {
-            Debug.Log("No hit");
             seePlayer = false;
+            playerDir = player.position - transform.position;
+            DistanceToPlayer = playerDir.magnitude;
+            RaycastHit hit;
+            Vector3 origin = transform.position;
+            if (Physics.Raycast(origin, playerDir.normalized, out hit, DistanceToPlayer, masks))
+            {
+                seePlayer = hit.transform.root.CompareTag("Player");
+            }
         }
-
         behavior.Tick();
 
         if (Weapon_R != null && Weapon_R.IsOut)
