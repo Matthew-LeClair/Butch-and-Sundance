@@ -47,11 +47,11 @@ public class EnemyAI : CharacterBase
             }
             if (rightInRange)
             {
-                Weapon_R.Shoot();
+                Weapon_R.Shoot("Enemy");
             }
             if (leftInRange)
             {
-                Weapon_L.Shoot();
+                Weapon_L.Shoot("Enemy");
             }
             if (!rightInRange && !leftInRange)
             {

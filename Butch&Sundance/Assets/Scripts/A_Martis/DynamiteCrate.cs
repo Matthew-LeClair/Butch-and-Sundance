@@ -22,7 +22,7 @@ public class DynamiteCrate : MonoBehaviour, I_Damage
     }
 
     // Damage function that I_Damage uses
-    public void TakeDamage(int Amount, string BodyPart)
+    public void TakeDamage(int Amount, string BodyPart, bool Single)
     {
         // Prevents additional damage after explosion
         if (exploded)
@@ -63,7 +63,7 @@ public class DynamiteCrate : MonoBehaviour, I_Damage
             if (damage != null && !DamagedObjects.Contains(damage))
             {
                 // Applies explosion damage to the object
-                damage.TakeDamage(explodeDamage, "Body");
+                damage.TakeDamage(explodeDamage, "Body", true);
 
                 // Adds the damaged object to the list to prevent multi-hit
                 DamagedObjects.Add(damage);
