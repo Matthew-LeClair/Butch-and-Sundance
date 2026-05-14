@@ -1,7 +1,12 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerController : CharacterBase
 {
+    [SerializeField] int Health;
+
+    int HealthMax;
+
     [SerializeField] CharacterController Controller;
 
     [SerializeField] public float SpeedBase;
@@ -43,6 +48,8 @@ public class PlayerController : CharacterBase
         base.Start();
         MomentumBuildRate = BaseMomentumBuildRate;
         CurrHealth = MaxHealth;
+
+        UpdatePlayerUI();
     }
 
     // Update is called once per frame
@@ -127,6 +134,8 @@ public class PlayerController : CharacterBase
         }
 
         base.TakeDamage(Amount, BodyPart, Single);
+
+        StartCoroutine(FlashDamageScreen());
     }
 
     public override void Death()
@@ -218,5 +227,17 @@ public class PlayerController : CharacterBase
         JumpMax = Mathf.Clamp((int)((CurvedPercent * Random.Range(1, 3)) * TrueJumpMax) + 1, 1, TrueJumpMax);
         // Jump Speed
         JumpSpeed = Speed + 0.6f;
+    }
+    public void UpdatePlayerUI()
+    {
+        GameManager.Instance.PlayerHP_Bar.fillAmount = (float)Health / HealthMax;
+    }
+    IEnumerator FlashDamageScreen()
+    {
+        GameManager.Instance.PlayerDamage_Screen.SetActive(true); // Activate the damage screen effect to indicate that the player has taken damage
+
+        yield return new WaitForSeconds(0.5f); // Wait for a short duration (0.5 seconds) before deactivating the damage screen effect
+
+        GameManager.Instance.PlayerDamage_Screen.SetActive(false); // Deactivate the damage screen effect after the wait time has elapsed
     }
 }
