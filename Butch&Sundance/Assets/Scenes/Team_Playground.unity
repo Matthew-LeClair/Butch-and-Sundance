@@ -5975,8 +5975,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1482070977579908689, guid: 232484dfbafa28046ab6eadda76e6feb, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 5095228699617403890, guid: 232484dfbafa28046ab6eadda76e6feb, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5095228699617403890, guid: 232484dfbafa28046ab6eadda76e6feb, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -7454,11 +7462,6 @@ MeshFilter:
 Transform:
   m_CorrespondingSourceObject: {fileID: 3322868057849035280, guid: b60ac39aa1ca12d4385c5e68170632c6, type: 3}
   m_PrefabInstance: {fileID: 1632818137}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1057789344 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5095228699617403890, guid: 232484dfbafa28046ab6eadda76e6feb, type: 3}
-  m_PrefabInstance: {fileID: 908532441}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1058207408 stripped
 Transform:
@@ -12109,7 +12112,7 @@ MonoBehaviour:
   PlayerHP_Bar: {fileID: 0}
   PlayerDamage_Screen: {fileID: 0}
   IsPaused: 0
-  Player: {fileID: 1057789344}
+  Player: {fileID: 0}
   PlayerScript: {fileID: 0}
   KillCount: 0
 --- !u!4 &1767178737
