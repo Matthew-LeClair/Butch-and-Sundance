@@ -471,7 +471,7 @@ MonoBehaviour:
   OriginalColor: {r: 0, g: 0.972549, b: 1, a: 0}
   FlashColor: {r: 1, g: 1, b: 1, a: 0}
   CurrHealth: 0
-  MaxHealth: 500
+  MaxHealth: 1000
   WeaponArm_R: {fileID: 6787385610135171431}
   WeaponSlot_R: {fileID: 1127261241696199899}
   ActiveWeapon_R: {fileID: 5430968552453330743, guid: 8a81f5ac3efc2494680196b7e5b116c0, type: 3}
@@ -484,6 +484,7 @@ MonoBehaviour:
   DamageReducBase: 1
   DamageReduc: 0
   IsAiming: 0
+  Health: 0
   Controller: {fileID: 1409351577761775182}
   SpeedBase: 2
   Speed: 0
@@ -492,7 +493,13 @@ MonoBehaviour:
   TimeMoveDecayRate: 1.5
   KillStreakDecayRate: 3
   ParkourComboDecayRate: 5
+  JumpSpeedBase: 7.5
   TrueJumpMax: 3
+  Aimed: 0
+  Shot: 0
+  Reloaded: 0
+  Moved: 0
+  Jumped: 0
 --- !u!33 &3300645691377470414
 MeshFilter:
   m_ObjectHideFlags: 0
