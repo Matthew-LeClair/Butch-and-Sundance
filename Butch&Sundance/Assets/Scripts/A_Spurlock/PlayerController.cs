@@ -36,8 +36,6 @@ public class PlayerController : CharacterBase
     Vector3 MoveDir;
     Vector3 PlayerVel;
 
-
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void Start()
     {
@@ -58,13 +56,13 @@ public class PlayerController : CharacterBase
     void Movement() 
     {
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
-        { Weapon.Reload(); }
+        { Weapon_R.Reload(); }
 
         if (Input.GetButtonDown("Fire2")) { Aim(); }
         if (Input.GetButtonUp("Fire2")) { Aim(); }
 
         if (Input.GetButton("Fire1") && IsAiming) // If Left Click is Pressed while Aiming...
-        { Weapon.Shoot(); } // Call Shoot Function
+        { Weapon_R.Shoot("Player"); } // Call Shoot Function
 
         if (Controller.isGrounded)  // Checks if the Player Character is on the ground
         { 
@@ -117,12 +115,12 @@ public class PlayerController : CharacterBase
         HandleStats();
     }
 
-    public override void TakeDamage(int Amount, string BodyPart) 
+    public override void TakeDamage(int Amount, string BodyPart, bool Single) 
     {
         float DamageRatio = Mathf.Clamp01((float)Amount / CurrHealth);
         CurrMomentum *= (1f - DamageRatio);
 
-        base.TakeDamage(Amount, BodyPart);
+        base.TakeDamage(Amount, BodyPart, Single);
     }
 
     public override void Death()
@@ -157,7 +155,8 @@ public class PlayerController : CharacterBase
             { 
                 ParkourCombo = 0; 
                 ParkourCount = 0; 
-                CurrMomentum = MaxMomentum * .03f; }
+                CurrMomentum = MaxMomentum * .03f; 
+            }
         }
     }
 

@@ -11,17 +11,18 @@ public class CharacterBase : MonoBehaviour, I_Damage
     public float CurrHealth;
     [SerializeField] public float MaxHealth;
 
-    [SerializeField] public GameObject WeaponArm;
-    [SerializeField] public GameObject WeaponSlot;
-    [SerializeField] public GameObject ActiveWeapon;
-    public Gun Weapon;
-    [SerializeField] public float AimSpeed;
-
+    [SerializeField] public GameObject WeaponArm_R;
+    [SerializeField] public GameObject WeaponSlot_R;
+    [SerializeField] public GameObject ActiveWeapon_R;
+    public Gun Weapon_R; 
+    [SerializeField] public GameObject WeaponArm_L;
+    [SerializeField] public GameObject WeaponSlot_L;
+    [SerializeField] public GameObject ActiveWeapon_L;
+    public Gun Weapon_L;
 
     [SerializeField] float CritMulti;
     [SerializeField] public float DamageReducBase;
     public float DamageReduc;
-
 
     public bool IsAiming;
 
@@ -38,15 +39,31 @@ public class CharacterBase : MonoBehaviour, I_Damage
         foreach (Renderer R in Renderers)
         { R.material.color = OriginalColor; }
 
-        GameObject ActiveGun = Instantiate(ActiveWeapon).gameObject;
-        ActiveGun.transform.SetParent(WeaponSlot.transform);
-        ActiveGun.transform.localPosition = Vector3.zero;
-        ActiveGun.transform.localRotation = Quaternion.identity;
-        ActiveGun.transform.localScale = Vector3.one;
+        if (ActiveWeapon_R != null && WeaponSlot_R != null)
+        {
+            GameObject ActiveGun_R = Instantiate(ActiveWeapon_R).gameObject;
+            ActiveGun_R.transform.SetParent(WeaponSlot_R.transform);
+            ActiveGun_R.transform.localPosition = Vector3.zero;
+            ActiveGun_R.transform.localRotation = Quaternion.identity;
+            ActiveGun_R.transform.localScale = Vector3.one;
 
-        Weapon = ActiveGun.GetComponent<Gun>();
+            Weapon_R = ActiveGun_R.GetComponent<Gun>();
 
-        Weapon.GunPivot = WeaponSlot.transform;
+            Weapon_R.GunPivot = WeaponSlot_R.transform;
+        }
+
+        if (ActiveWeapon_L != null && WeaponSlot_L != null)
+        {
+            GameObject ActiveGun_L = Instantiate(ActiveWeapon_L).gameObject;
+            ActiveGun_L.transform.SetParent(WeaponSlot_L.transform);
+            ActiveGun_L.transform.localPosition = Vector3.zero;
+            ActiveGun_L.transform.localRotation = Quaternion.identity;
+            ActiveGun_L.transform.localScale = Vector3.one;
+
+            Weapon_L = ActiveGun_L.GetComponent<Gun>();
+
+            Weapon_L.GunPivot = WeaponSlot_L.transform;
+        }
     }
 
     // Update is called once per frame
@@ -55,11 +72,14 @@ public class CharacterBase : MonoBehaviour, I_Damage
         
     }
 
-    public virtual void TakeDamage(int Amount, string BodyPart) // Take Damage, Damage Interface Override
+    public virtual void TakeDamage(int Amount, string BodyPart, bool Single) // Take Damage, Damage Interface Override
     {
-        if (BodyPart == "Head") { CritMulti += Random.Range(1, 1.5f); }
-        if (BodyPart == "Arm_R" || BodyPart == "Arm_L") { CritMulti += Random.Range(.25f, .6f); }
-        if (BodyPart == "Leg_R" || BodyPart == "Leg_L") { CritMulti += Random.Range(.5f, .8f); }
+        if (!Single)
+        {
+            if (BodyPart == "Head") { CritMulti += Random.Range(1, 1.5f); }
+            if (BodyPart == "Arm_R" || BodyPart == "Arm_L") { CritMulti += Random.Range(.25f, .6f); }
+            if (BodyPart == "Leg_R" || BodyPart == "Leg_L") { CritMulti += Random.Range(.5f, .8f); }
+        }
 
         CurrHealth -= (Amount * CritMulti) * DamageReduc; // Subtract Health by Amount
 
@@ -68,6 +88,7 @@ public class CharacterBase : MonoBehaviour, I_Damage
         if (CurrHealth <= 0) // If Health is Less Than or Equal To 0...
         { Death(); } // Destroy the Object
         else { StartCoroutine(Flash(BodyPart)); } // Call the Flash Function, Modular Version
+
     }
 
     IEnumerator Flash(string BodyPart)
@@ -103,10 +124,10 @@ public class CharacterBase : MonoBehaviour, I_Damage
         {
             IsAiming = true;
 
-            WeaponArm.transform.localPosition = AimPos;
+            WeaponArm_R.transform.localPosition = AimPos;
 
             Quaternion Aim = Quaternion.Euler(AimRot);
-            WeaponArm.transform.localRotation = Aim;
+            WeaponArm_R.transform.localRotation = Aim;
 
             Debug.Log("Should be aiming");
         } 
@@ -114,10 +135,10 @@ public class CharacterBase : MonoBehaviour, I_Damage
         {
             IsAiming = false;
 
-            WeaponArm.transform.localPosition = OriginalPos;
+            WeaponArm_R.transform.localPosition = OriginalPos;
 
             Quaternion Aim = Quaternion.Euler(OriginalRot);
-            WeaponArm.transform.localRotation = Aim;
+            WeaponArm_R.transform.localRotation = Aim;
 
             Debug.Log("Should NOT be aiming");
         }

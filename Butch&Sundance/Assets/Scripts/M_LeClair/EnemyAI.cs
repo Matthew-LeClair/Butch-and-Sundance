@@ -1,53 +1,59 @@
-using System.Collections;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyAI : CharacterBase
 {
+    public AimControl[] aimControllers;
+    public int MoveSpeed;
+    public LayerMask masks;
+    public Transform player;
+    public bool seePlayer = false;
+    public Vector3 playerDir;
+    public float DistanceToPlayer;
+    [SerializeField] EnemyBehavior behavior;
+    [SerializeField] public NavMeshAgent agent;
 
-    bool seePlayer;
-    Vector3 playerDir;
-
+    void Start()
+    {
+        agent.speed = MoveSpeed;
+        agent.angularSpeed = MoveSpeed;
+        agent.stoppingDistance = Weapon_R.ShootDistance;
+    }
     // Update is called once per frame
     void Update()
     {
-        if (seePlayer)
+        if(player == null)
         {
-            playerDir = GameManager.Instance.Player.transform.position - transform.position;
-            rotateToTarget();
-            if (!IsAiming)
-            {
-                Aim();
-            }
-            else
-            {
-                Vector3 targetPos = GameManager.Instance.Player.transform.position + Vector3.up;
-                Vector3 dir = targetPos - WeaponArm.transform.position;
-                Quaternion rot = Quaternion.LookRotation(dir) * Quaternion.Euler(-28, 70, -70);
-                WeaponArm.transform.rotation = Quaternion.Lerp(WeaponArm.transform.rotation, rot, Time.deltaTime * AimSpeed);
-                Weapon.Shoot();
-            }
+            seePlayer = false;
         }
         else
         {
-            if (IsAiming)
+            seePlayer = false;
+            playerDir = player.position - transform.position;
+            DistanceToPlayer = playerDir.magnitude;
+            RaycastHit hit;
+            Vector3 origin = transform.position;
+            if (Physics.Raycast(origin, playerDir.normalized, out hit, DistanceToPlayer, masks))
             {
-                Aim();
-                Weapon.Reload();
+                seePlayer = hit.transform.root.CompareTag("Player");
             }
         }
+        behavior.Tick();
 
-        if (Weapon.IsOut)
+        if (Weapon_R != null && Weapon_R.IsOut)
         {
-            Weapon.Reload();
+            Weapon_R.Reload();
+        }
+        if (Weapon_L != null && Weapon_L.IsOut)
+        {
+            Weapon_L.Reload();
         }
     }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            seePlayer = true;
+            player = other.transform;
         }
     }
 
@@ -55,13 +61,13 @@ public class EnemyAI : CharacterBase
     {
         if (other.CompareTag("Player"))
         {
-            seePlayer = false;
+            player = null;
         }
     }
 
-    void rotateToTarget()
+    public void rotateToTarget()
     {
         Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
-        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * MoveSpeed);
     }
 }
