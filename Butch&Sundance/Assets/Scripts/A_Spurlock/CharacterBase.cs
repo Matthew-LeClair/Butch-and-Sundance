@@ -20,12 +20,9 @@ public class CharacterBase : MonoBehaviour, I_Damage
     [SerializeField] public GameObject ActiveWeapon_L;
     public Gun Weapon_L;
 
-
-
     [SerializeField] float CritMulti;
     [SerializeField] public float DamageReducBase;
     public float DamageReduc;
-
 
     public bool IsAiming;
 
@@ -75,11 +72,14 @@ public class CharacterBase : MonoBehaviour, I_Damage
         
     }
 
-    public virtual void TakeDamage(int Amount, string BodyPart) // Take Damage, Damage Interface Override
+    public virtual void TakeDamage(int Amount, string BodyPart, bool Single) // Take Damage, Damage Interface Override
     {
-        if (BodyPart == "Head") { CritMulti += Random.Range(1, 1.5f); }
-        if (BodyPart == "Arm_R" || BodyPart == "Arm_L") { CritMulti += Random.Range(.25f, .6f); }
-        if (BodyPart == "Leg_R" || BodyPart == "Leg_L") { CritMulti += Random.Range(.5f, .8f); }
+        if (!Single)
+        {
+            if (BodyPart == "Head") { CritMulti += Random.Range(1, 1.5f); }
+            if (BodyPart == "Arm_R" || BodyPart == "Arm_L") { CritMulti += Random.Range(.25f, .6f); }
+            if (BodyPart == "Leg_R" || BodyPart == "Leg_L") { CritMulti += Random.Range(.5f, .8f); }
+        }
 
         CurrHealth -= (Amount * CritMulti) * DamageReduc; // Subtract Health by Amount
 
@@ -88,6 +88,7 @@ public class CharacterBase : MonoBehaviour, I_Damage
         if (CurrHealth <= 0) // If Health is Less Than or Equal To 0...
         { Death(); } // Destroy the Object
         else { StartCoroutine(Flash(BodyPart)); } // Call the Flash Function, Modular Version
+
     }
 
     IEnumerator Flash(string BodyPart)

@@ -49,7 +49,7 @@ public class ThornyBramble : MonoBehaviour
     {
         isDamaging = true;
 
-        damage.TakeDamage(thornDamage, "Body");
+        damage.TakeDamage(thornDamage, "Body", true);
 
         yield return new WaitForSeconds(damageRate);
 

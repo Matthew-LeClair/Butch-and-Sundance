@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fdf493131ac5f864db060d24c42a7f98, type: 2}
+  - {fileID: 2100000, guid: 32aaa3da0edf42840b561ecfc066f683, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -238,7 +238,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3322868057849035280}
   - component: {fileID: 8833397689779589650}
-  - component: {fileID: 350175239920795127}
+  - component: {fileID: 5149296065048787029}
+  - component: {fileID: 8196611959103655323}
   - component: {fileID: 5622418823241548529}
   - component: {fileID: 7342055331326546722}
   - component: {fileID: 8125713965362204399}
@@ -285,7 +286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
   Body: {fileID: 8125713965362204399}
-  OriginalColor: {r: 0.16862746, g: 0.54901963, b: 0.627451, a: 0}
+  OriginalColor: {r: 1, g: 0.016349792, b: 0, a: 1}
   FlashColor: {r: 0, g: 0, b: 0, a: 0}
   CurrHealth: 10
   MaxHealth: 10
@@ -301,11 +302,41 @@ MonoBehaviour:
   DamageReducBase: 1
   DamageReduc: 1
   IsAiming: 0
-  MoveSpeed: 2
-  movement: {fileID: 350175239920795127}
   aimControllers:
   - {fileID: 5622418823241548529}
---- !u!114 &350175239920795127
+  MoveSpeed: 2
+  masks:
+    serializedVersion: 2
+    m_Bits: 520
+  player: {fileID: 0}
+  seePlayer: 0
+  playerDir: {x: 0, y: 0, z: 0}
+  DistanceToPlayer: 0
+  behavior: {fileID: 8196611959103655323}
+  agent: {fileID: 5149296065048787029}
+--- !u!195 &5149296065048787029
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3269333186670381982}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 2.19
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &8196611959103655323
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -314,9 +345,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3269333186670381982}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd3414c556dfde9498c4993a88a1bfd4, type: 3}
+  m_Script: {fileID: 11500000, guid: dad550ec1a6bf324387d07781d1d80d5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyDetection
+  m_EditorClassIdentifier: Assembly-CSharp::GoonBehavior
 --- !u!114 &5622418823241548529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -525,7 +556,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fdf493131ac5f864db060d24c42a7f98, type: 2}
+  - {fileID: 2100000, guid: 32aaa3da0edf42840b561ecfc066f683, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -669,7 +700,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fdf493131ac5f864db060d24c42a7f98, type: 2}
+  - {fileID: 2100000, guid: 32aaa3da0edf42840b561ecfc066f683, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -783,7 +814,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fdf493131ac5f864db060d24c42a7f98, type: 2}
+  - {fileID: 2100000, guid: 32aaa3da0edf42840b561ecfc066f683, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -897,7 +928,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fdf493131ac5f864db060d24c42a7f98, type: 2}
+  - {fileID: 2100000, guid: 32aaa3da0edf42840b561ecfc066f683, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -1,70 +1,45 @@
-using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyAI : CharacterBase
 {
+    public AimControl[] aimControllers;
+    public int MoveSpeed;
+    public LayerMask masks;
+    public Transform player;
+    public bool seePlayer = false;
+    public Vector3 playerDir;
+    public float DistanceToPlayer;
+    [SerializeField] EnemyBehavior behavior;
+    [SerializeField] public NavMeshAgent agent;
 
-    Transform player;
-    bool seePlayer = false;
-    Vector3 playerDir;
-    float DistanceToPlayer;
-    [SerializeField] int MoveSpeed;
-    [SerializeField] EnemyMovement movement;
-    [SerializeField] AimControl[] aimControllers;
-    [SerializeField] LayerMask masks;
-
+    void Start()
+    {
+        agent.speed = MoveSpeed;
+        agent.angularSpeed = MoveSpeed;
+        agent.stoppingDistance = Weapon_R.ShootDistance;
+    }
     // Update is called once per frame
     void Update()
     {
-        if (player == null)
+        if(player == null)
         {
-            return;
-        }
-        playerDir = player.position - transform.position;
-        DistanceToPlayer = Vector3.Distance(transform.position, player.position);
-        Debug.DrawRay(transform.position, playerDir.normalized * DistanceToPlayer, Color.red);
-        if (Physics.Raycast(transform.position, playerDir.normalized, out RaycastHit see, DistanceToPlayer, masks))
-        {
-            Debug.Log("HIT: " + see.transform.name);
-            seePlayer = see.transform.CompareTag("Player");
-        }
-        else
-        {
-            Debug.Log("No hit");
             seePlayer = false;
         }
-        if (seePlayer)
+        else
         {
-            rotateToTarget();
-            bool rightInRange = Weapon_R != null && DistanceToPlayer < Weapon_R.ShootDistance;
-            bool leftInRange = Weapon_L != null && DistanceToPlayer < Weapon_L.ShootDistance;
-            foreach (AimControl aim in aimControllers)
+            seePlayer = false;
+            playerDir = player.position - transform.position;
+            DistanceToPlayer = playerDir.magnitude;
+            RaycastHit hit;
+            Vector3 origin = transform.position;
+            if (Physics.Raycast(origin, playerDir.normalized, out hit, DistanceToPlayer, masks))
             {
-                aim.SetAiming(true);
-                aim.AimAtTarget(player.position);
-            }
-            if (rightInRange)
-            {
-                Weapon_R.Shoot();
-            }
-            if (leftInRange)
-            {
-                Weapon_L.Shoot();
-            }
-            if (!rightInRange && !leftInRange)
-            {
-                movement.Move(playerDir, MoveSpeed);
+                seePlayer = hit.transform.root.CompareTag("Player");
             }
         }
-        else
-            foreach (AimControl aim in aimControllers)
-            {
-                {
-                    aim.ResetAim();
-                }
-            }
+        behavior.Tick();
+
         if (Weapon_R != null && Weapon_R.IsOut)
         {
             Weapon_R.Reload();
@@ -90,7 +65,7 @@ public class EnemyAI : CharacterBase
         }
     }
 
-    void rotateToTarget()
+    public void rotateToTarget()
     {
         Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * MoveSpeed);

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1771966637772501895}
   - component: {fileID: 1889527528611479050}
   - component: {fileID: 1356365388579522356}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: DynamiteCrate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
