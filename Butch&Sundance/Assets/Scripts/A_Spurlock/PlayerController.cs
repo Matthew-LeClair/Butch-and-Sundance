@@ -10,7 +10,7 @@ public class PlayerController : CharacterBase
     [SerializeField] public float BaseMomentumBuildRate;
     public float MomentumBuildRate;
     float CurrMomentum = 0;
-    float MaxMomentum = 300;
+    float MaxMomentum = 50;
 
     int KillStreak;
     int ParkourCount;
@@ -30,6 +30,7 @@ public class PlayerController : CharacterBase
 
     float JumpSpeed;
     int JumpMax;
+    [SerializeField] int TrueJumpMax;
     int JumpCount;
     float Gravity = 35;
 
@@ -41,6 +42,7 @@ public class PlayerController : CharacterBase
     {
         base.Start();
         MomentumBuildRate = BaseMomentumBuildRate;
+        CurrHealth = MaxHealth;
     }
 
     // Update is called once per frame
@@ -49,6 +51,8 @@ public class PlayerController : CharacterBase
         IsMoving = Mathf.Abs(Input.GetAxis("Horizontal")) > 0.1f
             || Mathf.Abs(Input.GetAxis("Vertical")) > 0.1f;
         if (GameManager.Instance != null) { HandleMomentum(); }
+
+        HandleMomentum(); // Moves once per frame for better smoothing
 
         Movement(); // Moves once per frame for better smoothing
     }
@@ -98,100 +102,121 @@ public class PlayerController : CharacterBase
         } 
     }
 
-    void HandleMomentum() 
+    void HandleMomentum()
     {
         HandleKillStreak();
         HandleParkourCountCombo();
         HandleTimeMove();
 
-        float MomentumGain = 
-            ((TimeMove / 60f) + 
-            (ParkourCombo / 100f) + 
-            (KillStreak / 100f))
+        float MomentumGain =
+            ((TimeMove / 60f) * 0.5f +        // Slow - Movement Baseline
+            (ParkourCombo / 100f) * 2f +      // Mid - Rewards Parkour
+            (KillStreak / 100f) * 5f)         // Fast - Kills Spike Momentum Hard
             * Time.deltaTime * MomentumBuildRate;
 
         CurrMomentum = Mathf.Clamp(CurrMomentum + MomentumGain, 0, MaxMomentum);
-
         HandleStats();
     }
 
     public override void TakeDamage(int Amount, string BodyPart, bool Single) 
     {
-        float DamageRatio = Mathf.Clamp01((float)Amount / CurrHealth);
-        CurrMomentum *= (1f - DamageRatio);
+        if (CurrMomentum > 0)
+        {
+            float DamageRatio = Mathf.Clamp01((float)Amount / CurrHealth);
+            CurrMomentum *= (1f - DamageRatio);
+        }
 
         base.TakeDamage(Amount, BodyPart, Single);
     }
 
     public override void Death()
     {
+        Debug.Log(CurrHealth);
 
+        #if UNITY_EDITOR // If in Unity Editor...
+        UnityEditor.EditorApplication.isPlaying = false; // Quit Debug
+        #else // If NOT in Unity Editor...      Quit Game.
+                        Application.Quit(); 
+        #endif
     }
 
     void HandleKillStreak()
     {
-        if (KillStreak != GameManager.Instance.KillCount) { KillStreak = GameManager.Instance.KillCount; KillStreakDecayTimer = 0; }
+        if (KillStreak != GameManager.Instance.KillCount)
+        {
+            KillStreak = GameManager.Instance.KillCount;
+            KillStreakDecayTimer = 0;
+        }
         else
-        { 
-            if (KillStreakDecayTimer < KillStreakDecayRate) 
-            { KillStreakDecayTimer += Time.deltaTime; }
+        {
+            if (KillStreakDecayTimer < KillStreakDecayRate)
+            {
+                KillStreakDecayTimer += Time.deltaTime;
+            }
             else
-            { 
-                KillStreak = 0; 
-                GameManager.Instance.KillCount = 0; 
-                CurrMomentum = MaxMomentum * .03f; 
+            {
+                KillStreak = 0;
+                GameManager.Instance.KillCount = 0;
+                CurrMomentum = MaxMomentum * 0.15f;
             }
         }
     }
 
-    void HandleParkourCountCombo() 
+    void HandleParkourCountCombo()
     {
-        if (ParkourCount != ParkourCombo) { ParkourCount = ParkourCombo; ParkourComboDecayTimer = 0; }
+        if (ParkourCount != ParkourCombo)
+        {
+            ParkourCount = ParkourCombo;
+            ParkourComboDecayTimer = 0;
+        }
         else
         {
             if (ParkourComboDecayTimer < ParkourComboDecayRate)
-            { ParkourComboDecayTimer += Time.deltaTime; }
-            else 
-            { 
-                ParkourCombo = 0; 
-                ParkourCount = 0; 
-                CurrMomentum = MaxMomentum * .03f; 
+            {
+                ParkourComboDecayTimer += Time.deltaTime;
+            }
+            else
+            {
+                ParkourCombo = 0;
+                ParkourCount = 0;
+                CurrMomentum = MaxMomentum * 0.15f;
             }
         }
     }
 
     void HandleTimeMove()
     {
-        if (IsMoving) 
-        { 
-            TimeMove = Mathf.Min(TimeMove + Time.deltaTime, 60f); 
-            TimeMoveDecayTimer = 0; 
+        if (IsMoving)
+        {
+            TimeMove = Mathf.Min(TimeMove + Time.deltaTime, 60f);
+            TimeMoveDecayTimer = 0;
         }
         else
         {
             if (TimeMoveDecayTimer < TimeMoveDecayRate)
-            { TimeMoveDecayTimer += Time.deltaTime; }
-            else { TimeMove = 0; CurrMomentum = MaxMomentum * .03f; }
+            {
+                TimeMoveDecayTimer += Time.deltaTime;
+            }
+            else
+            {
+                TimeMove = 0;
+                CurrMomentum = MaxMomentum * 0.15f;
+            }
         }
     }
 
     void HandleStats()
     {
-        int ClampedMomentum = Mathf.Clamp((int)(CurrMomentum), 1, (int)(MaxMomentum));
-
-        float MomentumPercent = (ClampedMomentum / MaxMomentum);
+        float MomentumPercent = CurrMomentum / MaxMomentum;
+        float CurvedPercent = Mathf.Pow(MomentumPercent, 0.3f); // Curves the response AGGRESSIVELY
 
         // Damage Reduction
-        DamageReduc = DamageReducBase + MomentumPercent;
-
+        DamageReduc = DamageReducBase + (CurvedPercent * Random.Range(1, 3));
         // Speed
-        Speed = SpeedBase * (1f + MomentumPercent); // Up to 2x Speed Bonus when at Max Momentum
-
-        // JumpCount
-        JumpMax = (int)(CurrMomentum / 100);
-        JumpMax = Mathf.Clamp(JumpMax, 1, (int)(MaxMomentum / 100));
-
+        Speed = SpeedBase * (1f + (CurvedPercent * Random.Range(1, 3)));
+        // Jump Count
+        JumpMax = Mathf.Clamp((int)((CurvedPercent * Random.Range(1, 3)) * TrueJumpMax) + 1, 1, TrueJumpMax);
         // Jump Speed
-        JumpSpeed = Speed + .6f;
+        JumpSpeed = Speed + 0.6f;
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Gun : MonoBehaviour
 {
@@ -73,10 +74,18 @@ public class Gun : MonoBehaviour
                 }
                 else
                 {
-                    Bullet.GetComponent<Damage>().DamageAmount /= PelletCount;
+                    Debug.Log(Bullet.GetComponent<Damage>().DamageAmount);
+                    Bullet.GetComponent<Damage>().DamageAmount = 
+                        (Bullet.GetComponent<Damage>().DamageAmount / 
+                        (PelletCount)) * Random.Range(2, 3);
+
+                    Bullet.GetComponent<Damage>().DamageAmount = 
+                        Mathf.Clamp(Bullet.GetComponent<Damage>().DamageAmount, 1, (30));
+
 
                     for (int i = 0; i < PelletCount; i++)
                     {
+                        Debug.Log(Bullet.GetComponent<Damage>().DamageAmount);
                         float SpreadX = Random.Range(-SpreadAngle, SpreadAngle);
                         float SpreadY = Random.Range(-SpreadAngle, SpreadAngle);
 

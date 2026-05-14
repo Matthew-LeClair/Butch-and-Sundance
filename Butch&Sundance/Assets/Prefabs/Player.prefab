@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3052440798227899856}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GunSocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,9 +43,9 @@ GameObject:
   - component: {fileID: 2965149177524605556}
   - component: {fileID: 5344567159732841353}
   - component: {fileID: 4701307584389999351}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Leg_R
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -158,7 +158,7 @@ GameObject:
   - component: {fileID: 7263150049344275885}
   - component: {fileID: 3099675961005480613}
   - component: {fileID: 2729028595265791927}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -311,7 +311,7 @@ GameObject:
   - component: {fileID: 2604877729758210065}
   - component: {fileID: 8285262993339705270}
   - component: {fileID: 257077691838591567}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Arm_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -427,9 +427,9 @@ GameObject:
   - component: {fileID: 5071527386106714572}
   - component: {fileID: 4711439925313008255}
   - component: {fileID: 1409351577761775182}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -471,10 +471,10 @@ MonoBehaviour:
   OriginalColor: {r: 0, g: 0.972549, b: 1, a: 0}
   FlashColor: {r: 1, g: 1, b: 1, a: 0}
   CurrHealth: 0
-  MaxHealth: 100
-  WeaponArm_R: {fileID: 0}
-  WeaponSlot_R: {fileID: 0}
-  ActiveWeapon_R: {fileID: 0}
+  MaxHealth: 500
+  WeaponArm_R: {fileID: 6787385610135171431}
+  WeaponSlot_R: {fileID: 1127261241696199899}
+  ActiveWeapon_R: {fileID: 5430968552453330743, guid: 8a81f5ac3efc2494680196b7e5b116c0, type: 3}
   Weapon_R: {fileID: 0}
   WeaponArm_L: {fileID: 0}
   WeaponSlot_L: {fileID: 0}
@@ -492,6 +492,7 @@ MonoBehaviour:
   TimeMoveDecayRate: 1.5
   KillStreakDecayRate: 3
   ParkourComboDecayRate: 5
+  TrueJumpMax: 3
 --- !u!33 &3300645691377470414
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -569,7 +570,7 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 2
+  m_Height: 4.4
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!143 &1409351577761775182
@@ -590,7 +591,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2
+  m_Height: 4.25
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -609,7 +610,7 @@ GameObject:
   - component: {fileID: 4731577130173894223}
   - component: {fileID: 4117809284379240161}
   - component: {fileID: 3323544248610879640}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Arm_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -724,7 +725,7 @@ GameObject:
   - component: {fileID: 1967171915770560231}
   - component: {fileID: 1076868259825909481}
   - component: {fileID: 7854954124687829929}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -836,7 +837,7 @@ GameObject:
   - component: {fileID: 7110582134646651875}
   - component: {fileID: 2926019036325347568}
   - component: {fileID: 2230334691986020491}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Leg_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}

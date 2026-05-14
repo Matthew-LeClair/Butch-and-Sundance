@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         Instance = this; // Set the Instance
-        Player = GameObject.FindWithTag("Player"); // Efficiently Search to find GameObject with Tag Player
         PlayerScript = Player.GetComponent<PlayerController>(); // Get the Player Controller Script Component from Player
         TimeScale_Original = Time.timeScale; // Set Time Scale Original
     }

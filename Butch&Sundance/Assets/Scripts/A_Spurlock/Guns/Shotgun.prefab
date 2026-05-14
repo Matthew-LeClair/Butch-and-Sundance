@@ -18,11 +18,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6860211766224948355, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
       propertyPath: DamageMax
-      value: 40
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6860211766224948355, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
       propertyPath: DamageMin
-      value: 15
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6860211766224948355, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
       propertyPath: ShootRate
@@ -90,7 +90,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7990298833152522492, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
       propertyPath: m_Name
-      value: Shotgun Variant
+      value: Shotgun
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -80,6 +80,7 @@ public class CharacterBase : MonoBehaviour, I_Damage
             if (BodyPart == "Arm_R" || BodyPart == "Arm_L") { CritMulti += Random.Range(.25f, .6f); }
             if (BodyPart == "Leg_R" || BodyPart == "Leg_L") { CritMulti += Random.Range(.5f, .8f); }
         }
+        Debug.Log(BodyPart);
 
         CurrHealth -= (Amount * CritMulti) * DamageReduc; // Subtract Health by Amount
 
