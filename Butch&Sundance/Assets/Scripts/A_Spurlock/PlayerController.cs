@@ -32,7 +32,7 @@ public class PlayerController : CharacterBase
     float ParkourComboDecayTimer;
 
     bool IsMoving;
-
+    public float JumpSpeedBase;
     float JumpSpeed;
     int JumpMax;
     [SerializeField] int TrueJumpMax;
@@ -41,6 +41,13 @@ public class PlayerController : CharacterBase
 
     Vector3 MoveDir;
     Vector3 PlayerVel;
+
+
+    public bool Aimed;
+    public bool Shot;
+    public bool Reloaded;
+    public bool Moved;
+    public bool Jumped;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void Start()
@@ -67,13 +74,13 @@ public class PlayerController : CharacterBase
     void Movement() 
     {
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
-        { Weapon_R.Reload(); }
+        { Weapon_R.Reload(); Reloaded = true; }
 
-        if (Input.GetButtonDown("Fire2")) { Aim(); }
+        if (Input.GetButtonDown("Fire2")) { Aim(); Aimed = true; }
         if (Input.GetButtonUp("Fire2")) { Aim(); }
 
         if (Input.GetButton("Fire1") && IsAiming) // If Left Click is Pressed while Aiming...
-        { Weapon_R.Shoot("Player"); } // Call Shoot Function
+        { Weapon_R.Shoot("Player"); Shot = true; } // Call Shoot Function
 
         if (Controller.isGrounded)  // Checks if the Player Character is on the ground
         { 
@@ -91,7 +98,9 @@ public class PlayerController : CharacterBase
         // Use the Controller to Move the Player using Move Direction Var * Speed
         Controller.Move(MoveDir.normalized * Speed * Time.deltaTime); // Make it time relative by adding a Multi Delta Time
 
-        Jump(); // Call Jump Function in Movement
+        if (MoveDir.normalized.Equals(new Vector3(0, 0, 0))) { } else { Moved = true; }
+
+            Jump(); // Call Jump Function in Movement
 
         Controller.Move(PlayerVel * Time.deltaTime); // Move the Player in the Jump Direction
 
@@ -104,6 +113,7 @@ public class PlayerController : CharacterBase
         if (Input.GetButtonDown("Jump") // If Jump button is pressed...
             && JumpCount < JumpMax) // AND Jump Count is NOT more than Jump Max
         {
+            Jumped = true;
             JumpCount++; // Increment Jump Count
             PlayerVel.y = JumpSpeed; // Set Player Velocity Y to Jump Speed
         } 
@@ -226,7 +236,7 @@ public class PlayerController : CharacterBase
         // Jump Count
         JumpMax = Mathf.Clamp((int)((CurvedPercent * Random.Range(1, 3)) * TrueJumpMax) + 1, 1, TrueJumpMax);
         // Jump Speed
-        JumpSpeed = Speed + 0.6f;
+        JumpSpeed = JumpSpeedBase * (1f + (CurvedPercent * Random.Range(1, 3)));
     }
     public void UpdatePlayerUI()
     {
