@@ -5979,18 +5979,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 9119352824631710339, guid: 232484dfbafa28046ab6eadda76e6feb, type: 3}
-      propertyPath: Shot
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9119352824631710339, guid: 232484dfbafa28046ab6eadda76e6feb, type: 3}
-      propertyPath: Reloaded
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9119352824631710339, guid: 232484dfbafa28046ab6eadda76e6feb, type: 3}
-      propertyPath: JumpSpeedBase
-      value: 7.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
