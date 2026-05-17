@@ -19,6 +19,8 @@ public class EnemyAI : EnemyBase
         agent.speed = MoveSpeed;
         agent.angularSpeed = MoveSpeed;
         agent.stoppingDistance = Weapon_R.ShootDistance;
+
+        GameManager.Instance.UpdateGameGoal(1);
     }
     // Update is called once per frame
     void Update()

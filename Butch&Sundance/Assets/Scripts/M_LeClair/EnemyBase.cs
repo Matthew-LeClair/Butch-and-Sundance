@@ -79,7 +79,11 @@ public class EnemyBase : MonoBehaviour, I_Damage
         CritMulti = 1; //Resets crit multi after damage
 
         if (CurrHealth <= 0) // If Health is Less Than or Equal To 0...
-        { Death(); } // Destroy the Object
+        {
+            GameManager.Instance.UpdateGameGoal(-1);
+
+            Death(); // Destroy the Object
+        } 
         else { StartCoroutine(Flash()); } // Call the Flash Function, Modular Version
 
     }
