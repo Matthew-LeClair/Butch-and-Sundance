@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, I_Damage
 {
     [Header("Config")]
     [SerializeField] public CharacterController Controller;

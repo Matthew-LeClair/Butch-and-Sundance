@@ -51,6 +51,18 @@ public class EnemyBase : MonoBehaviour, I_Damage
 
             Weapon_R.GunPivot = WeaponSlot_R.transform;
         }
+        if (ActiveWeapon_L != null && WeaponSlot_L != null)
+        {
+            GameObject ActiveGun_L = Instantiate(ActiveWeapon_L).gameObject;
+            ActiveGun_L.transform.SetParent(WeaponSlot_L.transform);
+            ActiveGun_L.transform.localPosition = Vector3.zero;
+            ActiveGun_L.transform.localRotation = Quaternion.identity;
+            ActiveGun_L.transform.localScale = Vector3.one;
+
+            Weapon_L = ActiveGun_L.GetComponent<Gun>();
+
+            Weapon_L.GunPivot = WeaponSlot_L.transform;
+        }
     }
 
     // Update is called once per frame
