@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class CharacterBase : MonoBehaviour, I_Damage
+public class EnemyBase : MonoBehaviour, I_Damage
 {
     [SerializeField] public Renderer Body;
 
@@ -51,19 +51,6 @@ public class CharacterBase : MonoBehaviour, I_Damage
 
             Weapon_R.GunPivot = WeaponSlot_R.transform;
         }
-
-        if (ActiveWeapon_L != null && WeaponSlot_L != null)
-        {
-            GameObject ActiveGun_L = Instantiate(ActiveWeapon_L).gameObject;
-            ActiveGun_L.transform.SetParent(WeaponSlot_L.transform);
-            ActiveGun_L.transform.localPosition = Vector3.zero;
-            ActiveGun_L.transform.localRotation = Quaternion.identity;
-            ActiveGun_L.transform.localScale = Vector3.one;
-
-            Weapon_L = ActiveGun_L.GetComponent<Gun>();
-
-            Weapon_L.GunPivot = WeaponSlot_L.transform;
-        }
     }
 
     // Update is called once per frame
@@ -72,15 +59,8 @@ public class CharacterBase : MonoBehaviour, I_Damage
         
     }
 
-    public virtual void TakeDamage(int Amount, string BodyPart, bool Single) // Take Damage, Damage Interface Override
+    public virtual void TakeDamage(int Amount, bool AlienTech) // Take Damage, Damage Interface Override
     {
-        if (!Single)
-        {
-            if (BodyPart == "Head") { CritMulti += Random.Range(1, 1.5f); }
-            if (BodyPart == "Arm_R" || BodyPart == "Arm_L") { CritMulti += Random.Range(.25f, .6f); }
-            if (BodyPart == "Leg_R" || BodyPart == "Leg_L") { CritMulti += Random.Range(.5f, .8f); }
-        }
-        Debug.Log(BodyPart);
 
         CurrHealth -= (Amount * CritMulti) * DamageReduc; // Subtract Health by Amount
 
@@ -88,14 +68,13 @@ public class CharacterBase : MonoBehaviour, I_Damage
 
         if (CurrHealth <= 0) // If Health is Less Than or Equal To 0...
         { Death(); } // Destroy the Object
-        else { StartCoroutine(Flash(BodyPart)); } // Call the Flash Function, Modular Version
+        else { StartCoroutine(Flash()); } // Call the Flash Function, Modular Version
 
     }
 
-    IEnumerator Flash(string BodyPart)
+    IEnumerator Flash()
     {
-        // Find the exact Body Part
-        Transform tPart = transform.Find(BodyPart);
+        Transform tPart = gameObject.transform;
 
         if (tPart == null) { yield break; }
 

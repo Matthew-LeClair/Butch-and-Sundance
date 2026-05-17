@@ -15,6 +15,7 @@ public class Damage : MonoBehaviour
     [SerializeField] ParticleSystem ImpactFX;
     public string OwnerTag;
     bool IsDamaging;
+    [SerializeField] public bool IsAlienTech;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -35,11 +36,7 @@ public class Damage : MonoBehaviour
             I_Damage Damage = other.GetComponent<I_Damage>();
 
             if (Damage != null && DamageType != eDamageType.DOT)
-            {
-                if (DamageType != eDamageType.Bullet)
-                { Damage.TakeDamage(DamageAmount, other.name, true); }
-                else { Damage.TakeDamage(DamageAmount, other.name, false); }
-            }
+            { Damage.TakeDamage(DamageAmount, IsAlienTech); }
 
             if (DamageType == eDamageType.Bullet && Damage != null)
             {
@@ -49,10 +46,7 @@ public class Damage : MonoBehaviour
                     transform.position,
                     Quaternion.identity);
                 }
-                if (DamageType != eDamageType.Bullet)
-                { Damage.TakeDamage(DamageAmount, other.name, true); }
-                else { Damage.TakeDamage(DamageAmount, other.name, false); }
-
+                Damage.TakeDamage(DamageAmount, IsAlienTech);
 
                 Destroy(gameObject);
             }
@@ -76,9 +70,7 @@ public class Damage : MonoBehaviour
     IEnumerator DamageOther(I_Damage Damage, Collider Object) 
     {
         IsDamaging = true;
-        if (DamageType != eDamageType.Bullet) 
-        { Damage.TakeDamage(DamageAmount, Object.name, true); }
-        else { Damage.TakeDamage(DamageAmount, Object.name, false); }
+        Damage.TakeDamage(DamageAmount, IsAlienTech);
         yield return new WaitForSeconds(DamageRate);
         IsDamaging = false;
     }

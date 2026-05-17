@@ -11,7 +11,7 @@ public class WeaponMod : MonoBehaviour
         Player = GameObject.FindGameObjectWithTag("Player");
         PlayerScript = Player.GetComponent<PlayerController>();
     }
-    public enum Type { Health, MomentumGain, DamageReduction, Speed }
+    public enum Type { Health, Shield, AlienEnergy, Speed, MomentumGain }
 
     Type ModType;
     float ModAmount;
@@ -27,23 +27,30 @@ public class WeaponMod : MonoBehaviour
         switch (ModType)
         {
             case Type.Health:
-                PlayerScript.MaxHealth *= ModAmount;
-                PlayerScript.CurrHealth = PlayerScript.MaxHealth;
+                PlayerScript.HealthMax *= ModAmount;
+                PlayerScript.Health = PlayerScript.HealthMax;
                 break;
 
 
-            case Type.MomentumGain:
-                PlayerScript.MomentumBuildRate = PlayerScript.BaseMomentumBuildRate * ModAmount;
+            case Type.Shield:
+                PlayerScript.ShieldMax = PlayerScript.ShieldMax * ModAmount;
+                PlayerScript.Shield = PlayerScript.ShieldMax;
                 break;
 
 
-            case Type.DamageReduction:
-                PlayerScript.DamageReduc = PlayerScript.DamageReducBase * ModAmount;
+            case Type.AlienEnergy:
+                PlayerScript.AlienEnergyMax = PlayerScript.AlienEnergyMax * ModAmount;
+                PlayerScript.AlienEnergy = PlayerScript.AlienEnergyMax;
                 break;
 
 
             case Type.Speed:
                 PlayerScript.Speed = PlayerScript.SpeedBase * ModAmount;
+                break;
+
+
+            case Type.MomentumGain:
+                PlayerScript.MomentumBuildRate = PlayerScript.BaseMomentumBuildRate * ModAmount;
                 break;
         }
     }

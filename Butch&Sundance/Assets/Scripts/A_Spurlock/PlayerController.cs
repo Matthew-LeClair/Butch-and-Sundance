@@ -1,48 +1,57 @@
 using UnityEngine;
 using System.Collections;
 
-public class PlayerController : CharacterBase
+public class PlayerController : MonoBehaviour
 {
-    [SerializeField] int Health;
-
-    int HealthMax;
-
+    [Header("Config")]
     [SerializeField] CharacterController Controller;
 
-    [SerializeField] public float SpeedBase;
-    public float Speed;
+    [SerializeField] Renderer Render;
+    Color OriginalColor;
 
-    [SerializeField] public float BaseMomentumBuildRate;
-    public float MomentumBuildRate;
-    float CurrMomentum = 0;
-    float MaxMomentum = 50;
-
-    int KillStreak;
-    int ParkourCount;
-
-    float TimeMove;
-    [SerializeField] float TimeMoveDecayRate;
-    float TimeMoveDecayTimer;
-
-    [SerializeField] float KillStreakDecayRate;
-    float KillStreakDecayTimer;
-
-    int ParkourCombo;
-    [SerializeField] float ParkourComboDecayRate;
-    float ParkourComboDecayTimer;
-
-    bool IsMoving;
-    public float JumpSpeedBase;
-    float JumpSpeed;
-    int JumpMax;
-    [SerializeField] int TrueJumpMax;
-    int JumpCount;
     float Gravity = 35;
 
     Vector3 MoveDir;
     Vector3 PlayerVel;
 
+    [Header("Health & Damage")]
+    [SerializeField] public float Health;
+    public float HealthMax;
 
+    [SerializeField] public float Shield;
+    public float ShieldMax;
+
+    [SerializeField] public float AlienEnergy;
+    public float AlienEnergyMax;
+
+    [Header("Weapon")]
+    PlayerGun pGun;
+
+    [Header("Gear")]
+
+
+    [Header("Movement")]
+    [SerializeField] public float SpeedBase;
+    public float Speed;
+
+    bool IsMoving;
+    public float JumpSpeedBase;
+    float JumpSpeed;
+    int JumpCount;
+
+
+    [Header("Momemtum")]
+    [SerializeField] public float BaseMomentumBuildRate;
+    public float MomentumBuildRate;
+    float CurrMomentum = 0;
+    float MaxMomentum = 50;
+
+    [Header("Parkour")]
+    float TimeMove;
+    [SerializeField] float TimeMoveDecayRate;
+    float TimeMoveDecayTimer;
+
+    [Header("Tutorial")]
     public bool Aimed;
     public bool Shot;
     public bool Reloaded;
@@ -50,11 +59,14 @@ public class PlayerController : CharacterBase
     public bool Jumped;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public override void Start()
+    public void Start()
     {
-        base.Start();
+
+        // Set the Material Color as the Original Color, Modular Version
+        Render.material.color = OriginalColor;
+
         MomentumBuildRate = BaseMomentumBuildRate;
-        CurrHealth = MaxHealth;
+        Health = HealthMax;
 
         UpdatePlayerUI();
     }
@@ -74,19 +86,16 @@ public class PlayerController : CharacterBase
     void Movement() 
     {
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
-        { Weapon_R.Reload(); Reloaded = true; }
+        { pGun.Reload(); Reloaded = true; }
 
-        if (Input.GetButtonDown("Fire2")) { Aim(); Aimed = true; }
-        if (Input.GetButtonUp("Fire2")) { Aim(); }
+        if (Input.GetButtonDown("Fire2")) { pGun.Aim(); Aimed = true; }
+        if (Input.GetButtonUp("Fire2")) { pGun.Aim(); }
 
-        if (Input.GetButton("Fire1") && IsAiming) // If Left Click is Pressed while Aiming...
-        { Weapon_R.Shoot("Player"); Shot = true; } // Call Shoot Function
+        if (Input.GetButton("Fire1") && pGun.IsAiming) // If Left Click is Pressed while Aiming...
+        { pGun.Shoot(); Shot = true; } // Call Shoot Function
 
         if (Controller.isGrounded)  // Checks if the Player Character is on the ground
-        { 
-            JumpCount = 0;  // Resets the Jump Count
-            PlayerVel.y = 0; // Resets the Player Velocity Y to help processes
-        }
+        { PlayerVel.y = 0; } // Resets the Player Velocity Y to help processes
 
         MoveDir = // Move Direction Equals The Following Equation
             Input.GetAxis("Horizontal") // Get the Horizontal Axis
@@ -111,7 +120,7 @@ public class PlayerController : CharacterBase
     void Jump() 
     {
         if (Input.GetButtonDown("Jump") // If Jump button is pressed...
-            && JumpCount < JumpMax) // AND Jump Count is NOT more than Jump Max
+            && JumpCount < 1) // AND Jump Count is NOT more than 1
         {
             Jumped = true;
             JumpCount++; // Increment Jump Count
@@ -121,86 +130,66 @@ public class PlayerController : CharacterBase
 
     void HandleMomentum()
     {
-        HandleKillStreak();
-        HandleParkourCountCombo();
         HandleTimeMove();
 
         float MomentumGain =
-            ((TimeMove / 60f) * 0.5f +        // Slow - Movement Baseline
-            (ParkourCombo / 100f) * 2f +      // Mid - Rewards Parkour
-            (KillStreak / 100f) * 5f)         // Fast - Kills Spike Momentum Hard
-            * Time.deltaTime * MomentumBuildRate;
+            ((TimeMove / 60f)
+            * Time.deltaTime) * 
+            MomentumBuildRate;
 
         CurrMomentum = Mathf.Clamp(CurrMomentum + MomentumGain, 0, MaxMomentum);
         HandleStats();
     }
 
-    public override void TakeDamage(int Amount, string BodyPart, bool Single) 
+    public void TakeDamage(int Amount, bool AlienTech) 
     {
-        if (CurrMomentum > 0)
+        Shield -= Amount;
+        if (Shield <= 0)
         {
-            float DamageRatio = Mathf.Clamp01((float)Amount / CurrHealth);
-            CurrMomentum *= (1f - DamageRatio);
-        }
+            if (CurrMomentum > 0)
+            {
+                float DamageRatio = Mathf.Clamp01((float)Amount / Health);
+                CurrMomentum *= (1f - DamageRatio);
+            }
 
-        base.TakeDamage(Amount, BodyPart, Single);
+            Health -= Amount; // Subtract Health by Amount
+            if (Health <= 0) // If Health is Less Than or Equal To 0...
+            { Death(); } // Destroy the Object
+            else { StartCoroutine(Flash()); } // Call the Flash Function, Modular Version
+            StartCoroutine(FlashDamageScreen());
+        } else { }
 
-        StartCoroutine(FlashDamageScreen());
+
     }
 
-    public override void Death()
+    IEnumerator Flash()
     {
-        Debug.Log(CurrHealth);
+        Transform tPart = gameObject.transform;
+
+        if (tPart == null) { yield break; }
+
+        Renderer rPart = tPart.GetComponent<Renderer>();
+
+        if (rPart == null) { yield break; }
+
+        // Flash Body Part
+        rPart.material.color = Color.red;
+
+        yield return new WaitForSeconds(0.1f);
+
+        // Reset Body Part
+        rPart.material.color = OriginalColor;
+    }
+
+    public void Death()
+    {
+        Debug.Log(Health);
 
         #if UNITY_EDITOR // If in Unity Editor...
         UnityEditor.EditorApplication.isPlaying = false; // Quit Debug
         #else // If NOT in Unity Editor...      Quit Game.
                         Application.Quit(); 
         #endif
-    }
-
-    void HandleKillStreak()
-    {
-        if (KillStreak != GameManager.Instance.KillCount)
-        {
-            KillStreak = GameManager.Instance.KillCount;
-            KillStreakDecayTimer = 0;
-        }
-        else
-        {
-            if (KillStreakDecayTimer < KillStreakDecayRate)
-            {
-                KillStreakDecayTimer += Time.deltaTime;
-            }
-            else
-            {
-                KillStreak = 0;
-                GameManager.Instance.KillCount = 0;
-                CurrMomentum = MaxMomentum * 0.15f;
-            }
-        }
-    }
-
-    void HandleParkourCountCombo()
-    {
-        if (ParkourCount != ParkourCombo)
-        {
-            ParkourCount = ParkourCombo;
-            ParkourComboDecayTimer = 0;
-        }
-        else
-        {
-            if (ParkourComboDecayTimer < ParkourComboDecayRate)
-            {
-                ParkourComboDecayTimer += Time.deltaTime;
-            }
-            else
-            {
-                ParkourCombo = 0;
-                ParkourCount = 0;
-                CurrMomentum = MaxMomentum * 0.15f;
-            }
-        }
     }
 
     void HandleTimeMove()
@@ -229,20 +218,28 @@ public class PlayerController : CharacterBase
         float MomentumPercent = CurrMomentum / MaxMomentum;
         float CurvedPercent = Mathf.Pow(MomentumPercent, 0.3f); // Curves the response AGGRESSIVELY
 
-        // Damage Reduction
-        DamageReduc = DamageReducBase + (CurvedPercent * Random.Range(1, 3));
         // Speed
         Speed = SpeedBase * (1f + (CurvedPercent * Random.Range(1, 3)));
-        // Jump Count
-        JumpMax = Mathf.Clamp((int)((CurvedPercent * Random.Range(1, 3)) * TrueJumpMax) + 1, 1, TrueJumpMax);
+        
         // Jump Speed
-        JumpSpeed = JumpSpeedBase * (1f + (CurvedPercent * Random.Range(1, 3)));
+        JumpSpeed = (float)((JumpSpeedBase * (1f + (CurvedPercent * Random.Range(1, 3)))) + (Speed * .6));
     }
+
     public void UpdatePlayerUI()
     {
         GameManager.Instance.PlayerHP_Bar.fillAmount = (float)Health / HealthMax;
     }
+
     IEnumerator FlashDamageScreen()
+    {
+        GameManager.Instance.PlayerDamage_Screen.SetActive(true); // Activate the damage screen effect to indicate that the player has taken damage
+
+        yield return new WaitForSeconds(0.5f); // Wait for a short duration (0.5 seconds) before deactivating the damage screen effect
+
+        GameManager.Instance.PlayerDamage_Screen.SetActive(false); // Deactivate the damage screen effect after the wait time has elapsed
+    }
+
+    IEnumerator FlashShieldScreen()
     {
         GameManager.Instance.PlayerDamage_Screen.SetActive(true); // Activate the damage screen effect to indicate that the player has taken damage
 

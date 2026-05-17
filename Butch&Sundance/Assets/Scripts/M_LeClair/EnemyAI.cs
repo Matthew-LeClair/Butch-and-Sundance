@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : CharacterBase
+public class EnemyAI : EnemyBase
 {
     public AimControl[] aimControllers;
     public int MoveSpeed;
@@ -13,8 +13,9 @@ public class EnemyAI : CharacterBase
     [SerializeField] EnemyBehavior behavior;
     [SerializeField] public NavMeshAgent agent;
 
-    void Start()
+    public override void Start()
     {
+        base.Start();
         agent.speed = MoveSpeed;
         agent.angularSpeed = MoveSpeed;
         agent.stoppingDistance = Weapon_R.ShootDistance;

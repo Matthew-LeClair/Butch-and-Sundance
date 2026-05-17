@@ -23,7 +23,7 @@ public class LiquidCourage : MonoBehaviour
 
     IEnumerator ApplyLQ(PlayerController player)
     {
-        player.CurrHealth += healAmount;
+        player.Health += healAmount;
 
         float originalSpeed = player.SpeedBase;
 

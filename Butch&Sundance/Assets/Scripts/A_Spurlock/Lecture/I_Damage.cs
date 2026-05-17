@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface I_Damage
 {
-    void TakeDamage(int Amount, string BodyPart,bool Single);
+    void TakeDamage(int Amount, bool AlienTech);
 }

@@ -6,11 +6,11 @@ using UnityEngine.Rendering;
 public class Gun : MonoBehaviour
 {
     [SerializeField] GameObject Bullet;
-    [SerializeField] bool Spread;
+    [SerializeField] public bool Spread;
     [SerializeField] int PelletCount;
     [SerializeField] int SpreadAngle;
 
-    [SerializeField] float ShootRate;
+    [SerializeField] public float ShootRate;
     float ShootTimer;
 
     [SerializeField] public Transform GunPivot;
@@ -18,12 +18,12 @@ public class Gun : MonoBehaviour
     [SerializeField] public int ShootDistance;
 
     public int CurrAmmo;
-    [SerializeField] int MaxAmmo;
-    [SerializeField] float ReloadSpeed;
+    [SerializeField] public int MaxAmmo;
+    [SerializeField] public float ReloadSpeed;
     int AmmoReserve;
 
-    [SerializeField] int DamageMin;
-    [SerializeField] int DamageMax;
+    [SerializeField] public int DamageMin;
+    [SerializeField] public int DamageMax;
 
     List<WeaponMod> Mods;
 
@@ -102,15 +102,6 @@ public class Gun : MonoBehaviour
             }
         }
     }
-
-    // Mayne use this Function for the UI when you buy Mods
-    public void AddMod(WeaponMod.Type ModType, float ModAmount) 
-    {
-        WeaponMod NewMod = new WeaponMod();
-        NewMod.InitMod(ModType, ModAmount);
-        Mods.Add(NewMod);
-    }
-
     public void Reload() 
     {
         Debug.Log("Trying Reload");
