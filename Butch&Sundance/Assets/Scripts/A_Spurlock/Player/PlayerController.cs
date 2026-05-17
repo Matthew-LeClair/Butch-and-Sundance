@@ -241,7 +241,11 @@ public class PlayerController : MonoBehaviour, I_Damage
 
             Health -= Amount; // Subtract Health by Amount
             if (Health <= 0) // If Health is Less Than or Equal To 0...
-            { Death(); } // Destroy the Object
+            {
+                GameManager.Instance.YouLose();
+
+                Death();
+            } // Destroy the Object
             StartCoroutine(FlashDamageScreen());
         } else { FlashShieldScreen(); }
 
