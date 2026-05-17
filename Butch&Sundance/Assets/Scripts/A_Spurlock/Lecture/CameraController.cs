@@ -14,6 +14,12 @@ public class CameraController : MonoBehaviour
     [SerializeField] float MomentumFOVMin = 60f; // FOV at zero momentum
     [SerializeField] float MomentumFOVMax = 70f; // FOV at full momentum
 
+    [Header("Wall Run")]
+    [SerializeField] float WallRunFOV = 75f; // FOV during Wall Run
+    [SerializeField] float WallRunTilt = 15f; // Camera Tilt during Wall Run
+    [SerializeField] float WallRunTiltSpeed = 8f; // How fast the Tilt applies and returns
+    float CurrentTilt; // Current Camera Tilt
+
     [Header("Do NOT Touch!")]
     [SerializeField] Transform Player;
     [SerializeField] Camera Cam;
@@ -35,6 +41,7 @@ public class CameraController : MonoBehaviour
         LookAround();
         HandleSway();
         HandleFOV();
+        HandleWallRunEffects(); // Add this
     }
 
     void LookAround()
@@ -85,5 +92,24 @@ public class CameraController : MonoBehaviour
         float MomentumPercent = GameManager.Instance.Player.GetComponent<PlayerController>() != null ? GameManager.Instance.Player.GetComponent<PlayerController>().CurrMomentum / 50f : 0f;
         float TargetFOV = Mathf.Lerp(MomentumFOVMin, MomentumFOVMax, MomentumPercent);
         Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, TargetFOV, 5f * Time.deltaTime);
+    }
+
+    void HandleWallRunEffects()
+    {
+        if (PC.IsWallRunning) // If the Player is Wall Running...
+        {
+            // FOV
+            Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, WallRunFOV, WallRunTiltSpeed * Time.deltaTime); // Boost FOV during Wall Run
+
+            // Tilt toward the wall
+            float TargetTilt = PC.IsRightWall ? WallRunTilt : -WallRunTilt; // Tilt based on which wall
+            CurrentTilt = Mathf.Lerp(CurrentTilt, TargetTilt, WallRunTiltSpeed * Time.deltaTime); // Smoothly Blend to Target Tilt
+        }
+        else // If not Wall Running...
+        {
+            CurrentTilt = Mathf.Lerp(CurrentTilt, 0f, WallRunTiltSpeed * Time.deltaTime); // Return Tilt to Zero
+        }
+
+        transform.localRotation = Quaternion.Euler(CamRotX, 0, CurrentTilt); // Apply Tilt to Camera Rotation
     }
 }

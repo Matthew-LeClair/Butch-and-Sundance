@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour, I_Damage
     public float UpJumpForce;
     public float OutJumpForce;
     private float WallRunTimer;
-    private bool IsWallRunning;
+    public bool IsWallRunning;
 
     private bool IsExitWallRun;
     public float ExitTime;
@@ -59,9 +59,9 @@ public class PlayerController : MonoBehaviour, I_Damage
     private RaycastHit LeftWall;
     private bool IsLeftWall;
     private RaycastHit RightWall;
-    private bool IsRightWall;
+    public bool IsRightWall;
     private bool UseGravity;
-
+    public float GravityCounterForce;
 
 
 
@@ -314,8 +314,8 @@ public class PlayerController : MonoBehaviour, I_Damage
 
                 // Step 3 -- Wall Run Check
                 if ((IsRightWall || IsLeftWall) && MoveDir.magnitude > 0.1f && AboveGround() && !Controller.isGrounded)
-                { IsWallRunning = true; UseGravity = false; }
-                else { IsWallRunning = false; UseGravity = true; }
+                { IsWallRunning = true; }
+                else { IsWallRunning = false; }
 
                 // Step 4 -- Wall Run
                 if (IsWallRunning) { WallRunMovement(); }
@@ -336,7 +336,8 @@ public class PlayerController : MonoBehaviour, I_Damage
 
     void WallRunMovement()
     {
-        UseGravity = false; // Cancel Gravity while Wall Running
+        PlayerVel.y -= Gravity * Time.deltaTime; // Apply Gravity while Wall Running
+        PlayerVel.y += GravityCounterForce * Time.deltaTime; // Counter Gravity to slow the fall
 
         Vector3 Normal = IsRightWall ? RightWall.normal : LeftWall.normal; // Get Wall Normal
         Vector3 WallForward = Vector3.Cross(Normal, transform.up); // Calculate Wall Forward Direction
@@ -363,7 +364,5 @@ public class PlayerController : MonoBehaviour, I_Damage
         PlayerVel.y = 0f; // Reset Y Velocity before Jump
         PlayerVel = ForceToApply; // Apply Jump Force to Player Velocity
         MomentumVelocity = Vector3.zero;
-       
-        
     }
 }
