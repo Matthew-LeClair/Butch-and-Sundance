@@ -40,7 +40,6 @@ public class CameraController : MonoBehaviour
     {
         LookAround();
         HandleSway();
-        HandleFOV();
         HandleWallRunEffects(); // Add this
     }
 
@@ -86,30 +85,25 @@ public class CameraController : MonoBehaviour
         transform.localPosition = Vector3.Lerp(transform.localPosition, TargetPos, SwaySpeed * Time.deltaTime);
     }
 
-    void HandleFOV()
-    {
-        if (Cam == null) return;
-        float MomentumPercent = GameManager.Instance.Player.GetComponent<PlayerController>() != null ? GameManager.Instance.Player.GetComponent<PlayerController>().CurrMomentum / 50f : 0f;
-        float TargetFOV = Mathf.Lerp(MomentumFOVMin, MomentumFOVMax, MomentumPercent);
-        Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, TargetFOV, 5f * Time.deltaTime);
-    }
-
     void HandleWallRunEffects()
     {
+        float TargetFOV;
+        float TargetTilt;
+
         if (PC.IsWallRunning) // If the Player is Wall Running...
         {
-            // FOV
-            Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, WallRunFOV, WallRunTiltSpeed * Time.deltaTime); // Boost FOV during Wall Run
-
-            // Tilt toward the wall
-            float TargetTilt = PC.IsRightWall ? WallRunTilt : -WallRunTilt; // Tilt based on which wall
-            CurrentTilt = Mathf.Lerp(CurrentTilt, TargetTilt, WallRunTiltSpeed * Time.deltaTime); // Smoothly Blend to Target Tilt
+            TargetFOV = WallRunFOV; // Target Wall Run FOV
+            TargetTilt = PC.IsRightWall ? WallRunTilt : -WallRunTilt; // Tilt toward the Wall
         }
         else // If not Wall Running...
         {
-            CurrentTilt = Mathf.Lerp(CurrentTilt, 0f, WallRunTiltSpeed * Time.deltaTime); // Return Tilt to Zero
+            TargetFOV = Mathf.Lerp(MomentumFOVMin, MomentumFOVMax, // Return to Momentum FOV
+                PC.CurrMomentum / 50f);
+            TargetTilt = 0f; // Return Tilt to Zero
         }
 
+        Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, TargetFOV, WallRunTiltSpeed * Time.deltaTime); // Smoothly Blend FOV
+        CurrentTilt = Mathf.Lerp(CurrentTilt, TargetTilt, WallRunTiltSpeed * Time.deltaTime); // Smoothly Blend Tilt
         transform.localRotation = Quaternion.Euler(CamRotX, 0, CurrentTilt); // Apply Tilt to Camera Rotation
     }
 }
