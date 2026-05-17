@@ -50,6 +50,10 @@ public class PlayerController : MonoBehaviour, I_Damage
     private float WallRunTimer;
     private bool IsWallRunning;
 
+    private bool IsExitWallRun;
+    public float ExitTime;
+    private float ExitTimer;
+
     public float WallCheckDistance;
     public float MinJumpHeight;
     private RaycastHit LeftWall;
@@ -88,7 +92,7 @@ public class PlayerController : MonoBehaviour, I_Damage
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Start()
     {
-
+        UseGravity = true;
         // Set the Material Color as the Original Color, Modular Version
         Render.material.color = OriginalColor;
 
@@ -299,22 +303,35 @@ public class PlayerController : MonoBehaviour, I_Damage
 
     void HandleWallRun()
     {
-        // Step 1 -- Wall Run Timer
-        if (WallRunTimer >= MaxWallRunTime) { IsWallRunning = false; WallRunTimer = 0; }
-        {
-            WallRunTimer += Time.deltaTime;
-            
-            // Step 2 -- Wall Check
-            CheckForWall();
+        if (!IsExitWallRun)
+        {        // Step 1 -- Wall Run Timer
+            if (WallRunTimer >= MaxWallRunTime) { IsWallRunning = false; WallRunTimer = 0; }
+            {
+                WallRunTimer += Time.deltaTime;
 
-            // Step 3 -- Wall Run Check
-            if ((IsRightWall || IsLeftWall) && MoveDir.magnitude > 0.1f && AboveGround() && !Controller.isGrounded)
-            { IsWallRunning = true; UseGravity = false; }
-            else { IsWallRunning = false; UseGravity = true; }
+                // Step 2 -- Wall Check
+                CheckForWall();
 
-            // Step 4 -- Wall Run
-            if (IsWallRunning) { WallRunMovement(); }
+                // Step 3 -- Wall Run Check
+                if ((IsRightWall || IsLeftWall) && MoveDir.magnitude > 0.1f && AboveGround() && !Controller.isGrounded)
+                { IsWallRunning = true; UseGravity = false; }
+                else { IsWallRunning = false; UseGravity = true; }
+
+                // Step 4 -- Wall Run
+                if (IsWallRunning) { WallRunMovement(); }
+            }
         }
+        else 
+        {
+            if (ExitTimer >= ExitTime)
+            {
+                IsExitWallRun = false;
+                ExitTimer = 0;
+            }
+            else { ExitTimer += Time.deltaTime; }
+                
+        }
+
     }
 
     void WallRunMovement()
@@ -336,12 +353,17 @@ public class PlayerController : MonoBehaviour, I_Damage
 
     void WallJump()
     {
+        IsWallRunning = false; // Stop Wall Running
+        WallRunTimer = 0; // Reset Wall Run
+        IsExitWallRun = true; // Exit Wall Running
+
         Vector3 Normal = IsRightWall ? RightWall.normal : LeftWall.normal; // Get Wall Normal
         Vector3 ForceToApply = transform.up * UpJumpForce + Normal * OutJumpForce; // Calculate Jump Force
 
         PlayerVel.y = 0f; // Reset Y Velocity before Jump
         PlayerVel = ForceToApply; // Apply Jump Force to Player Velocity
         MomentumVelocity = Vector3.zero;
-        IsWallRunning = false; // Stop Wall Running
+       
+        
     }
 }

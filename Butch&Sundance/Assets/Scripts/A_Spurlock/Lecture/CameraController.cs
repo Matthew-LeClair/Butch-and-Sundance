@@ -4,6 +4,7 @@ public class CameraController : MonoBehaviour
     [Header("Config")]
     [SerializeField] int Sensitivity;
     [SerializeField] int LockVertMin, LockVertMax;
+    [SerializeField] LayerMask CamIgnoreLayer;
 
     [Header("Sway & Bob")]
     [SerializeField] float SwayAmount = 0.05f; // How much the Camera sways on horizontal input
@@ -46,6 +47,12 @@ public class CameraController : MonoBehaviour
 
         transform.localRotation = Quaternion.Euler(CamRotX, 0, 0);
         Player.transform.Rotate(Vector3.up * MouseX);
+
+        // Prevent Camera from clipping into walls
+        RaycastHit CamHit;
+        Vector3 DirToCamera = transform.position - Player.position; // Direction from Player to Camera
+        if (Physics.Raycast(Player.position, DirToCamera.normalized, out CamHit, DirToCamera.magnitude, ~CamIgnoreLayer))
+        { transform.position = CamHit.point; }
     }
 
     void HandleSway()
@@ -56,14 +63,17 @@ public class CameraController : MonoBehaviour
         bool IsMoving = Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0.1f
             || Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0.1f;
 
-        if (IsMoving && PC.Controller.isGrounded)
+        if (IsMoving && PC.Controller.isGrounded) // Only Bob while Moving on the Ground
         {
             float MomentumPercent = PC.CurrMomentum / 50f;
             BobTimer += Time.deltaTime * (BobSpeed * (1f + MomentumPercent * 0.5f));
             CamBasePos.y += Mathf.Sin(BobTimer) * BobAmount * (1f + MomentumPercent);
         }
         else
-        { BobTimer = 0; }
+        {
+            BobTimer = 0;
+            CamBasePos.y = Mathf.Lerp(CamBasePos.y, transform.localPosition.y, SwaySpeed * Time.deltaTime); // Reset Base Y when not bobbing
+        }
 
         Vector3 TargetPos = CamBasePos + new Vector3(TargetSwayY, TargetSwayX, 0);
         transform.localPosition = Vector3.Lerp(transform.localPosition, TargetPos, SwaySpeed * Time.deltaTime);
