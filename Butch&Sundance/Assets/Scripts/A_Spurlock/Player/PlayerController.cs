@@ -295,11 +295,11 @@ public class PlayerController : MonoBehaviour, I_Damage
 
     IEnumerator FlashShieldScreen()
     {
-        GameManager.Instance.PlayerDamage_Screen.SetActive(true); // Activate the damage screen effect to indicate that the player has taken damage
+        GameManager.Instance.PlayerShield_Screen.SetActive(true); // Activate the damage screen effect to indicate that the player has taken damage
 
         yield return new WaitForSeconds(0.5f); // Wait for a short duration (0.5 seconds) before deactivating the damage screen effect
 
-        GameManager.Instance.PlayerDamage_Screen.SetActive(false); // Deactivate the damage screen effect after the wait time has elapsed
+        GameManager.Instance.PlayerShield_Screen.SetActive(false); // Deactivate the damage screen effect after the wait time has elapsed
     }
 
 
