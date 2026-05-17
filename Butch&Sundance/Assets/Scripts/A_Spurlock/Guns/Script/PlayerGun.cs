@@ -27,7 +27,7 @@ public class PlayerGun : MonoBehaviour
 
     [Header("Aim")]
     public bool IsAiming;
-    Camera PlayerCamera;
+    [SerializeField] Camera PlayerCamera;
     CameraController CC;
 
     [Header("Alien Tech")]
@@ -40,8 +40,7 @@ public class PlayerGun : MonoBehaviour
 
     private void Start()
     {
-        PlayerCamera = GameManager.Instance.Player.GetComponent<Camera>();
-        CC = PlayerCamera.GetComponent<CameraController>();
+        CC = PlayerCamera.GetComponent<CameraController>(); // Get CameraController from Main Camera
 
         if (aTech != null) { aTech.SwitchGun(); }
         else

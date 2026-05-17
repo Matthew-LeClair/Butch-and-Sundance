@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-
 public class AlienTech_Pickup : MonoBehaviour
 {
     //===[Enums]===\\
@@ -12,68 +11,67 @@ public class AlienTech_Pickup : MonoBehaviour
         AssualtRifle,
         Sniper
     };
-
+    
+    [System.Serializable]
     public struct Mod
     {
         public WeaponMod.Type ModType;
         public float ModAmount;
     }
-
     [Header("Config")]
     [SerializeField] public GunTypeMod puTypeMod;
-    [SerializeField] public List<Mod> DataMods;
-
+    [SerializeField] public int ModCount;
     [Header("Visual")]
     [SerializeField] public Renderer Mat;
     [SerializeField] public Material Outline;
-
     Material OriginalMat;
 
     bool InRange;
 
-    
+    private void Update()
+    {
+        if (InRange) 
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (GameManager.Instance.Player.GetComponentInParent<PlayerController>().pGun.aTech != null)
+                {
+                    GameManager.Instance.Player.GetComponentInParent<PlayerController>().pGun.aTech.typeMod = puTypeMod;
+                    Debug.Log("Gun Type: " +  puTypeMod);
+                    GameManager.Instance.Player.GetComponentInParent<PlayerController>().pGun.aTech.SwitchGun(); // Switch the Gun
+                    for (global::System.Int32 i = 0; i < ModCount; i++)
+                    {
+                        GameManager.Instance.Player.GetComponentInParent<PlayerController>().pGun.aTech.AddMod();
+                    } // Apply each Mod
+                }
+            }
+            if (Input.GetKeyUp(KeyCode.E)) { Destroy(gameObject); } // Destroy the Pickup
+        }
+    }
 
     private void Start()
     {
-        if (Mat != null && Outline != null) 
-        { 
-            OriginalMat = Mat.material; 
-            Mat.material = Outline;
+        if (Mat != null && Outline != null)
+        {
+            OriginalMat = Mat.material; // Store Original Material
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == GameManager.Instance.Player) 
-        { InRange = true; }
+        if (other.CompareTag("Player"))
+        {
+            Mat.material = Outline; // Apply Outline Material
+            InRange = true;
+        }
     }
+
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject == GameManager.Instance.Player)
-        { 
-            InRange = false; 
-
-            if (Mat != null && OriginalMat != null) 
-            { Mat.material = OriginalMat; } 
-        }
-    }
-
-    private void Update()
-    {
-        if (InRange)
+        if (other.CompareTag("Player"))
         {
-            if (Input.GetButtonDown("Interact"))
-            {
-                AlienTech AT = GameManager.Instance.Player.GetComponent<PlayerController>().pGun.aTech; // Cache the Player Controller
-                
-                AT.typeMod = puTypeMod; // Set the Gun Type Mod
-                AT.SwitchGun(); // Switch the Gun
-
-                foreach (var Mod in DataMods)
-                { AT.AddMod(Mod.ModType, Mod.ModAmount); } // Apply each Mod
-                Destroy(gameObject);
-            }
+            Mat.material = OriginalMat; // Apply Outline Material
+            InRange = false;
         }
-        
     }
-}
+    }

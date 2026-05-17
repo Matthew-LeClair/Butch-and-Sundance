@@ -139,13 +139,10 @@ public class AlienTech : AlienTech_Pickup
     }
 
     // Mayne use this Function for the UI when you buy Mods
-    public void AddMod(WeaponMod.Type ModType, float ModAmount)
+    public void AddMod()
     {
         WeaponMod NewMod = new WeaponMod();
-        NewMod.InitMod(ModType, ModAmount);
         Mods.Add(NewMod);
-
-        foreach (var Mod in Mods)
-        { Mod.ApplyBonus(); }
+        NewMod.ApplyBonus();
     }
 }

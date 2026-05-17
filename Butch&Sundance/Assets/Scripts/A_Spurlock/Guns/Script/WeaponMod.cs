@@ -2,56 +2,69 @@ using UnityEngine;
 
 public class WeaponMod
 {
-    GameObject Player;
-    PlayerController PlayerScript;
-
     public enum Type { Health, Shield, AlienEnergy, Speed, MomentumGain }
 
     Type ModType;
     float ModAmount;
-    bool Applied = false;
 
-    public void InitMod(Type mType, float Amount) 
+    public void InitMod()
     {
-        ModType = mType;
-        ModAmount = Amount;
-        Player = GameManager.Instance.Player;
-        PlayerScript = Player.GetComponent<PlayerController>();
+        ModType = (Type)Random.Range(0, System.Enum.GetValues(typeof(Type)).Length); // Random Mod Type
+        switch (ModType)
+        {
+            case Type.Health:
+                ModAmount = Random.Range(1.1f, 1.5f); // 10% to 50% Health boost
+                break;
+            case Type.Shield:
+                ModAmount = Random.Range(1.1f, 1.5f); // 10% to 50% Shield boost
+                break;
+            case Type.AlienEnergy:
+                ModAmount = Random.Range(1.1f, 1.5f); // 10% to 50% Alien Energy boost
+                break;
+            case Type.Speed:
+                ModAmount = Random.Range(1.1f, 1.3f); // 10% to 30% Speed boost
+                break;
+            case Type.MomentumGain:
+                ModAmount = Random.Range(1.1f, 1.3f); // 10% to 30% Momentum Gain boost
+                break;
+        }
     }
 
     public void ApplyBonus() 
     {
-        if (!Applied)
+        InitMod();
+        Debug.Log("Mod Type: " + ModType + " | Mod Amount: " + ModAmount);
+        switch (ModType)
         {
-            switch (ModType)
-            {
-                case Type.Health:
-                    PlayerScript.HealthMax *= ModAmount;
-                    PlayerScript.Health = PlayerScript.HealthMax;
-                    break;
+            case Type.Health:
+                GameManager.Instance.Player.GetComponent<PlayerController>().HealthMax *= ModAmount;
+                GameManager.Instance.Player.GetComponent<PlayerController>().Health = GameManager.Instance.Player.GetComponent<PlayerController>().HealthMax;
+                GameManager.Instance.Player.GetComponent<PlayerController>().UpdatePlayerUI();
+                break;
 
 
-                case Type.Shield:
-                    PlayerScript.ShieldMax = PlayerScript.ShieldMax * ModAmount;
-                    PlayerScript.Shield = PlayerScript.ShieldMax;
-                    break;
+            case Type.Shield:
+                GameManager.Instance.Player.GetComponent<PlayerController>().ShieldMax = GameManager.Instance.Player.GetComponent<PlayerController>().ShieldMax * ModAmount;
+                GameManager.Instance.Player.GetComponent<PlayerController>().Shield = GameManager.Instance.Player.GetComponent<PlayerController>().ShieldMax;
+                GameManager.Instance.Player.GetComponent<PlayerController>().UpdatePlayerUI();
+                break;
 
 
-                case Type.AlienEnergy:
-                    PlayerScript.AlienEnergyMax = PlayerScript.AlienEnergyMax * ModAmount;
-                    PlayerScript.AlienEnergy = PlayerScript.AlienEnergyMax;
-                    break;
+            case Type.AlienEnergy:
+                GameManager.Instance.Player.GetComponent<PlayerController>().AlienEnergyMax = GameManager.Instance.Player.GetComponent<PlayerController>().AlienEnergyMax * ModAmount;
+                GameManager.Instance.Player.GetComponent<PlayerController>().AlienEnergy = GameManager.Instance.Player.GetComponent<PlayerController>().AlienEnergyMax;
+                GameManager.Instance.Player.GetComponent<PlayerController>().UpdatePlayerUI();
+                break;
 
 
-                case Type.Speed:
-                    PlayerScript.Speed = PlayerScript.SpeedBase * ModAmount;
-                    break;
+            case Type.Speed:
+                GameManager.Instance.Player.GetComponent<PlayerController>().Speed = GameManager.Instance.Player.GetComponent<PlayerController>().SpeedBase * ModAmount;
+                break;
 
 
-                case Type.MomentumGain:
-                    PlayerScript.MomentumBuildRate = PlayerScript.BaseMomentumBuildRate * ModAmount;
-                    break;
-            } Applied = true;
+            case Type.MomentumGain:
+                GameManager.Instance.Player.GetComponent<PlayerController>().MomentumBuildRate = GameManager.Instance.Player.GetComponent<PlayerController>().BaseMomentumBuildRate * ModAmount;
+                break;
         }
     }
 }
