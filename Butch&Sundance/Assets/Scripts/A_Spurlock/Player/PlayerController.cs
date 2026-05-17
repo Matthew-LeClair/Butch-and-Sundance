@@ -107,6 +107,7 @@ public class PlayerController : MonoBehaviour, I_Damage
 
         MomentumBuildRate = BaseMomentumBuildRate;
         Health = HealthMax;
+        Shield = ShieldMax;
 
         UpdatePlayerUI();
     }
@@ -279,6 +280,8 @@ public class PlayerController : MonoBehaviour, I_Damage
     public void UpdatePlayerUI()
     {
         GameManager.Instance.PlayerHP_Bar.fillAmount = (float)Health / HealthMax;
+
+        GameManager.Instance.PlayerShieldHP_Bar.fillAmount = (float)Shield / ShieldMax;
     }
 
     IEnumerator FlashDamageScreen()

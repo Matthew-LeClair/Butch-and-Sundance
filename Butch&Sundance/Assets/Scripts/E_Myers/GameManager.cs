@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject MenuWin; // Win Screen
     [SerializeField] GameObject MenuLose; // Lose Screen
     public Image PlayerHP_Bar;
+    public Image PlayerShieldHP_Bar;
     public GameObject PlayerDamage_Screen;
     public GameObject PlayerShield_Screen;
 
