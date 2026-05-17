@@ -1,13 +1,11 @@
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class PlayerController : MonoBehaviour, I_Damage
 {
     [Header("Config")]
     [SerializeField] public CharacterController Controller;
-
-    [SerializeField] Renderer Render;
-    Color OriginalColor;
 
     float Gravity = 35;
 
@@ -39,8 +37,7 @@ public class PlayerController : MonoBehaviour, I_Damage
     float JumpSpeed;
     int JumpCount;
 
-    [Header("Parkour")]
-    // Wallrun
+    [Header("Wall Run")]
     public LayerMask WhatIsWall;
     public LayerMask WhatIsGround;
     public float WallRunForce;
@@ -62,7 +59,19 @@ public class PlayerController : MonoBehaviour, I_Damage
     public bool IsRightWall;
     public float GravityCounterForce;
 
+    [Header("Hook Shot")]
+    public KeyCode GrappleKey = KeyCode.Q;
+    public LayerMask WhatCanHook;
+    public Transform CamTransform;
 
+    public float MaxGrappleDistance;
+    public float GrappleDelayTime;
+    private Vector3 GrapplePoint;
+
+    public float GrapplingCooldown;
+    private float GrapplingCooldownTimer;
+
+    private bool IsGrapple;
 
 
     [Header("Momemtum")]
@@ -91,9 +100,6 @@ public class PlayerController : MonoBehaviour, I_Damage
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Start()
     {
-        // Set the Material Color as the Original Color, Modular Version
-        Render.material.color = OriginalColor;
-
         MomentumBuildRate = BaseMomentumBuildRate;
         Health = HealthMax;
 
@@ -103,17 +109,15 @@ public class PlayerController : MonoBehaviour, I_Damage
     // Update is called once per frame
     public void Update()
     {
+        Debug.DrawRay(CamTransform.position, CamTransform.forward * pGun.ShootDistance, Color.red);
+
         IsMoving = Mathf.Abs(Input.GetAxis("Horizontal")) > 0.1f
             || Mathf.Abs(Input.GetAxis("Vertical")) > 0.1f;
         
         Movement(); // Moves once per frame for better smoothing
     }
 
-
-
-    //===[Movement]===\\
-
-    void Movement()
+    void HandleInput() 
     {
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         { pGun.Reload(); Reloaded = true; }
@@ -121,8 +125,18 @@ public class PlayerController : MonoBehaviour, I_Damage
         if (Input.GetButtonDown("Fire2")) { pGun.Aim(); Aimed = true; }
         if (Input.GetButtonUp("Fire2")) { pGun.Aim(); }
 
-        if (Input.GetButton("Fire1") && pGun.IsAiming)
+        if (Input.GetButton("Fire1"))
         { pGun.Shoot(); Shot = true; }
+
+        if (Input.GetKeyDown(GrappleKey)) { StartGrapple(); }
+    }
+
+
+    //===[Movement]===\\
+
+    void Movement()
+    {
+        HandleInput();
 
         if (Controller.isGrounded)
         {
@@ -228,29 +242,10 @@ public class PlayerController : MonoBehaviour, I_Damage
             Health -= Amount; // Subtract Health by Amount
             if (Health <= 0) // If Health is Less Than or Equal To 0...
             { Death(); } // Destroy the Object
-            else { StartCoroutine(Flash()); } // Call the Flash Function, Modular Version
             StartCoroutine(FlashDamageScreen());
-        } else { }
+        } else { FlashShieldScreen(); }
 
 
-    }
-    IEnumerator Flash()
-    {
-        Transform tPart = gameObject.transform;
-
-        if (tPart == null) { yield break; }
-
-        Renderer rPart = tPart.GetComponent<Renderer>();
-
-        if (rPart == null) { yield break; }
-
-        // Flash Body Part
-        rPart.material.color = Color.red;
-
-        yield return new WaitForSeconds(0.1f);
-
-        // Reset Body Part
-        rPart.material.color = OriginalColor;
     }
 
     public void Death()
@@ -290,6 +285,7 @@ public class PlayerController : MonoBehaviour, I_Damage
     }
 
 
+    //===[Wall Run]===\\
 
     void CheckForWall()
     {
@@ -363,5 +359,29 @@ public class PlayerController : MonoBehaviour, I_Damage
         PlayerVel.y = 0f; // Reset Y Velocity before Jump
         PlayerVel = ForceToApply; // Apply Jump Force to Player Velocity
         MomentumVelocity = Vector3.zero;
+    }
+
+
+    //===[Hook Shot Parkour]===\\
+    void StartGrapple()
+    {
+        if (GrapplingCooldown < GrapplingCooldownTimer) { GrapplingCooldownTimer += Time.deltaTime; return; }
+        else
+        {
+            GrapplingCooldownTimer = 0;
+
+            IsGrapple = true;
+
+            RaycastHit GrappleHit;
+            Physics.Raycast(CamTransform.position, CamTransform.forward, out GrappleHit, MaxGrappleDistance, WhatCanHook);
+        }
+    }
+
+    void Grapple()
+    {
+    }
+
+    void EndGrapple()
+    {
     }
 }
