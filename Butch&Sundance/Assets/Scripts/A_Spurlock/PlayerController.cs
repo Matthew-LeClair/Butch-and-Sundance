@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     public float AlienEnergyMax;
 
     [Header("Weapon")]
-    PlayerGun pGun;
+    public PlayerGun pGun;
 
     [Header("Gear")]
 
@@ -42,14 +42,17 @@ public class PlayerController : MonoBehaviour
 
     [Header("Momemtum")]
     [SerializeField] public float BaseMomentumBuildRate;
+    [SerializeField] float MomentumDecayRate = 0.4f;
+    [SerializeField] float DirectionBlendSpeed = 8f;
+
     public float MomentumBuildRate;
     float CurrMomentum = 0;
     float MaxMomentum = 50;
 
+    Vector3 MomentumVelocity = Vector3.zero;
+
+
     [Header("Parkour")]
-    float TimeMove;
-    [SerializeField] float TimeMoveDecayRate;
-    float TimeMoveDecayTimer;
 
     [Header("Tutorial")]
     public bool Aimed;
@@ -57,6 +60,9 @@ public class PlayerController : MonoBehaviour
     public bool Reloaded;
     public bool Moved;
     public bool Jumped;
+
+
+    //===[Basic]===\\
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Start()
@@ -76,14 +82,15 @@ public class PlayerController : MonoBehaviour
     {
         IsMoving = Mathf.Abs(Input.GetAxis("Horizontal")) > 0.1f
             || Mathf.Abs(Input.GetAxis("Vertical")) > 0.1f;
-        if (GameManager.Instance != null) { HandleMomentum(); }
-
-        HandleMomentum(); // Moves once per frame for better smoothing
 
         Movement(); // Moves once per frame for better smoothing
     }
 
-    void Movement() 
+
+
+    //===[Movement]===\\
+
+    void Movement()
     {
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         { pGun.Reload(); Reloaded = true; }
@@ -91,56 +98,94 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Fire2")) { pGun.Aim(); Aimed = true; }
         if (Input.GetButtonUp("Fire2")) { pGun.Aim(); }
 
-        if (Input.GetButton("Fire1") && pGun.IsAiming) // If Left Click is Pressed while Aiming...
-        { pGun.Shoot(); Shot = true; } // Call Shoot Function
+        if (Input.GetButton("Fire1") && pGun.IsAiming)
+        { pGun.Shoot(); Shot = true; }
 
-        if (Controller.isGrounded)  // Checks if the Player Character is on the ground
-        { PlayerVel.y = 0; } // Resets the Player Velocity Y to help processes
+        if (Controller.isGrounded)
+        {
+            PlayerVel.y = 0;
+            JumpCount = 0; // Reset Jump Count on Landing
+        }
 
-        MoveDir = // Move Direction Equals The Following Equation
-            Input.GetAxis("Horizontal") // Get the Horizontal Axis
-            * transform.right  // Multi it by the Players Right Transform
-            +  // Add that to...
-            Input.GetAxis("Vertical") // Get the Vertical Axis
-            * transform.forward;  // Multi it by the Players Forward Transform
+        Vector3 InputDir =
+            Input.GetAxis("Horizontal") * transform.right
+            + Input.GetAxis("Vertical") * transform.forward;
 
-        // Use the Controller to Move the Player using Move Direction Var * Speed
-        Controller.Move(MoveDir.normalized * Speed * Time.deltaTime); // Make it time relative by adding a Multi Delta Time
+        if (InputDir.magnitude > 0.1f) { Moved = true; }
 
-        if (MoveDir.normalized.Equals(new Vector3(0, 0, 0))) { } else { Moved = true; }
+        HandleMomentum(InputDir); // Pass Input Direction to Momentum System
 
-            Jump(); // Call Jump Function in Movement
+        // Blend Momentum Velocity toward Input Direction, preserving speed through turns
+        if (InputDir.magnitude > 0.1f) // If there is Input...
+        {
+            MomentumVelocity = Vector3.Lerp(
+                MomentumVelocity,
+                InputDir.normalized * (Speed + CurrMomentum * 0.1f), // Target is Input Direction at Current Speed
+                DirectionBlendSpeed * Time.deltaTime); // Blend at Direction Blend Speed
+        }
+        else // If there is No Input...
+        {
+            MomentumVelocity = Vector3.Lerp(
+                MomentumVelocity,
+                Vector3.zero, // Bleed off toward Zero
+                MomentumDecayRate * Time.deltaTime);
+        }
 
-        Controller.Move(PlayerVel * Time.deltaTime); // Move the Player in the Jump Direction
+        Controller.Move(MomentumVelocity * Time.deltaTime); // Move Player using Momentum Velocity
 
-        PlayerVel.y -= Gravity * // Decrement the Player Velocity Y by Gravity
-            Time.deltaTime; // Relative To Time
+        Jump();
+
+        Controller.Move(PlayerVel * Time.deltaTime);
+        PlayerVel.y -= Gravity * Time.deltaTime;
     }
 
-    void Jump() 
+    void Jump()
     {
-        if (Input.GetButtonDown("Jump") // If Jump button is pressed...
-            && JumpCount < 1) // AND Jump Count is NOT more than 1
+        if (Input.GetButtonDown("Jump") && JumpCount < 2) // Allow Double Jump
         {
             Jumped = true;
-            JumpCount++; // Increment Jump Count
-            PlayerVel.y = JumpSpeed; // Set Player Velocity Y to Jump Speed
-        } 
+            JumpCount++;
+
+            float MomentumBoost = CurrMomentum / MaxMomentum; // Momentum as a Percentage
+            PlayerVel.y = JumpSpeedBase * (1f + MomentumBoost * 0.4f); // Scale Jump Height with Momentum
+
+            MomentumVelocity = new Vector3(
+                MomentumVelocity.x, 0, MomentumVelocity.z) // Strip Y from Momentum Velocity
+                * (1f + MomentumBoost * 0.3f); // Boost Horizontal on Jump
+        }
     }
 
-    void HandleMomentum()
+
+
+    //===[Momentum]===\\
+    void HandleMomentum(Vector3 InputDir)
     {
-        HandleTimeMove();
+        if (InputDir.magnitude > 0.1f) // If the Player is Moving...
+        {
+            CurrMomentum = Mathf.MoveTowards(
+                CurrMomentum, MaxMomentum,
+                MomentumBuildRate * Time.deltaTime); // Build Momentum toward Max
+        }
+        else // If the Player is NOT Moving...
+        {
+            CurrMomentum = Mathf.MoveTowards(
+                CurrMomentum, 0,
+                (MomentumBuildRate * MomentumDecayRate) * Time.deltaTime); // Decay Momentum slower than Build
+        }
 
-        float MomentumGain =
-            ((TimeMove / 60f)
-            * Time.deltaTime) * 
-            MomentumBuildRate;
-
-        CurrMomentum = Mathf.Clamp(CurrMomentum + MomentumGain, 0, MaxMomentum);
         HandleStats();
     }
 
+    void HandleStats()
+    {
+        float MomentumPercent = CurrMomentum / MaxMomentum; // Momentum as a Percentage
+        Speed = Mathf.Lerp(SpeedBase, SpeedBase * 2f, MomentumPercent); // Scale Speed between Base and 2x
+        JumpSpeed = Mathf.Lerp(JumpSpeedBase, JumpSpeedBase * 1.5f, MomentumPercent); // Scale Jump between Base and 1.5x
+    }
+
+
+
+    //===[Damage]===\\
     public void TakeDamage(int Amount, bool AlienTech) 
     {
         Shield -= Amount;
@@ -161,7 +206,6 @@ public class PlayerController : MonoBehaviour
 
 
     }
-
     IEnumerator Flash()
     {
         Transform tPart = gameObject.transform;
@@ -192,39 +236,8 @@ public class PlayerController : MonoBehaviour
         #endif
     }
 
-    void HandleTimeMove()
-    {
-        if (IsMoving)
-        {
-            TimeMove = Mathf.Min(TimeMove + Time.deltaTime, 60f);
-            TimeMoveDecayTimer = 0;
-        }
-        else
-        {
-            if (TimeMoveDecayTimer < TimeMoveDecayRate)
-            {
-                TimeMoveDecayTimer += Time.deltaTime;
-            }
-            else
-            {
-                TimeMove = 0;
-                CurrMomentum = MaxMomentum * 0.15f;
-            }
-        }
-    }
 
-    void HandleStats()
-    {
-        float MomentumPercent = CurrMomentum / MaxMomentum;
-        float CurvedPercent = Mathf.Pow(MomentumPercent, 0.3f); // Curves the response AGGRESSIVELY
-
-        // Speed
-        Speed = SpeedBase * (1f + (CurvedPercent * Random.Range(1, 3)));
-        
-        // Jump Speed
-        JumpSpeed = (float)((JumpSpeedBase * (1f + (CurvedPercent * Random.Range(1, 3)))) + (Speed * .6));
-    }
-
+    //===[UI]===\\
     public void UpdatePlayerUI()
     {
         GameManager.Instance.PlayerHP_Bar.fillAmount = (float)Health / HealthMax;

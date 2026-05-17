@@ -1,57 +1,57 @@
 using UnityEngine;
 
-public class WeaponMod : MonoBehaviour
+public class WeaponMod
 {
     GameObject Player;
     PlayerController PlayerScript;
 
-
-    private void Start()
-    {
-        Player = GameObject.FindGameObjectWithTag("Player");
-        PlayerScript = Player.GetComponent<PlayerController>();
-    }
     public enum Type { Health, Shield, AlienEnergy, Speed, MomentumGain }
 
     Type ModType;
     float ModAmount;
+    bool Applied = false;
 
     public void InitMod(Type mType, float Amount) 
     {
         ModType = mType;
         ModAmount = Amount;
+        Player = GameManager.Instance.Player;
+        PlayerScript = Player.GetComponent<PlayerController>();
     }
 
     public void ApplyBonus() 
     {
-        switch (ModType)
+        if (!Applied)
         {
-            case Type.Health:
-                PlayerScript.HealthMax *= ModAmount;
-                PlayerScript.Health = PlayerScript.HealthMax;
-                break;
+            switch (ModType)
+            {
+                case Type.Health:
+                    PlayerScript.HealthMax *= ModAmount;
+                    PlayerScript.Health = PlayerScript.HealthMax;
+                    break;
 
 
-            case Type.Shield:
-                PlayerScript.ShieldMax = PlayerScript.ShieldMax * ModAmount;
-                PlayerScript.Shield = PlayerScript.ShieldMax;
-                break;
+                case Type.Shield:
+                    PlayerScript.ShieldMax = PlayerScript.ShieldMax * ModAmount;
+                    PlayerScript.Shield = PlayerScript.ShieldMax;
+                    break;
 
 
-            case Type.AlienEnergy:
-                PlayerScript.AlienEnergyMax = PlayerScript.AlienEnergyMax * ModAmount;
-                PlayerScript.AlienEnergy = PlayerScript.AlienEnergyMax;
-                break;
+                case Type.AlienEnergy:
+                    PlayerScript.AlienEnergyMax = PlayerScript.AlienEnergyMax * ModAmount;
+                    PlayerScript.AlienEnergy = PlayerScript.AlienEnergyMax;
+                    break;
 
 
-            case Type.Speed:
-                PlayerScript.Speed = PlayerScript.SpeedBase * ModAmount;
-                break;
+                case Type.Speed:
+                    PlayerScript.Speed = PlayerScript.SpeedBase * ModAmount;
+                    break;
 
 
-            case Type.MomentumGain:
-                PlayerScript.MomentumBuildRate = PlayerScript.BaseMomentumBuildRate * ModAmount;
-                break;
+                case Type.MomentumGain:
+                    PlayerScript.MomentumBuildRate = PlayerScript.BaseMomentumBuildRate * ModAmount;
+                    break;
+            } Applied = true;
         }
     }
 }

@@ -7,8 +7,8 @@ public class Gun : MonoBehaviour
 {
     [SerializeField] GameObject Bullet;
     [SerializeField] public bool Spread;
-    [SerializeField] int PelletCount;
-    [SerializeField] int SpreadAngle;
+    [SerializeField] public int PelletCount;
+    [SerializeField] public int SpreadAngle;
 
     [SerializeField] public float ShootRate;
     float ShootTimer;
