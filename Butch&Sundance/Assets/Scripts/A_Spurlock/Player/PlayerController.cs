@@ -60,7 +60,6 @@ public class PlayerController : MonoBehaviour, I_Damage
     private bool IsLeftWall;
     private RaycastHit RightWall;
     public bool IsRightWall;
-    private bool UseGravity;
     public float GravityCounterForce;
 
 
@@ -92,7 +91,6 @@ public class PlayerController : MonoBehaviour, I_Damage
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Start()
     {
-        UseGravity = true;
         // Set the Material Color as the Original Color, Modular Version
         Render.material.color = OriginalColor;
 
@@ -136,6 +134,7 @@ public class PlayerController : MonoBehaviour, I_Damage
             Input.GetAxis("Horizontal") * transform.right
             + Input.GetAxis("Vertical") * transform.forward;
 
+        Jump();
         HandleWallRun();
         
         if (!IsWallRunning)
@@ -159,10 +158,10 @@ public class PlayerController : MonoBehaviour, I_Damage
 
         Controller.Move(MomentumVelocity * Time.deltaTime); // Move Player using Momentum Velocity
 
-        Jump();
+        
 
         Controller.Move(PlayerVel * Time.deltaTime);
-        if (UseGravity) { PlayerVel.y -= Gravity * Time.deltaTime; }
+        PlayerVel.y -= Gravity * Time.deltaTime;
     }
 
     void Jump()
@@ -313,7 +312,7 @@ public class PlayerController : MonoBehaviour, I_Damage
                 CheckForWall();
 
                 // Step 3 -- Wall Run Check
-                if ((IsRightWall || IsLeftWall) && MoveDir.magnitude > 0.1f && AboveGround() && !Controller.isGrounded)
+                if ((IsRightWall || IsLeftWall) && MoveDir.magnitude > 0.1f && AboveGround() && !Controller.isGrounded && !IsExitWallRun)
                 { IsWallRunning = true; }
                 else { IsWallRunning = false; }
 
