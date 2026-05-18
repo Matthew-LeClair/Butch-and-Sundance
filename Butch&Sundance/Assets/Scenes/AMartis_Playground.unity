@@ -119,7 +119,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &477326207
+--- !u!1001 &211679904
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -129,15 +129,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 718641632567244554, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.85
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 718641632567244554, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.58
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 718641632567244554, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.58
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 718641632567244554, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -171,11 +171,76 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8893641552255450173, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+      propertyPath: Cam
+      value: 
+      objectReference: {fileID: 432584144}
+    - target: {fileID: 8893641552255450173, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+      propertyPath: ExitTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8893641552255450173, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+      propertyPath: CamTransform
+      value: 
+      objectReference: {fileID: 211679910}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8677270422375201963, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 2013894010}
+    - targetCorrespondingSourceObject: {fileID: 8677270422375201963, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 2013894009}
   m_SourcePrefab: {fileID: 100100000, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+--- !u!1 &211679905 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8677270422375201963, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+  m_PrefabInstance: {fileID: 211679904}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &211679906 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2776064752822907975, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+  m_PrefabInstance: {fileID: 211679904}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 958cff77900fa10479a2f962f679387a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGun
+--- !u!114 &211679907 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4447826174741325666, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+  m_PrefabInstance: {fileID: 211679904}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cc324d9ef7382d4fae965f5a27c8f75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AlienTech
+--- !u!20 &211679908 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 8661160447946240342, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+  m_PrefabInstance: {fileID: 211679904}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &211679909 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6480184997921109338, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+  m_PrefabInstance: {fileID: 211679904}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &211679910 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2232769458087304895, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+  m_PrefabInstance: {fileID: 211679904}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &432584144 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7459162486821116028, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+  m_PrefabInstance: {fileID: 211679904}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &878688770
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,6 +480,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DynamiteCrate
   maxHP: 20
+  rend: {fileID: 1201726069}
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.1
 --- !u!4 &1201726072
 Transform:
   m_ObjectHideFlags: 0
@@ -559,6 +627,56 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2013894009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211679905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cc324d9ef7382d4fae965f5a27c8f75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AlienTech
+  puTypeMod: 0
+  ModCount: 0
+  Mat: {fileID: 0}
+  Outline: {fileID: 0}
+  typeMod: 0
+  pGun: {fileID: 211679906}
+  eGun: {fileID: 0}
+--- !u!114 &2013894010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211679905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 958cff77900fa10479a2f962f679387a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGun
+  IgnoreLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  GunPivot: {fileID: 211679910}
+  ShootPos: {fileID: 211679909}
+  MinDamage: 5
+  MaxDamage: 10
+  FireRate: 0.5
+  ShootTimer: 0
+  ShootDistance: 20
+  MaxAmmo: 6
+  CurrAmmo: 0
+  ReloadSpeed: 0.35
+  IsAiming: 0
+  PlayerCamera: {fileID: 211679908}
+  aTech: {fileID: 211679907}
+  Spread: 0
+  PelletCount: 0
+  SpreadAngle: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -566,4 +684,4 @@ SceneRoots:
   - {fileID: 878688772}
   - {fileID: 1320106308}
   - {fileID: 1201726072}
-  - {fileID: 477326207}
+  - {fileID: 211679904}
