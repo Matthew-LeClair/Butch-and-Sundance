@@ -80,7 +80,11 @@ public class PlayerGun : MonoBehaviour
                     I_Damage dmg = hit.collider.GetComponent<I_Damage>(); // Init and Set the Interface as the Hit GameObjects Version
 
                     if (dmg != null) // If the GameObjects Damage Interface is NOT Null...
-                    { dmg.TakeDamage(Random.Range(MinDamage, MaxDamage), aTech != null); } // Hit GameObject takes Damage
+                    { // Hit GameObject takes Damage
+                        int Damage = Random.Range(MinDamage, MaxDamage);
+                        if (IsAiming) { Damage = (int)(Damage * 1.5f); }
+                        dmg.TakeDamage(Damage, aTech != null);
+                    } 
                 }
             }
             else 
@@ -105,7 +109,11 @@ public class PlayerGun : MonoBehaviour
                         Debug.Log(hit.collider.name); // Debug Print the name of what the Ray Collides with
                         I_Damage dmg = hit.collider.GetComponent<I_Damage>(); // Init and Set the Interface as the Hit GameObjects Version
                         if (dmg != null) // If the GameObjects Damage Interface is NOT Null...
-                        { dmg.TakeDamage(Random.Range(MinDamage, MaxDamage), aTech != null); } // Hit GameObject takes Damage
+                        { // Hit GameObject takes Damage
+                            int Damage = Random.Range(MinDamage, MaxDamage);
+                            if (IsAiming) { Damage = (int)(Damage * 1.5f); }
+                            dmg.TakeDamage(Damage, aTech != null);
+                        }
                     }
                 }
             }

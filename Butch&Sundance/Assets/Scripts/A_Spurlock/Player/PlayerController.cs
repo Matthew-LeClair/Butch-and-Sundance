@@ -6,89 +6,98 @@ public class PlayerController : MonoBehaviour, I_Damage
 {
     [Header("Config")]
     [SerializeField] public CharacterController Controller;
-
     float Gravity = 35;
-
     Vector3 MoveDir;
     Vector3 PlayerVel;
 
     [Header("Health & Damage")]
     [SerializeField] public float Health;
-    public float HealthMax;
-
+    [SerializeField] public float HealthMax;
     [SerializeField] public float Shield;
-    public float ShieldMax;
+    [SerializeField] public float ShieldMax;
 
+    [Header("Alien Energy")]
     [SerializeField] public float AlienEnergy;
-    public float AlienEnergyMax;
+    [SerializeField] public float AlienEnergyMax;
+    [SerializeField] public float AlienEnergyRegenRate = 5f; // How fast Alien Energy regens per second
+    [SerializeField] public float AlienEnergyRegenCap = 25f; // Max regen cap (upgradable)
+    [SerializeField] public float WallRunEnergyCost = 5f; // Energy cost per second of wall running
+    [SerializeField] public float GrappleEnergyCost = 10f; // Energy cost per grapple
+    [SerializeField] public float AimEnergyCost = 3f; // Energy cost per second of aiming
+    [SerializeField] public float AbsorbRatio = 0.3f; // How much incoming damage is absorbed as energy
+
+    [Header("Dodge")]
+    [SerializeField] public float DodgeEnergyCost = 15f; // Energy cost per dodge
+    [SerializeField] public float DodgeDistance = 5f; // How far the dodge travels
+    [SerializeField] public float DodgeDuration = 0.2f; // How long the dodge takes
+    [SerializeField] public float DodgeCooldown = 1f; // Cooldown between dodges
+    private float DodgeCooldownTimer;
+    private bool IsDodging;
+
+    [Header("Aim")]
+    [SerializeField] public float AimFOV = 40f; // FOV when aiming
+    [SerializeField] public float AimDamageMultiplier = 1.5f; // Damage multiplier when aiming
 
     [Header("Weapon")]
-    public PlayerGun pGun;
+    [SerializeField] public PlayerGun pGun;
 
     [Header("Gear")]
-
+    [SerializeField] public bool HasPhaseBoots; // Unlocks Parkour and Dodge
+    [SerializeField] public bool HasEnergyConverter; // Unlocks Damage Absorption
 
     [Header("Movement")]
     [SerializeField] public float SpeedBase;
-    public float Speed;
-
+    [SerializeField] public float Speed;
     bool IsMoving;
-    public float JumpSpeedBase;
+    [SerializeField] public float JumpSpeedBase;
     float JumpSpeed;
     int JumpCount;
 
     [Header("Wall Run")]
-    public LayerMask WhatIsWall;
-    public LayerMask WhatIsGround;
-    public float WallRunForce;
-    public float MaxWallRunTime;
-    public float UpJumpForce;
-    public float OutJumpForce;
+    [SerializeField] public LayerMask WhatIsWall;
+    [SerializeField] public LayerMask WhatIsGround;
+    [SerializeField] public float WallRunForce;
+    [SerializeField] public float MaxWallRunTime;
+    [SerializeField] public float UpJumpForce;
+    [SerializeField] public float OutJumpForce;
     private float WallRunTimer;
-    public bool IsWallRunning;
-
+    [SerializeField] public bool IsWallRunning;
     private bool IsExitWallRun;
-    public float ExitTime;
+    [SerializeField] public float ExitTime;
     private float ExitTimer;
-
-    public float WallCheckDistance;
-    public float MinJumpHeight;
+    [SerializeField] public float WallCheckDistance;
+    [SerializeField] public float MinJumpHeight;
     private RaycastHit LeftWall;
     private bool IsLeftWall;
     private RaycastHit RightWall;
-    public bool IsRightWall;
-    public float GravityCounterForce;
+    [SerializeField] public bool IsRightWall;
+    [SerializeField] public float GravityCounterForce;
 
     [Header("Hook Shot")]
     [SerializeField] GameObject Cam;
-    public Transform CamTransform;
-
-    public LineRenderer GrappleLine;
+    [SerializeField] public Transform CamTransform;
+    [SerializeField] public LineRenderer GrappleLine;
     [SerializeField] int RopePoints = 20; // Number of points in the rope
     [SerializeField] float RopeSag = 2f; // How much the rope sags
-
-    public float MaxGrappleDistance;
-    public float GrappleDelayTime;
+    [SerializeField] public float MaxGrappleDistance;
+    [SerializeField] public float GrappleDelayTime;
     private Vector3 GrapplePoint;
-
-    public float GrapplingCooldown;
+    [SerializeField] public float GrapplingCooldown;
     private float GrapplingCooldownTimer;
+    [SerializeField] public bool IsGrapple;
+    private bool AttemptGrapple;
+    [SerializeField] public float GrappleForceMultiplier = 0.1f;
 
-    private bool IsGrapple;
+    [Header("Swinging")]
+    [SerializeField] public float MaxSwingDistance = 25f;
 
-    public float GrappleForceMultiplier = 0.1f;
-
-
-    [Header("Momemtum")]
+    [Header("Momentum")]
     [SerializeField] public float BaseMomentumBuildRate;
     [SerializeField] float MomentumDecayRate = 0.4f;
-
-    public float MomentumBuildRate;
-    public float CurrMomentum = 0;
+    [SerializeField] public float MomentumBuildRate;
+    [SerializeField] public float CurrMomentum = 0;
     float MaxMomentum = 50;
-
     Vector3 MomentumVelocity = Vector3.zero;
-
 
     [Header("Parkour")]
 
@@ -117,8 +126,13 @@ public class PlayerController : MonoBehaviour, I_Damage
     // Update is called once per frame
     void Update()
     {
-        if (GrapplingCooldownTimer > 0)
-        { GrapplingCooldownTimer -= Time.deltaTime; }
+        // Alien Energy Regen — only if Phase Boots equipped
+        if (HasPhaseBoots && AlienEnergy < AlienEnergyRegenCap && !pGun.IsAiming)
+        { AlienEnergy = Mathf.Min(AlienEnergy + AlienEnergyRegenRate * Time.deltaTime, AlienEnergyRegenCap); }
+
+        // Dodge Cooldown
+        if (DodgeCooldownTimer > 0)
+        { DodgeCooldownTimer -= Time.deltaTime; }
 
         if (IsGrapple)
         {
@@ -134,6 +148,7 @@ public class PlayerController : MonoBehaviour, I_Damage
                 GrappleLine.enabled = false;
                 IsGrapple = false;
                 MomentumVelocity = Vector3.zero;
+                AttemptGrapple = false;
             }
         }
         else
@@ -151,6 +166,7 @@ public class PlayerController : MonoBehaviour, I_Damage
             GrappleLine.enabled = false;
             IsGrapple = false;
             MomentumVelocity = Vector3.zero;
+            AttemptGrapple = false;
         }
 
         Controller.Move(MomentumVelocity * Time.deltaTime);
@@ -158,18 +174,68 @@ public class PlayerController : MonoBehaviour, I_Damage
         PlayerVel.y -= Gravity * Time.deltaTime;
     }
 
-    void HandleInput() 
+    void HandleInput()
     {
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         { pGun.Reload(); Reloaded = true; }
 
-        if (Input.GetButtonDown("Fire2")) { pGun.Aim(); Aimed = true; }
-        if (Input.GetButtonUp("Fire2")) { pGun.Aim(); }
+        if (Input.GetButtonDown("Fire2") && (!HasPhaseBoots || AlienEnergy > 0)) // Allow Aim always, but energy cost only if boots equipped
+        { pGun.Aim(); Aimed = true; if (HasPhaseBoots) { Time.timeScale = 0.5f; Time.fixedDeltaTime = 0.02f * Time.timeScale; } }
+
+        if (Input.GetButtonUp("Fire2"))
+        {
+            if (!AttemptGrapple) { pGun.Aim(); }
+            else { StartSwing(); }
+            Time.timeScale = 1f;
+            Time.fixedDeltaTime = 0.02f;
+        }
+
+        if (HasPhaseBoots && pGun.IsAiming && AlienEnergy > 0) // Only drain energy if boots equipped
+        {
+            AlienEnergy = Mathf.Max(AlienEnergy - AimEnergyCost * Time.deltaTime, 0);
+            if (AlienEnergy <= 0)
+            {
+                pGun.IsAiming = false;
+                Time.timeScale = 1f;
+                Time.fixedDeltaTime = 0.02f;
+            }
+        }
 
         if (Input.GetButton("Fire1"))
-        { pGun.Shoot(); Shot = true; }
+        {
+            if (!AttemptGrapple) { pGun.Shoot(); Shot = true; }
+            else { Invoke(nameof(Grapple), GrappleDelayTime); }
+        }
 
         if (Input.GetKeyDown(KeyCode.Tab)) { StartGrapple(); }
+
+        if (HasPhaseBoots && Input.GetKeyDown(KeyCode.LeftShift) // Only dodge if boots equipped
+            && !IsDodging && DodgeCooldownTimer <= 0 && AlienEnergy >= DodgeEnergyCost)
+        { StartCoroutine(Dodge()); }
+    }
+
+    IEnumerator Dodge()
+    {
+        IsDodging = true; // Set Dodging State
+        AlienEnergy -= DodgeEnergyCost; // Consume Energy
+
+        Vector3 DodgeDir = MoveDir.magnitude > 0.1f ? MoveDir.normalized : transform.forward; // Dodge in move direction or forward
+        float Timer = 0f;
+
+        Controller.enabled = false; // Disable Collision for Phase Effect
+
+        while (Timer < DodgeDuration)
+        {
+            Timer += Time.deltaTime;
+            Vector3 DodgeMove = DodgeDir * (DodgeDistance / DodgeDuration) * Time.deltaTime;
+            DodgeMove.y = 0f; // Lock Y to prevent phasing through floor
+            transform.position += DodgeMove;
+            yield return null;
+        }
+
+        Controller.enabled = true; // Re-enable Collision after Phase
+        DodgeCooldownTimer = DodgeCooldown; // Start Cooldown
+        IsDodging = false; // End Dodge
     }
 
 
@@ -262,9 +328,17 @@ public class PlayerController : MonoBehaviour, I_Damage
 
 
     //===[Damage]===\\
-    public void TakeDamage(int Amount, bool AlienTech) 
+    public void TakeDamage(int Amount, bool AlienTech)
     {
-        Shield -= Amount;
+        if (HasEnergyConverter) // Only absorb damage if Energy Converter is equipped
+        {
+            float AbsorbedAmount = Amount * AbsorbRatio; // Calculate Absorbed Amount
+            AlienEnergy = Mathf.Min(AlienEnergy + AbsorbedAmount, AlienEnergyMax); // Add to Alien Energy
+            Amount = (int)(Amount - AbsorbedAmount); // Reduce actual damage by absorbed amount
+        }
+
+        if (Shield > 0) { Shield -= Amount; }
+
         if (Shield <= 0)
         {
             if (CurrMomentum > 0)
@@ -273,17 +347,17 @@ public class PlayerController : MonoBehaviour, I_Damage
                 CurrMomentum *= (1f - DamageRatio);
             }
 
-            Health -= Amount; // Subtract Health by Amount
-            if (Health <= 0) // If Health is Less Than or Equal To 0...
+            Health -= Amount;
+            if (Health <= 0)
             {
                 GameManager.Instance.YouLose();
-
                 Death();
-            } // Destroy the Object
+            }
             StartCoroutine(FlashDamageScreen());
-        } else { FlashShieldScreen(); }
+        }
+        else { StartCoroutine(FlashShieldScreen()); }
 
-
+        UpdatePlayerUI();
     }
 
     public void Death()
@@ -338,52 +412,47 @@ public class PlayerController : MonoBehaviour, I_Damage
 
     void HandleWallRun()
     {
+        if (!HasPhaseBoots) return; // Wall Run requires Phase Boots
+
         if (!IsExitWallRun)
-        {        // Step 1 -- Wall Run Timer
+        {
             if (WallRunTimer >= MaxWallRunTime) { IsWallRunning = false; WallRunTimer = 0; }
             {
                 WallRunTimer += Time.deltaTime;
-
-                // Step 2 -- Wall Check
                 CheckForWall();
 
-                // Step 3 -- Wall Run Check
                 if ((IsRightWall || IsLeftWall) && MoveDir.magnitude > 0.1f && AboveGround() && !Controller.isGrounded && !IsExitWallRun)
-                { IsWallRunning = true; }
+                { IsWallRunning = true; } 
                 else { IsWallRunning = false; }
 
-                // Step 4 -- Wall Run
                 if (IsWallRunning) { WallRunMovement(); }
             }
         }
-        else 
+        else
         {
-            if (ExitTimer >= ExitTime)
-            {
-                IsExitWallRun = false;
-                ExitTimer = 0;
-            }
+            if (ExitTimer >= ExitTime) { IsExitWallRun = false; ExitTimer = 0; }
             else { ExitTimer += Time.deltaTime; }
-                
         }
-
     }
 
     void WallRunMovement()
     {
-        PlayerVel.y -= Gravity * Time.deltaTime; // Apply Gravity while Wall Running
-        PlayerVel.y += GravityCounterForce * Time.deltaTime; // Counter Gravity to slow the fall
+        if (AlienEnergy <= 0) { IsWallRunning = false; return; } // Stop Wall Run if no Energy
+        AlienEnergy = Mathf.Max(AlienEnergy - WallRunEnergyCost * Time.deltaTime, 0); // Drain Energy while Wall Running
 
-        Vector3 Normal = IsRightWall ? RightWall.normal : LeftWall.normal; // Get Wall Normal
-        Vector3 WallForward = Vector3.Cross(Normal, transform.up); // Calculate Wall Forward Direction
+        PlayerVel.y -= Gravity * Time.deltaTime;
+        PlayerVel.y += GravityCounterForce * Time.deltaTime;
+
+        Vector3 Normal = IsRightWall ? RightWall.normal : LeftWall.normal;
+        Vector3 WallForward = Vector3.Cross(Normal, transform.up);
 
         if ((transform.forward - WallForward).magnitude > (transform.forward - -WallForward).magnitude)
         { WallForward = -WallForward; }
 
-        if (Vector3.Dot(WallForward, transform.forward) < 0) // If Wall Forward is behind the Player...
-        { WallForward = -WallForward; } // Flip Wall Forward Direction
+        if (Vector3.Dot(WallForward, transform.forward) < 0)
+        { WallForward = -WallForward; }
 
-        float VerticalDot = Vector3.Dot(Camera.main.transform.forward, Vector3.up); // How much Camera is pointing Up or Down (-1 to 1)
+        float VerticalDot = Vector3.Dot(Camera.main.transform.forward, Vector3.up);
         PlayerVel.y = VerticalDot * Speed;
     }
 
@@ -405,25 +474,26 @@ public class PlayerController : MonoBehaviour, I_Damage
     //===[Hook Shot Parkour]===\\
     void StartGrapple()
     {
+        if (!HasPhaseBoots) return; // Grapple requires Phase Boots
         Debug.Log("StartGrapple Called");
-        if (GrapplingCooldownTimer > 0)
-        {
-            Debug.Log("On Cooldown: " + GrapplingCooldownTimer + " / " + 0);
-            return;
-        }
+
+        if (GrapplingCooldownTimer > 0) { Debug.Log("On Cooldown"); return; }
+        if (AlienEnergy < GrappleEnergyCost) { Debug.Log("Not enough energy"); return; } // Guard
+
         RaycastHit GrappleHit;
         if (Physics.Raycast(CamTransform.position, CamTransform.forward, out GrappleHit, MaxGrappleDistance))
         {
             if (GrappleHit.collider.CompareTag("Grapple"))
             {
                 IsGrapple = true;
+                AlienEnergy -= GrappleEnergyCost; // Consume Energy on Grapple
                 Debug.Log("Grapple Started");
                 GrapplePoint = GrappleHit.point;
                 Debug.Log("Grapple Hit: " + GrappleHit.collider.name + " at " + GrapplePoint);
-                Invoke(nameof(Grapple), GrappleDelayTime);
+                AttemptGrapple = true;
                 GrappleLine.enabled = true;
                 GrappleLine.positionCount = RopePoints;
-                StartCoroutine(ExtendGrappleLine(GrapplePoint)); // Extend to Grapple Point
+                StartCoroutine(ExtendGrappleLine(GrapplePoint));
             }
             else { Debug.Log("Hit " + GrappleHit.collider.name + " but not tagged Grapple"); }
         }
@@ -468,5 +538,13 @@ public class PlayerController : MonoBehaviour, I_Damage
         PlayerVel.y = GrappleDir.y * LaunchForce; // Apply vertical launch
 
         Debug.Log("Launch Force: " + LaunchForce); // Debug — check the actual force value
+    }
+
+
+    //===[Swing]===\\
+
+    void StartSwing() 
+    {
+
     }
 }

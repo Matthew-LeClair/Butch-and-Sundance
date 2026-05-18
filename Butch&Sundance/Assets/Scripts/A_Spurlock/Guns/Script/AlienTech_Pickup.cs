@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-public class AlienTech_Pickup : MonoBehaviour
+public class AlienTech_Pickup : PickUp_Interact
 {
     //===[Enums]===\\
     public enum GunTypeMod
@@ -21,57 +21,18 @@ public class AlienTech_Pickup : MonoBehaviour
     [Header("Config")]
     [SerializeField] public GunTypeMod puTypeMod;
     [SerializeField] public int ModCount;
-    [Header("Visual")]
-    [SerializeField] public Renderer Mat;
-    [SerializeField] public Material Outline;
-    Material OriginalMat;
 
-    bool InRange;
-
-    private void Update()
+    public override void EventPickUp() 
     {
-        if (InRange) 
+        if (GameManager.Instance.Player.GetComponentInParent<PlayerController>().pGun.aTech != null)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            GameManager.Instance.Player.GetComponentInParent<PlayerController>().pGun.aTech.typeMod = puTypeMod;
+            Debug.Log("Gun Type: " + puTypeMod);
+            GameManager.Instance.Player.GetComponentInParent<PlayerController>().pGun.aTech.SwitchGun(); // Switch the Gun
+            for (global::System.Int32 i = 0; i < ModCount; i++)
             {
-                if (GameManager.Instance.Player.GetComponentInParent<PlayerController>().pGun.aTech != null)
-                {
-                    GameManager.Instance.Player.GetComponentInParent<PlayerController>().pGun.aTech.typeMod = puTypeMod;
-                    Debug.Log("Gun Type: " +  puTypeMod);
-                    GameManager.Instance.Player.GetComponentInParent<PlayerController>().pGun.aTech.SwitchGun(); // Switch the Gun
-                    for (global::System.Int32 i = 0; i < ModCount; i++)
-                    {
-                        GameManager.Instance.Player.GetComponentInParent<PlayerController>().pGun.aTech.AddMod();
-                    } // Apply each Mod
-                }
-            }
-            if (Input.GetKeyUp(KeyCode.E)) { Destroy(gameObject); } // Destroy the Pickup
+                GameManager.Instance.Player.GetComponentInParent<PlayerController>().pGun.aTech.AddMod();
+            } // Apply each Mod
         }
     }
-
-    private void Start()
-    {
-        if (Mat != null && Outline != null)
-        {
-            OriginalMat = Mat.material; // Store Original Material
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            Mat.material = Outline; // Apply Outline Material
-            InRange = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            Mat.material = OriginalMat; // Apply Outline Material
-            InRange = false;
-        }
-    }
-    }
+}

@@ -86,18 +86,22 @@ public class CameraController : MonoBehaviour
 
         if (PC.IsWallRunning) // If the Player is Wall Running...
         {
-            TargetFOV = WallRunFOV; // Target Wall Run FOV
-            TargetTilt = PC.IsRightWall ? WallRunTilt : -WallRunTilt; // Tilt toward the Wall
+            TargetFOV = WallRunFOV;
+            TargetTilt = PC.IsRightWall ? WallRunTilt : -WallRunTilt;
         }
-        else // If not Wall Running...
+        else if (PC.pGun.IsAiming && !PC.IsGrapple) // If Aiming and not Grappling...
         {
-            TargetFOV = Mathf.Lerp(MomentumFOVMin, MomentumFOVMax, // Return to Momentum FOV
-                PC.CurrMomentum / 50f);
-            TargetTilt = 0f; // Return Tilt to Zero
+            TargetFOV = PC.AimFOV; // Zoom in when Aiming
+            TargetTilt = 0f;
+        }
+        else
+        {
+            TargetFOV = Mathf.Lerp(MomentumFOVMin, MomentumFOVMax, PC.CurrMomentum / 50f);
+            TargetTilt = 0f;
         }
 
-        Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, TargetFOV, WallRunTiltSpeed * Time.deltaTime); // Smoothly Blend FOV
-        CurrentTilt = Mathf.Lerp(CurrentTilt, TargetTilt, WallRunTiltSpeed * Time.deltaTime); // Smoothly Blend Tilt
-        transform.localRotation = Quaternion.Euler(CamRotX, 0, CurrentTilt); // Apply Tilt to Camera Rotation
+        Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, TargetFOV, WallRunTiltSpeed * Time.deltaTime);
+        CurrentTilt = Mathf.Lerp(CurrentTilt, TargetTilt, WallRunTiltSpeed * Time.deltaTime);
+        transform.localRotation = Quaternion.Euler(CamRotX, 0, CurrentTilt);
     }
 }
