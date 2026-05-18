@@ -540,10 +540,6 @@ MonoBehaviour:
   CamIgnoreLayer:
     serializedVersion: 2
     m_Bits: 8
-  SwayAmount: 0.05
-  SwaySpeed: 8
-  BobAmount: 0.05
-  BobSpeed: 12
   MomentumFOVMin: 60
   MomentumFOVMax: 70
   WallRunFOV: 75
@@ -1057,7 +1053,7 @@ MonoBehaviour:
   pGun: {fileID: 2776064752822907975}
   HasPhaseBoots: 1
   HasEnergyConverter: 1
-  SpeedBase: 7
+  SpeedBase: 5
   Speed: 0
   JumpSpeedBase: 10
   WhatIsWall:
@@ -1076,6 +1072,11 @@ MonoBehaviour:
   MinJumpHeight: 2
   IsRightWall: 0
   GravityCounterForce: 0
+  RopeMode: 0
+  SwingHoldThreshold: 0.2
+  PredictionSphereCastRadius: 3
+  PredictionPoint: {fileID: 0}
+  PredictionPrefab: {fileID: 3318435204082315909, guid: 94597fbe5a041ca47bebc7f48e0d8ed7, type: 3}
   Cam: {fileID: 7459162486821116028}
   CamTransform: {fileID: 2232769458087304895}
   GrappleLine: {fileID: 0}
@@ -1083,7 +1084,6 @@ MonoBehaviour:
   RopeSag: 2
   MaxGrappleDistance: 25
   GrappleDelayTime: 0.3
-  GrapplingCooldown: 1
   IsGrapple: 0
   GrappleForceMultiplier: 5
   MaxSwingDistance: 25
@@ -1091,6 +1091,10 @@ MonoBehaviour:
   SwingLengthMin: 5
   SwingLengthMax: 25
   SwingLengthChangeSpeed: 5
+  HorizontalThrustForce: 1000
+  ForwardThrustForce: 2000
+  ExtendCableSpeed: 20
+  SwingPassiveForwardForce: 8
   BaseMomentumBuildRate: 1
   MomentumDecayRate: 0.4
   MomentumBuildRate: 0
