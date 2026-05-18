@@ -907,7 +907,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   Controller: {fileID: 1156401263190982702}
-  Render: {fileID: 6497123759800140750}
   Health: 0
   HealthMax: 1000
   Shield: 500
@@ -934,6 +933,16 @@ MonoBehaviour:
   MinJumpHeight: 2
   IsRightWall: 0
   GravityCounterForce: 0
+  WhatCanHook:
+    serializedVersion: 2
+    m_Bits: 0
+  Cam: {fileID: 7459162486821116028}
+  GrappleLine: {fileID: 0}
+  CamTransform: {fileID: 2232769458087304895}
+  MaxGrappleDistance: 0
+  GrappleDelayTime: 0
+  GrapplingCooldown: 0
+  GrappleForceMultiplier: 0.1
   BaseMomentumBuildRate: 1
   MomentumDecayRate: 0.4
   MomentumBuildRate: 0

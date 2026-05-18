@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Grapple
   layers:
   - Default
   - TransparentFX
@@ -17,9 +18,9 @@ TagManager:
   - Environment
   - WallRun
   - WallClimb
+  - Grapple
+  - Parkour
   - Ground
-  - 
-  - 
   - 
   - 
   - 

@@ -60,10 +60,12 @@ public class PlayerController : MonoBehaviour, I_Damage
     public float GravityCounterForce;
 
     [Header("Hook Shot")]
-    public LayerMask WhatCanHook;
     [SerializeField] GameObject Cam;
-    public LineRenderer GrappleLine;
     public Transform CamTransform;
+
+    public LineRenderer GrappleLine;
+    [SerializeField] int RopePoints = 20; // Number of points in the rope
+    [SerializeField] float RopeSag = 2f; // How much the rope sags
 
     public float MaxGrappleDistance;
     public float GrappleDelayTime;
@@ -113,24 +115,44 @@ public class PlayerController : MonoBehaviour, I_Damage
     }
 
     // Update is called once per frame
-    public void Update()
+    void Update()
     {
         if (GrapplingCooldownTimer > 0)
-        { GrapplingCooldownTimer -= Time.deltaTime; } // Count Down Cooldown Timer
+        { GrapplingCooldownTimer -= Time.deltaTime; }
 
-        if (IsGrapple) 
-        { GrappleLine.SetPosition(0, new Vector3(CamTransform.position.x, CamTransform.position.y - .5f, CamTransform.position.z)); }
+        if (IsGrapple)
+        {
+            UpdateRopePoints(new Vector3(CamTransform.position.x, CamTransform.position.y - .5f, CamTransform.position.z), GrapplePoint);
+
+            MomentumVelocity = Vector3.MoveTowards(        // Bleed off Momentum Velocity during Grapple
+                MomentumVelocity, Vector3.zero,
+                Speed * 2f * Time.deltaTime);
+
+            if (Vector3.Distance(transform.position, GrapplePoint) < 2f)
+            {
+                GrapplingCooldownTimer = GrapplingCooldown;
+                GrappleLine.enabled = false;
+                IsGrapple = false;
+                MomentumVelocity = Vector3.zero;
+            }
+        }
         else
         {
             Debug.DrawRay(CamTransform.position, CamTransform.forward * pGun.ShootDistance, Color.red);
-
             IsMoving = Mathf.Abs(Input.GetAxis("Horizontal")) > 0.1f
                 || Mathf.Abs(Input.GetAxis("Vertical")) > 0.1f;
-
-            Movement(); // Moves once per frame for better smoothing
+            Movement();
         }
 
-        // Always apply velocity regardless of grapple state
+        // Called In Update to Prevent Errors with Grapple
+        if (Input.GetKeyDown(KeyCode.Q)) // Quit Grapple Input for just in case
+        {
+            GrapplingCooldownTimer = GrapplingCooldown;
+            GrappleLine.enabled = false;
+            IsGrapple = false;
+            MomentumVelocity = Vector3.zero;
+        }
+
         Controller.Move(MomentumVelocity * Time.deltaTime);
         Controller.Move(PlayerVel * Time.deltaTime);
         PlayerVel.y -= Gravity * Time.deltaTime;
@@ -147,7 +169,7 @@ public class PlayerController : MonoBehaviour, I_Damage
         if (Input.GetButton("Fire1"))
         { pGun.Shoot(); Shot = true; }
 
-        if (Input.GetKeyDown(KeyCode.Q)) { StartGrapple(); }
+        if (Input.GetKeyDown(KeyCode.Tab)) { StartGrapple(); }
     }
 
 
@@ -383,34 +405,55 @@ public class PlayerController : MonoBehaviour, I_Damage
     //===[Hook Shot Parkour]===\\
     void StartGrapple()
     {
-        Debug.Log("StartGrapple Called"); // Debug — StartGrapple was called
-
+        Debug.Log("StartGrapple Called");
         if (GrapplingCooldownTimer > 0)
         {
-            Debug.Log("On Cooldown: " + GrapplingCooldownTimer + " / " + 0); // Debug — Still on cooldown
+            Debug.Log("On Cooldown: " + GrapplingCooldownTimer + " / " + 0);
             return;
         }
-
-        IsGrapple = true;
-        Debug.Log("Grapple Started"); // Debug — Grapple is firing
-
         RaycastHit GrappleHit;
-        if (Physics.Raycast(CamTransform.position, CamTransform.forward, out GrappleHit, MaxGrappleDistance, WhatCanHook))
+        if (Physics.Raycast(CamTransform.position, CamTransform.forward, out GrappleHit, MaxGrappleDistance))
         {
-            GrapplePoint = GrappleHit.point;
-            Debug.Log("Grapple Hit: " + GrappleHit.collider.name + " at " + GrapplePoint); // Debug — What was hit
-            Invoke(nameof(Grapple), GrappleDelayTime);
+            if (GrappleHit.collider.CompareTag("Grapple"))
+            {
+                IsGrapple = true;
+                Debug.Log("Grapple Started");
+                GrapplePoint = GrappleHit.point;
+                Debug.Log("Grapple Hit: " + GrappleHit.collider.name + " at " + GrapplePoint);
+                Invoke(nameof(Grapple), GrappleDelayTime);
+                GrappleLine.enabled = true;
+                GrappleLine.positionCount = RopePoints;
+                StartCoroutine(ExtendGrappleLine(GrapplePoint)); // Extend to Grapple Point
+            }
+            else { Debug.Log("Hit " + GrappleHit.collider.name + " but not tagged Grapple"); }
         }
-        else
-        {
-            GrapplePoint = CamTransform.position + (CamTransform.forward * MaxGrappleDistance);
-            Debug.Log("Grapple Missed — firing to max distance"); // Debug — Nothing was hit
-            Invoke(nameof(Grapple), GrappleDelayTime);
-        }
+        else { Debug.Log("Grapple Missed — nothing hit"); }
+    }
 
-        GrappleLine.enabled = true;
-        Debug.Log("Line Renderer Enabled: " + GrappleLine.enabled); // Debug — Line Renderer state
-        GrappleLine.SetPosition(1, GrapplePoint);
+    IEnumerator ExtendGrappleLine(Vector3 Target)
+    {
+        float Timer = 0f;
+        GrappleLine.positionCount = RopePoints; // Set number of rope points
+
+        while (Timer < GrappleDelayTime)
+        {
+            Timer += Time.deltaTime;
+            float Percent = Timer / GrappleDelayTime; // 0 to 1 over Delay Time
+            UpdateRopePoints(CamTransform.position, Vector3.Lerp(CamTransform.position, Target, Percent)); // Extend rope
+            yield return null;
+        }
+    }
+
+    void UpdateRopePoints(Vector3 Start, Vector3 End)
+    {
+        for (int i = 0; i < RopePoints; i++)
+        {
+            float t = i / (float)(RopePoints - 1); // 0 to 1 along rope
+            Vector3 Point = Vector3.Lerp(Start, End, t); // Linear point along rope
+            float Sag = Mathf.Sin(t * Mathf.PI) * RopeSag * (1f - t * 0.5f); // Sag peaks in middle
+            Point.y -= Sag; // Apply sag downward
+            GrappleLine.SetPosition(i, Point); // Set rope point
+        }
     }
 
     void Grapple()
@@ -420,23 +463,10 @@ public class PlayerController : MonoBehaviour, I_Damage
         Vector3 GrappleDir = (GrapplePoint - transform.position).normalized;
         float GrappleDist = Vector3.Distance(transform.position, GrapplePoint);
 
-        MomentumVelocity = GrappleDir * (Speed + GrappleDist * GrappleForceMultiplier);
-        PlayerVel.y = GrappleDir.y * (Speed + GrappleDist * GrappleForceMultiplier);
+        float LaunchForce = GrappleDist * GrappleForceMultiplier; // Force purely based on distance
+        MomentumVelocity = GrappleDir * LaunchForce; // Apply horizontal launch
+        PlayerVel.y = GrappleDir.y * LaunchForce; // Apply vertical launch
 
-        EndGrapple();
-    }
-
-    void EndGrapple()
-    {
-        GrapplingCooldownTimer = GrapplingCooldown; // Start Cooldown Timer
-        GrappleLine.enabled = false;
-        StartCoroutine(EndGrappleWhenAirborne());
-    }
-
-    IEnumerator EndGrappleWhenAirborne()
-    {
-        yield return new WaitForSeconds(1.4f); // Wait until Player leaves Ground
-        IsGrapple = false;
-        MomentumVelocity = Vector3.zero; // Zero out Momentum Velocity on Grapple End
+        Debug.Log("Launch Force: " + LaunchForce); // Debug — check the actual force value
     }
 }
