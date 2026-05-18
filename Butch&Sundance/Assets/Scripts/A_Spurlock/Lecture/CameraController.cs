@@ -6,15 +6,9 @@ public class CameraController : MonoBehaviour
     [SerializeField] int LockVertMin, LockVertMax;
     [SerializeField] LayerMask CamIgnoreLayer;
 
-    [Header("Sway & Bob")]
-    [SerializeField] float SwayAmount = 0.05f; // How much the Camera sways on horizontal input
-    [SerializeField] float SwaySpeed = 8f; // How fast the Sway returns to center
-    [SerializeField] float BobAmount = 0.05f; // How much the Camera bobs while moving
-    [SerializeField] float BobSpeed = 12f; // How fast the Camera bobs
+    [Header("Wall Run")]
     [SerializeField] float MomentumFOVMin = 60f; // FOV at zero momentum
     [SerializeField] float MomentumFOVMax = 70f; // FOV at full momentum
-
-    [Header("Wall Run")]
     [SerializeField] float WallRunFOV = 75f; // FOV during Wall Run
     [SerializeField] float WallRunTilt = 15f; // Camera Tilt during Wall Run
     [SerializeField] float WallRunTiltSpeed = 8f; // How fast the Tilt applies and returns
@@ -24,22 +18,17 @@ public class CameraController : MonoBehaviour
     [SerializeField] Transform Player;
     [SerializeField] Camera Cam;
     [SerializeField] PlayerController PC; // Cached Player Controller
-
     float CamRotX;
-    float BobTimer;
-    Vector3 CamBasePos; // Base Position of the Camera
 
     void Start()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        CamBasePos = transform.localPosition; // Store Base Position on Start
     }
 
     void Update()
     {
         LookAround();
-        HandleSway();
         HandleWallRunEffects(); // Add this
     }
 
@@ -51,32 +40,7 @@ public class CameraController : MonoBehaviour
         CamRotX -= MouseY;
         CamRotX = Mathf.Clamp(CamRotX, LockVertMin, LockVertMax);
 
-        transform.localRotation = Quaternion.Euler(CamRotX, 0, 0);
         Player.transform.Rotate(Vector3.up * MouseX);
-    }
-
-    void HandleSway()
-    {
-        float TargetSwayX = Input.GetAxisRaw("Horizontal") * -SwayAmount;
-        float TargetSwayY = Input.GetAxisRaw("Vertical") * -SwayAmount;
-
-        bool IsMoving = Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0.1f
-            || Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0.1f;
-
-        if (IsMoving && PC.Controller.isGrounded) // Only Bob while Moving on the Ground
-        {
-            float MomentumPercent = PC.CurrMomentum / 50f;
-            BobTimer += Time.deltaTime * (BobSpeed * (1f + MomentumPercent * 0.5f));
-            CamBasePos.y += Mathf.Sin(BobTimer) * BobAmount * (1f + MomentumPercent);
-        }
-        else
-        {
-            BobTimer = 0;
-            CamBasePos.y = Mathf.Lerp(CamBasePos.y, transform.localPosition.y, SwaySpeed * Time.deltaTime); // Reset Base Y when not bobbing
-        }
-
-        Vector3 TargetPos = CamBasePos + new Vector3(TargetSwayY, TargetSwayX, 0);
-        transform.localPosition = Vector3.Lerp(transform.localPosition, TargetPos, SwaySpeed * Time.deltaTime);
     }
 
     void HandleWallRunEffects()
