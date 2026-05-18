@@ -538,7 +538,7 @@ MonoBehaviour:
   LockVertMax: 45
   CamIgnoreLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   SwayAmount: 0.05
   SwaySpeed: 8
   BobAmount: 0.05
@@ -700,10 +700,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cc324d9ef7382d4fae965f5a27c8f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AlienTech
-  puTypeMod: 0
-  ModCount: 0
   Mat: {fileID: 0}
   Outline: {fileID: 0}
+  puTypeMod: 0
+  ModCount: 0
   typeMod: 0
   pGun: {fileID: 2776064752822907975}
   eGun: {fileID: 0}
@@ -913,7 +913,21 @@ MonoBehaviour:
   ShieldMax: 0
   AlienEnergy: 100
   AlienEnergyMax: 0
+  AlienEnergyRegenRate: 5
+  AlienEnergyRegenCap: 25
+  WallRunEnergyCost: 5
+  GrappleEnergyCost: 10
+  AimEnergyCost: 3
+  AbsorbRatio: 0.3
+  DodgeEnergyCost: 15
+  DodgeDistance: 5
+  DodgeDuration: 0.2
+  DodgeCooldown: 1
+  AimFOV: 40
+  AimDamageMultiplier: 1.5
   pGun: {fileID: 2776064752822907975}
+  HasPhaseBoots: 0
+  HasEnergyConverter: 0
   SpeedBase: 7
   Speed: 0
   JumpSpeedBase: 10
@@ -933,16 +947,21 @@ MonoBehaviour:
   MinJumpHeight: 2
   IsRightWall: 0
   GravityCounterForce: 0
-  WhatCanHook:
-    serializedVersion: 2
-    m_Bits: 0
   Cam: {fileID: 7459162486821116028}
-  GrappleLine: {fileID: 0}
   CamTransform: {fileID: 2232769458087304895}
-  MaxGrappleDistance: 0
-  GrappleDelayTime: 0
-  GrapplingCooldown: 0
-  GrappleForceMultiplier: 0.1
+  GrappleLine: {fileID: 0}
+  RopePoints: 20
+  RopeSag: 2
+  MaxGrappleDistance: 25
+  GrappleDelayTime: 0.3
+  GrapplingCooldown: 1
+  IsGrapple: 0
+  GrappleForceMultiplier: 5
+  MaxSwingDistance: 25
+  SwingSpeed: 10
+  SwingLengthMin: 5
+  SwingLengthMax: 25
+  SwingLengthChangeSpeed: 5
   BaseMomentumBuildRate: 1
   MomentumDecayRate: 0.4
   MomentumBuildRate: 0

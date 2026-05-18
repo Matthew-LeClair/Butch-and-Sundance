@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using Unity.VisualScripting;
+using UnityEngine.XR.LegacyInputHelpers;
 
 public class PlayerController : MonoBehaviour, I_Damage
 {
@@ -89,7 +90,14 @@ public class PlayerController : MonoBehaviour, I_Damage
     [SerializeField] public float GrappleForceMultiplier = 0.1f;
 
     [Header("Swinging")]
-    [SerializeField] public float MaxSwingDistance = 25f;
+    [SerializeField] public float MaxSwingDistance;
+    [SerializeField] public float SwingSpeed = 10f; // How fast the player swings
+    [SerializeField] public float SwingLengthMin = 5f; // Minimum rope length
+    [SerializeField] public float SwingLengthMax = 25f; // Maximum rope length
+    [SerializeField] public float SwingLengthChangeSpeed = 5f; // How fast rope length changes
+    private float CurrentSwingLength; // Current rope length
+    private bool IsSwinging; // Is the player currently swinging
+    private Vector3 SwingPoint; // The point the player is swinging from
 
     [Header("Momentum")]
     [SerializeField] public float BaseMomentumBuildRate;
@@ -162,11 +170,16 @@ public class PlayerController : MonoBehaviour, I_Damage
         // Called In Update to Prevent Errors with Grapple
         if (Input.GetKeyDown(KeyCode.Q)) // Quit Grapple Input for just in case
         {
-            GrapplingCooldownTimer = GrapplingCooldown;
-            GrappleLine.enabled = false;
-            IsGrapple = false;
-            MomentumVelocity = Vector3.zero;
-            AttemptGrapple = false;
+            if (IsGrapple) 
+            {
+                GrapplingCooldownTimer = GrapplingCooldown;
+                GrappleLine.enabled = false;
+                IsGrapple = false;
+                MomentumVelocity = Vector3.zero;
+                AttemptGrapple = false;
+            }
+
+            if (IsSwinging) { StopSwing(); } // Also stop swing on Q
         }
 
         Controller.Move(MomentumVelocity * Time.deltaTime);
@@ -179,13 +192,21 @@ public class PlayerController : MonoBehaviour, I_Damage
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         { pGun.Reload(); Reloaded = true; }
 
-        if (Input.GetButtonDown("Fire2") && (!HasPhaseBoots || AlienEnergy > 0)) // Allow Aim always, but energy cost only if boots equipped
-        { pGun.Aim(); Aimed = true; if (HasPhaseBoots) { Time.timeScale = 0.5f; Time.fixedDeltaTime = 0.02f * Time.timeScale; } }
+        if (Input.GetButtonDown("Fire2") && (!HasPhaseBoots || AlienEnergy > 0))
+        {
+            pGun.Aim();
+            Aimed = true;
+            if (HasPhaseBoots && !IsGrapple && !IsSwinging) // Only slow time if not Grappling or Swinging
+            {
+                Time.timeScale = 0.5f;
+                Time.fixedDeltaTime = 0.02f * Time.timeScale;
+            }
+        }
 
         if (Input.GetButtonUp("Fire2"))
         {
-            if (!AttemptGrapple) { pGun.Aim(); }
-            else { StartSwing(); }
+            if (!AttemptGrapple && !IsSwinging) { pGun.Aim(); }
+            else if (AttemptGrapple) { StartSwing(); }
             Time.timeScale = 1f;
             Time.fixedDeltaTime = 0.02f;
         }
@@ -257,7 +278,8 @@ public class PlayerController : MonoBehaviour, I_Damage
 
         Jump();
         HandleWallRun();
-        
+        HandleSwing(); // Handle Swing Physics
+
         if (!IsWallRunning)
         {
             if (InputDir.magnitude > 0.1f) // If there is Input...
@@ -543,8 +565,72 @@ public class PlayerController : MonoBehaviour, I_Damage
 
     //===[Swing]===\\
 
-    void StartSwing() 
+    void StartSwing()
     {
+        if (!HasPhaseBoots) return; // Swing requires Phase Boots
 
+        RaycastHit SwingHit;
+        if (Physics.Raycast(CamTransform.position, CamTransform.forward, out SwingHit, MaxSwingDistance))
+        {
+            if (SwingHit.collider.CompareTag("Grapple")) // Only swing on Grapple tagged objects
+            {
+                IsSwinging = true;
+                SwingPoint = SwingHit.point; // Set Swing Point
+                CurrentSwingLength = Vector3.Distance(transform.position, SwingPoint); // Set initial rope length
+                GrappleLine.enabled = true;
+                GrappleLine.positionCount = RopePoints;
+                Debug.Log("Swing Started at: " + SwingPoint);
+            }
+        }
+    }
+
+    void StopSwing()
+    {
+        IsSwinging = false; // Stop Swinging
+        GrappleLine.enabled = false; // Disable Rope
+        Debug.Log("Swing Stopped");
+    }
+
+    void HandleSwing()
+    {
+        if (!IsSwinging) return;
+
+        // Change rope length with scroll wheel
+        float Scroll = Input.GetAxis("Mouse ScrollWheel"); // Get Scroll Wheel Input
+        if (Scroll != 0)
+        {
+            CurrentSwingLength = Mathf.Clamp( // Clamp rope length
+                CurrentSwingLength - Scroll * SwingLengthChangeSpeed, // Change length by scroll
+                SwingLengthMin, // Min length
+                SwingLengthMax); // Max length
+        }
+
+        // Stop swing on key release
+        if (Input.GetButtonUp("Fire2")) { StopSwing(); return; }
+
+        Vector3 DirToPoint = SwingPoint - transform.position; // Direction to Swing Point
+        float DistToPoint = DirToPoint.magnitude; // Distance to Swing Point
+
+        // Pull toward swing point if rope is taut
+        if (DistToPoint > CurrentSwingLength) // If rope is taut...
+        {
+            Vector3 Pull = DirToPoint.normalized * (DistToPoint - CurrentSwingLength); // Calculate Pull Force
+            MomentumVelocity += Pull * SwingSpeed * Time.deltaTime; // Apply Pull to Momentum
+        }
+
+        // Apply gravity while swinging
+        PlayerVel.y -= Gravity * Time.deltaTime; // Apply Gravity while Swinging
+
+        // Omni directional — apply mouse input as swing direction influence
+        float MouseX = Input.GetAxisRaw("Mouse X") * 0.1f; // Get Mouse X Input
+        float MouseY = Input.GetAxisRaw("Mouse Y") * 0.1f; // Get Mouse Y Input
+        Vector3 SwingInfluence = transform.right * MouseX + transform.up * MouseY; // Combine into Swing Influence
+        MomentumVelocity += SwingInfluence * SwingSpeed * Time.deltaTime; // Apply Swing Influence
+
+        // Update rope visual
+        UpdateRopePoints(new Vector3(
+            CamTransform.position.x,
+            CamTransform.position.y - 0.5f,
+            CamTransform.position.z), SwingPoint); // Update Rope Points
     }
 }
