@@ -53,12 +53,6 @@ public class CameraController : MonoBehaviour
 
         transform.localRotation = Quaternion.Euler(CamRotX, 0, 0);
         Player.transform.Rotate(Vector3.up * MouseX);
-
-        // Prevent Camera from clipping into walls
-        RaycastHit CamHit;
-        Vector3 DirToCamera = transform.position - Player.position; // Direction from Player to Camera
-        if (Physics.Raycast(Player.position, DirToCamera.normalized, out CamHit, DirToCamera.magnitude, ~CamIgnoreLayer))
-        { transform.position = CamHit.point; }
     }
 
     void HandleSway()
