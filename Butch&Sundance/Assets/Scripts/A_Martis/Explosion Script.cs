@@ -30,29 +30,27 @@ public class ExplosionScript : MonoBehaviour
 
         List<I_Damage> DamagedObjects = new List<I_Damage>();
 
-        foreach (Collider c in Hits)
-        {
-            if (c.gameObject == gameObject) continue;
-
-            I_Damage damageTarget = c.GetComponentInParent<I_Damage>();
-            
-            if (damageTarget != null && !DamagedObjects.Contains(damageTarget))
-            {
-                damageTarget.TakeDamage(damage, IsAlienTech);
-
-                DamagedObjects.Add(damageTarget);
-            }
-        }
-
         if (destroyAfterExplode)
         {
             Destroy(gameObject);
         }
-    }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, radius);
+        foreach (Collider c in Hits)
+        {
+            I_Damage damageTarget = c.GetComponentInParent<I_Damage>();
+
+            if (damageTarget ==  null || damageTarget == (I_Damage)GetComponent<I_Damage>())
+            {
+                continue;
+            }
+
+            if(!DamagedObjects.Contains(damageTarget))
+            {
+                damageTarget.TakeDamage(damage, IsAlienTech);
+                {
+                    DamagedObjects.Add(damageTarget);
+                }
+            }
+        }
     }
 }

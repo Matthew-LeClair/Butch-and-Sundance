@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public Image PlayerShieldHP_Bar;
     public GameObject PlayerDamage_Screen;
     public GameObject PlayerShield_Screen;
+    public GameObject CheckpointPopup;
+    public GameObject PlayerStartPos;
 
     public bool IsPaused; // IsPaused Bool
     public GameObject Player; // Player GameObject

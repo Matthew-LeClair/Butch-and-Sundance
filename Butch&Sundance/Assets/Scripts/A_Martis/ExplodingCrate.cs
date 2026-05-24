@@ -17,6 +17,7 @@ public class ExplodingCrate : MonoBehaviour, I_Damage
     ExplosionScript explosion;
 
     bool isFlashing;
+    bool destroyed;
 
     void Awake()
     {
@@ -36,6 +37,8 @@ public class ExplodingCrate : MonoBehaviour, I_Damage
 
     public void TakeDamage(int amount, bool AlienTech)
     {
+        if (destroyed) return;
+
         currentHP -= amount;
 
         if (!isFlashing)
@@ -45,7 +48,16 @@ public class ExplodingCrate : MonoBehaviour, I_Damage
 
         if (currentHP <= 0)
         {
-            explosion.Explode();
+            destroyed = true;
+            if (explosion != null)
+            {
+                explosion.Explode();
+            }
+            else
+            {
+                Debug.Log(transform.root.name);
+                Destroy(transform.root.gameObject);
+            }
         }
     }
 
