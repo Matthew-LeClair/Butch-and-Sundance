@@ -18,7 +18,10 @@ public class EnemyAI : EnemyBase
         base.Start();
         agent.speed = MoveSpeed;
         agent.angularSpeed = MoveSpeed;
-        agent.stoppingDistance = Weapon_R.ShootDistance;
+        if (Weapon_R != null)
+        {
+            agent.stoppingDistance = Weapon_R.ShootDistance;
+        }
 
         GameManager.Instance.UpdateGameGoal(1);
     }
