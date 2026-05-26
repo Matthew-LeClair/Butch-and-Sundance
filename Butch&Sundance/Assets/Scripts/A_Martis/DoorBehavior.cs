@@ -9,6 +9,8 @@ public class DoorBehavior : MonoBehaviour
     [SerializeField] float slideDistance;
     [SerializeField] float slideSpeed;
 
+    [SerializeField] Vector3 slideDirection;
+
     bool playerInTrigger;
     bool isOpen;
     bool isMoving;
@@ -20,7 +22,7 @@ public class DoorBehavior : MonoBehaviour
     {
         closedPos = doorModel.transform.position;
 
-        openPos = closedPos + Vector3.down * slideDistance;
+        openPos = closedPos + slideDirection.normalized * slideDistance;
 
         if(doorButtons != null ) doorButtons.SetActive(false);
     }
@@ -35,6 +37,11 @@ public class DoorBehavior : MonoBehaviour
                 if (!isOpen)
                 {
                     StartCoroutine(MoveDoor(openPos, true));
+                }
+
+                if(doorButtons != null)
+                {
+                    doorButtons.SetActive(false);
                 }
             }
         }
@@ -60,7 +67,7 @@ public class DoorBehavior : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInTrigger = true;
-            if (doorButtons != null)
+            if (!isOpen && doorButtons != null)
             {
                 doorButtons.SetActive(true);
             }
