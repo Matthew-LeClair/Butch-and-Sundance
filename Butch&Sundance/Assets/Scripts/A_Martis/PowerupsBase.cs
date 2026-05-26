@@ -15,7 +15,8 @@ public abstract class PowerupBase : MonoBehaviour
         }
         if (destroyOnPickup)
         {
-            GameObject.Destroy(gameObject);
+            GetComponent<Collider>().enabled = false;
+            GetComponent<Renderer>().enabled = false;
         }
     }
 
