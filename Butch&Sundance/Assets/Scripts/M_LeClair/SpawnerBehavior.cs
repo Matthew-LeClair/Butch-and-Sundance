@@ -16,13 +16,19 @@ public class Spawner : EnemyBehavior
     float roamTimer;
 
     bool startSpawning;
+    bool onCooldown = false;
 
     Vector3 startingPos;
+
+    private void Start()
+    {
+        startingPos = transform.position;
+    }
 
     public override void Tick()
     {
         checkRoam();
-        if (startSpawning)
+        if (startSpawning && !onCooldown)
         {
             spawnTimer += Time.deltaTime;
 
@@ -30,9 +36,10 @@ public class Spawner : EnemyBehavior
             {
                 spawn();
             }
+
             if(spawnCount >= amountToSpawn)
             {
-                spawnCooldown();
+                StartCoroutine(spawnCooldown());
             }
         }
     }
@@ -85,6 +92,10 @@ public class Spawner : EnemyBehavior
 
     IEnumerator spawnCooldown()
     {
-        yield return new WaitForSeconds(30);
+        onCooldown = true;
+        yield return new WaitForSeconds(10);
+        spawnCount = 0;
+        spawnTimer = 0;
+        onCooldown = false;
     }
 }
