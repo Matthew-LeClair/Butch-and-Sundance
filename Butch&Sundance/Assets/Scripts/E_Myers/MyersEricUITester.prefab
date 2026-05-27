@@ -2679,7 +2679,7 @@ GameObject:
   - component: {fileID: 3693823342956270398}
   - component: {fileID: 7688900533486755365}
   m_Layer: 5
-  m_Name: PlayerHp_Bar
+  m_Name: PlayerHP_Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2794,6 +2794,8 @@ MonoBehaviour:
   PlayerShieldHP_Bar: {fileID: 231865299054363844}
   PlayerDamage_Screen: {fileID: 2057683004518151847}
   PlayerShield_Screen: {fileID: 6174407604814758564}
+  CheckpointPopup: {fileID: 0}
+  PlayerStartPos: {fileID: 0}
   IsPaused: 0
   Player: {fileID: 0}
   PlayerScript: {fileID: 0}
@@ -3159,7 +3161,7 @@ GameObject:
   - component: {fileID: 8271660763811360706}
   - component: {fileID: 231865299054363844}
   m_Layer: 5
-  m_Name: ShieldHp_Bar
+  m_Name: ShieldHP_Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
