@@ -1561,6 +1561,12 @@ MonoBehaviour:
   Outline: {fileID: 2100000, guid: 8d6a8090dce357941b97bd715bbf7f47, type: 2}
   puTypeMod: 2
   ModCount: 5
+  GunMeshes:
+  - {fileID: -5495902117074765545, guid: de340571d723394429c7a5e476e53da4, type: 3}
+  - {fileID: -5495902117074765545, guid: b7f0c0e8e11c6944b932623d678ca9d0, type: 3}
+  - {fileID: -5495902117074765545, guid: d58beb3957cf7e94f9be72f605f6e440, type: 3}
+  - {fileID: -5495902117074765545, guid: 10acb03013f81b6448748b14da88ddbd, type: 3}
+  - {fileID: -5495902117074765545, guid: 7fff68229dc818d499d9b77d7fc6ee44, type: 3}
 --- !u!4 &1520012786
 Transform:
   m_ObjectHideFlags: 0
@@ -1570,7 +1576,7 @@ Transform:
   m_GameObject: {fileID: 1520012781}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.86, y: 12.512, z: -14.61}
+  m_LocalPosition: {x: -10, y: 0.25, z: 14.154}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1795,7 +1801,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 718641632567244554, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.58369
+      value: -10.08
       objectReference: {fileID: 0}
     - target: {fileID: 718641632567244554, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1803,7 +1809,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 718641632567244554, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.63707
+      value: 7.25
       objectReference: {fileID: 0}
     - target: {fileID: 718641632567244554, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1833,6 +1839,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4447826174741325666, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+      propertyPath: GunMeshes.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4447826174741325666, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+      propertyPath: 'GunMeshes.Array.data[0]'
+      value: 
+      objectReference: {fileID: -5495902117074765545, guid: de340571d723394429c7a5e476e53da4, type: 3}
+    - target: {fileID: 4447826174741325666, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+      propertyPath: 'GunMeshes.Array.data[1]'
+      value: 
+      objectReference: {fileID: -5495902117074765545, guid: b7f0c0e8e11c6944b932623d678ca9d0, type: 3}
+    - target: {fileID: 4447826174741325666, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+      propertyPath: 'GunMeshes.Array.data[2]'
+      value: 
+      objectReference: {fileID: -5495902117074765545, guid: d58beb3957cf7e94f9be72f605f6e440, type: 3}
+    - target: {fileID: 4447826174741325666, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+      propertyPath: 'GunMeshes.Array.data[3]'
+      value: 
+      objectReference: {fileID: -5495902117074765545, guid: 10acb03013f81b6448748b14da88ddbd, type: 3}
+    - target: {fileID: 4447826174741325666, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+      propertyPath: 'GunMeshes.Array.data[4]'
+      value: 
+      objectReference: {fileID: -5495902117074765545, guid: 7fff68229dc818d499d9b77d7fc6ee44, type: 3}
     - target: {fileID: 8677270422375201963, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
       propertyPath: m_Name
       value: Player

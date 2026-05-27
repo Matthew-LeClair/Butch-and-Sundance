@@ -192,6 +192,7 @@ public class PlayerController : MonoBehaviour, I_Damage
 
         if (!IsSwinging && !IsGrapple) // CharacterController is disabled during both Swing and Grapple - Rigidbody drives physics in both cases
         {
+            Controller.enabled = true; // Activate Controller
             Controller.Move(MomentumVelocity * Time.deltaTime); // Move Player using Momentum Velocity
             Controller.Move(PlayerVel * Time.deltaTime); // Move Player using Player Velocity
             PlayerVel.y -= Gravity * Time.deltaTime; // Apply Gravity to Player Velocity
@@ -207,7 +208,7 @@ public class PlayerController : MonoBehaviour, I_Damage
     void HandleInput()
     {
         if (Input.GetKeyDown(KeyCode.R)) // If R is pressed...
-        { pGun.Reload(); Reloaded = true; } // Reload the Gun
+        { pGun.SwitchWeapons(); } // Reload the Gun
 
         if (Input.GetButtonDown("Fire2") && (!HasPhaseBoots || AlienEnergy > 0)) // If Mouse2 pressed and has energy or no boots...
         {
@@ -463,12 +464,7 @@ public class PlayerController : MonoBehaviour, I_Damage
     public void Death()
     {
         Debug.Log(Health); // Debug Print Health
-
-#if UNITY_EDITOR // If in Unity Editor...
-        UnityEditor.EditorApplication.isPlaying = false; // Quit Debug
-#else // If NOT in Unity Editor...
-        Application.Quit(); // Quit Game
-#endif
+        GameManager.Instance.YouLose(); // Lose UI
     }
 
 
@@ -479,8 +475,12 @@ public class PlayerController : MonoBehaviour, I_Damage
     // Should be called any time Health or Shield values change so the UI stays in sync.
     public void UpdatePlayerUI()
     {
-        //GameManager.Instance.PlayerHP_Bar.fillAmount = (float)Health / HealthMax; // Update HP Bar
-        //GameManager.Instance.PlayerShieldHP_Bar.fillAmount = (float)Shield / ShieldMax; // Update Shield Bar
+        if (GameManager.Instance.PlayerHP_Bar != null && GameManager.Instance.PlayerShieldHP_Bar != null)
+        {
+            GameManager.Instance.PlayerHP_Bar.fillAmount = (float)Health / HealthMax; // Update HP Bar
+            GameManager.Instance.PlayerShieldHP_Bar.fillAmount = (float)Shield / ShieldMax; // Update Shield Bar
+        }
+
     }
 
     // Called from TakeDamage() when health damage is taken.
