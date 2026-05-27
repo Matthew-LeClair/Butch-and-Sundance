@@ -92,13 +92,11 @@ public class GameManager : MonoBehaviour
     {
         KillCount += Amount; // Dynamically Increment or Decrement GameGoalCount
 
-<<<<<<< HEAD
         GameGoalAmount_Text.text = KillCount.ToString("F0");
 
-=======
->>>>>>> 1554dfa9854bdb46aeeff6554a0e889562868c6b
         if (KillCount <= 0) // If Goal is MET
         { // WIN!!
+            GameGoalAmount_Text.text = KillCount.ToString("F0");
             GoalCompleted = true;
             Debug.Log("Objective complete");
         }
