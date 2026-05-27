@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject MenuPause; // Pause Menu
     [SerializeField] GameObject MenuWin; // Win Screen
     [SerializeField] GameObject MenuLose; // Lose Screen
+
     
 
     [Header("Player Elements")]
@@ -31,7 +33,10 @@ public class GameManager : MonoBehaviour
 
     float TimeScale_Original; // Chached Original Time Scale for better setting
 
+    [Header("Game Goal Elements")]
+    public TMP_Text GameGoalAmount_Text;
     public int KillCount;
+    public bool GoalCompleted;
 
 
     // Awake is called once before the first execution of Start after the MonoBehaviour is created
@@ -86,12 +91,22 @@ public class GameManager : MonoBehaviour
     public void UpdateGameGoal(int Amount) 
     {
         KillCount += Amount; // Dynamically Increment or Decrement GameGoalCount
+
+        GameGoalAmount_Text.text = KillCount.ToString("F0");
+
         if (KillCount <= 0) // If Goal is MET
         { // WIN!!
-            StatePause(true); // Pause Game
-            MenuActive = MenuWin; // Set MenuActive as MenuWin
-            MenuActive.SetActive(true); // Set MenuActive as Active
+            GameGoalAmount_Text.text = KillCount.ToString("F0");
+            GoalCompleted = true;
+            Debug.Log("Objective complete");
         }
+    }
+
+    public void YouWin()
+    {
+        StatePause(true);
+        MenuActive = MenuWin;
+        MenuActive.SetActive(true);
     }
 
     public void YouLose() 
