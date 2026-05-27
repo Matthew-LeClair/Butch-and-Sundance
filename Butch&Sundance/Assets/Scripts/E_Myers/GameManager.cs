@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public GameObject AmmoCount;
     public GameObject PlayerDamage_Screen;
     public GameObject PlayerShield_Screen;
+    public GameObject PlayerMomentum;
     
 
     [Header("Checkpoint Elements")]
