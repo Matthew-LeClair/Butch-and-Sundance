@@ -1,10 +1,13 @@
 using UnityEngine;
 using System.Collections;
 
+
+// Updates the player's respawn position and displays a checkpoint popup
 public class Checkpoint : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
+        // Ensure the collider belongs to the player and prevent reactivating the same checkpoint repeatedly
         if (other.CompareTag("Player") && GameManager.Instance.PlayerStartPos.transform.position != transform.position)
         {
             GameManager.Instance.PlayerStartPos.transform.position = transform.position;
@@ -12,6 +15,7 @@ public class Checkpoint : MonoBehaviour
         }
     }
 
+    // Display brief checkpoint popup
     IEnumerator displayPopup()
     {
         GameManager.Instance.CheckpointPopup.SetActive(true);

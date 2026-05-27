@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+// Destructible crate that can take damage and explode when destroyed.
 public class ExplodingCrate : MonoBehaviour, I_Damage
 {
     // HP initializers
@@ -8,17 +9,18 @@ public class ExplodingCrate : MonoBehaviour, I_Damage
     int currentHP;
 
     //Flash
-    [SerializeField] Renderer rend;
-    [SerializeField] Color flashColor = Color.red;
-    [SerializeField] float flashDuration = 0.1f;
+    [SerializeField] Renderer rend; // Renderer used for visual feedback
+    [SerializeField] Color flashColor = Color.red; // Color when damaged
+    [SerializeField] float flashDuration = 0.1f; // Duration of flash effect
 
-    Color originalColor;
+    Color originalColor; // Stores original material color
 
-    ExplosionScript explosion;
+    ExplosionScript explosion; // Handles explosion
 
     bool isFlashing;
     bool destroyed;
 
+    // Initializes health, renderer, and explosion component.
     void Awake()
     {
         currentHP = maxHP;
@@ -37,15 +39,18 @@ public class ExplodingCrate : MonoBehaviour, I_Damage
 
     public void TakeDamage(int amount, bool AlienTech)
     {
+        // Prevent further if already destroyed
         if (destroyed) return;
 
         currentHP -= amount;
 
+        // Trigger flash effect if not already running
         if (!isFlashing)
         {
             StartCoroutine(FlashRed());
         }
 
+        // Check for destruction and trigger explosion
         if (currentHP <= 0)
         {
             destroyed = true;
@@ -61,6 +66,7 @@ public class ExplodingCrate : MonoBehaviour, I_Damage
         }
     }
 
+    // Temporary flash
     IEnumerator FlashRed()
     {
         isFlashing = true;
