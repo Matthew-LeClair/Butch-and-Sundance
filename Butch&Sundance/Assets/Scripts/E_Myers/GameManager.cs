@@ -5,14 +5,23 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance; // GameManager Instance
 
+    [Header("Menu Elements")]
     [SerializeField] GameObject MenuActive; // Active Menu
     [SerializeField] GameObject MenuPause; // Pause Menu
     [SerializeField] GameObject MenuWin; // Win Screen
     [SerializeField] GameObject MenuLose; // Lose Screen
+    
+
+    [Header("Player Elements")]
     public Image PlayerHP_Bar;
+    public Image AlienEnergy_Bar;
     public Image PlayerShieldHP_Bar;
+    public GameObject AmmoCount;
     public GameObject PlayerDamage_Screen;
     public GameObject PlayerShield_Screen;
+    
+
+    [Header("Checkpoint Elements")]
     public GameObject CheckpointPopup;
     public GameObject PlayerStartPos;
 
