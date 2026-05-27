@@ -14,21 +14,27 @@ public class Spawner : EnemyBehavior
     int spawnCount;
     float spawnTimer;
     float roamTimer;
+    int roamSpeed;
 
-    bool startSpawning;
     bool onCooldown = false;
+    bool seePlayer;
 
     Vector3 startingPos;
 
     private void Start()
     {
         startingPos = transform.position;
+        roamSpeed = ai.MoveSpeed;
     }
 
     public override void Tick()
     {
-        checkRoam();
-        if (startSpawning && !onCooldown)
+        if (!seePlayer)
+        {
+            checkRoam();
+        }
+
+        if (!onCooldown)
         {
             spawnTimer += Time.deltaTime;
 
@@ -37,8 +43,9 @@ public class Spawner : EnemyBehavior
                 spawn();
             }
 
-            if(spawnCount >= amountToSpawn)
+            if(spawnCount >= amountToSpawn && !onCooldown)
             {
+                onCooldown = true;
                 StartCoroutine(spawnCooldown());
             }
         }
@@ -72,7 +79,16 @@ public class Spawner : EnemyBehavior
     {
         if (other.CompareTag("Player"))
         {
-            startSpawning = true;
+            seePlayer = true;
+            ai.agent.ResetPath();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            seePlayer = false;
         }
     }
 
@@ -92,8 +108,14 @@ public class Spawner : EnemyBehavior
 
     IEnumerator spawnCooldown()
     {
-        onCooldown = true;
-        yield return new WaitForSeconds(10);
+        if (seePlayer)
+        {
+            yield return new WaitForSeconds(10);
+        }
+        else
+        {
+            yield return new WaitForSeconds(30);
+        }
         spawnCount = 0;
         spawnTimer = 0;
         onCooldown = false;
