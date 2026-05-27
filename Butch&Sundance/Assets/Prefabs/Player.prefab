@@ -790,6 +790,8 @@ GameObject:
   - component: {fileID: 8187235564404433980}
   - component: {fileID: 4447826174741325666}
   - component: {fileID: 2776064752822907975}
+  - component: {fileID: 704309351709236414}
+  - component: {fileID: 341075635128948373}
   m_Layer: 0
   m_Name: PlayerGun
   m_TagString: Untagged
@@ -829,6 +831,12 @@ MonoBehaviour:
   Outline: {fileID: 0}
   puTypeMod: 0
   ModCount: 0
+  GunMeshes:
+  - {fileID: -5495902117074765545, guid: de340571d723394429c7a5e476e53da4, type: 3}
+  - {fileID: -5495902117074765545, guid: b7f0c0e8e11c6944b932623d678ca9d0, type: 3}
+  - {fileID: -5495902117074765545, guid: d58beb3957cf7e94f9be72f605f6e440, type: 3}
+  - {fileID: -5495902117074765545, guid: 10acb03013f81b6448748b14da88ddbd, type: 3}
+  - {fileID: -5495902117074765545, guid: 7fff68229dc818d499d9b77d7fc6ee44, type: 3}
   typeMod: 0
   pGun: {fileID: 2776064752822907975}
   eGun: {fileID: 0}
@@ -849,20 +857,94 @@ MonoBehaviour:
     m_Bits: 8
   GunPivot: {fileID: 2232769458087304895}
   ShootPos: {fileID: 6480184997921109338}
+  BaseMinDamage: 0
   MinDamage: 5
+  BaseMaxDamage: 0
   MaxDamage: 10
   FireRate: 0.5
   ShootTimer: 0
   ShootDistance: 7
-  MaxAmmo: 6
-  CurrAmmo: 0
+  MaxAmmo: 
+  ActiveMaxAmmo: 0
+  CurrAmmo: 
+  ActiveCurrAmmo: 0
   ReloadSpeed: 0.35
   IsAiming: 0
   PlayerCamera: {fileID: 8661160447946240342}
-  aTech: {fileID: 4447826174741325666}
+  aTechPool:
+  - {fileID: 4447826174741325666}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  Active_aTech: 0
+  BaseMesh: {fileID: -5495902117074765545, guid: de340571d723394429c7a5e476e53da4, type: 3}
+  GunMeshes:
+  - {fileID: -5495902117074765545, guid: de340571d723394429c7a5e476e53da4, type: 3}
+  - {fileID: -5495902117074765545, guid: b7f0c0e8e11c6944b932623d678ca9d0, type: 3}
+  - {fileID: -5495902117074765545, guid: d58beb3957cf7e94f9be72f605f6e440, type: 3}
+  - {fileID: -5495902117074765545, guid: 10acb03013f81b6448748b14da88ddbd, type: 3}
+  - {fileID: -5495902117074765545, guid: 7fff68229dc818d499d9b77d7fc6ee44, type: 3}
   Spread: 0
   PelletCount: 0
   SpreadAngle: 0
+--- !u!33 &704309351709236414
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7537967215498738424}
+  m_Mesh: {fileID: -5495902117074765545, guid: de340571d723394429c7a5e476e53da4, type: 3}
+--- !u!23 &341075635128948373
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7537967215498738424}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: -6478536213147159724, guid: de340571d723394429c7a5e476e53da4, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &8328796369497191880
 GameObject:
   m_ObjectHideFlags: 0
