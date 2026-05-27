@@ -479,6 +479,7 @@ public class PlayerController : MonoBehaviour, I_Damage
         {
             GameManager.Instance.PlayerHP_Bar.fillAmount = (float)Health / HealthMax; // Update HP Bar
             GameManager.Instance.PlayerShieldHP_Bar.fillAmount = (float)Shield / ShieldMax; // Update Shield Bar
+            GameManager.Instance.AlienEnergy_Bar.fillAmount = AlienEnergy / AlienEnergyMax; // Update Alien Energy Bar
         }
 
     }
