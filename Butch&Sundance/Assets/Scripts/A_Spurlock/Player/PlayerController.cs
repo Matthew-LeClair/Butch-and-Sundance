@@ -475,7 +475,8 @@ public class PlayerController : MonoBehaviour, I_Damage
     // Should be called any time Health or Shield values change so the UI stays in sync.
     public void UpdatePlayerUI()
     {
-        if (GameManager.Instance.PlayerHP_Bar != null && GameManager.Instance.PlayerShieldHP_Bar != null)
+        if (GameManager.Instance.PlayerHP_Bar != null && GameManager.Instance.PlayerShieldHP_Bar != null
+            && GameManager.Instance.AlienEnergy_Bar != null)
         {
             GameManager.Instance.PlayerHP_Bar.fillAmount = (float)Health / HealthMax; // Update HP Bar
             GameManager.Instance.PlayerShieldHP_Bar.fillAmount = (float)Shield / ShieldMax; // Update Shield Bar

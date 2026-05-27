@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     [Header("Game Goal Elements")]
     public TMP_Text GameGoalAmount_Text;
     public int KillCount;
+    public bool GoalCompleted;
 
 
     // Awake is called once before the first execution of Start after the MonoBehaviour is created
@@ -91,14 +92,23 @@ public class GameManager : MonoBehaviour
     {
         KillCount += Amount; // Dynamically Increment or Decrement GameGoalCount
 
+<<<<<<< HEAD
         GameGoalAmount_Text.text = KillCount.ToString("F0");
 
+=======
+>>>>>>> 1554dfa9854bdb46aeeff6554a0e889562868c6b
         if (KillCount <= 0) // If Goal is MET
         { // WIN!!
-            StatePause(true); // Pause Game
-            MenuActive = MenuWin; // Set MenuActive as MenuWin
-            MenuActive.SetActive(true); // Set MenuActive as Active
+            GoalCompleted = true;
+            Debug.Log("Objective complete");
         }
+    }
+
+    public void YouWin()
+    {
+        StatePause(true);
+        MenuActive = MenuWin;
+        MenuActive.SetActive(true);
     }
 
     public void YouLose() 
