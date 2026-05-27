@@ -59,15 +59,21 @@ public class PlayerGun : MonoBehaviour
     [SerializeField] public int SpreadAngle;   // Half-angle of the spread cone in degrees - larger = wider
 
 
+    //===[Cache]===\\
+
+    MeshFilter GunMeshFilter; // Cached MeshFilter on this GameObject - fetched once in Start() to avoid repeated GetComponent calls
+
+
     //===[Lifecycle]===\\
 
     // Called once by Unity before the first frame.
-    // Caches the CameraController, ensures MaxAmmo and CurrAmmo are sized to match aTechPool,
+    // Caches the CameraController and MeshFilter, ensures MaxAmmo and CurrAmmo are sized to match aTechPool,
     // then initializes the starting weapon slot. MaxAmmo and CurrAmmo start as empty lists in the
     // Inspector so the while loops must run before any index access or every subsequent line throws.
     private void Start()
     {
-        CC = PlayerCamera.GetComponent<CameraController>(); // Cache CameraController from the assigned camera
+        CC = PlayerCamera.GetComponent<CameraController>();                    // Cache CameraController from the assigned camera
+        GunMeshFilter = gameObject.GetComponent<MeshFilter>();                 // Cache MeshFilter once - avoids repeated GetComponent calls across Shoot, Switch, and Destroy paths
 
         while (MaxAmmo.Count < aTechPool.Count) { MaxAmmo.Add(0); }   // Pad MaxAmmo to match aTechPool size - avoids index out of range on first access
         while (CurrAmmo.Count < aTechPool.Count) { CurrAmmo.Add(0); } // Pad CurrAmmo to match aTechPool size - avoids index out of range on first access
@@ -167,9 +173,16 @@ public class PlayerGun : MonoBehaviour
 
             CurrAmmo[Active_aTech]--; // Consume one round from the active weapon's clip
 
-            if (CurrAmmo[Active_aTech] <= 0) // Clip is empty - this weapon is spent
+            if (CurrAmmo[Active_aTech] <= 0) // Clip is empty
             {
-                DestroyActiveGun(); // Revert mods, remove weapon from pool, and advance to the next
+                if (Active_aTech == 0)
+                {
+                    CurrAmmo[Active_aTech] = MaxAmmo[Active_aTech]; // Slot 0 never runs dry - refill silently on empty
+                }
+                else
+                {
+                    DestroyActiveGun(); // Revert mods, remove weapon from pool, and advance to the next
+                }
             }
         }
     }
@@ -201,58 +214,76 @@ public class PlayerGun : MonoBehaviour
     //===[Weapon Switching]===\\
 
     // Called from PlayerController.HandleInput() on R press to manually cycle the arsenal.
-    // Advances Active_aTech to the next slot, wrapping back to 0 when the end is reached.
-    // Updates gun stats via SwitchGun() and swaps the mesh to match the newly active weapon type.
+    // Walks forward from the current slot (wrapping at the end) and stops at the first non-null entry.
+    // Null slots - empty or not yet filled - are skipped entirely so the player only ever lands on real weapons.
+    // If no non-null slot exists anywhere in the pool, falls back to the base revolver mesh.
     public void SwitchWeapons()
     {
-        if (aTechPool.Count > Active_aTech + 1) // There is a slot after the current one
+        for (int i = 1; i <= aTechPool.Count; i++) // Start at 1 so the search always moves forward at least one slot
         {
-            Active_aTech++;                                                                                    // Advance to the next weapon
-            aTechPool[Active_aTech].SwitchGun();                                                               // Apply the new weapon's archetype stats
-            gameObject.GetComponent<MeshFilter>().sharedMesh = GunMeshes[(int)aTechPool[Active_aTech].typeMod]; // sharedMesh assigns the asset directly - typeMod is the runtime value set by EventPickUp(), not puTypeMod which is Inspector-only
-        }
-        else // Already at the last slot - wrap to the beginning
-        {
-            Active_aTech = 0;                                                                                  // Reset to first slot
+            int candidate = (Active_aTech + i) % aTechPool.Count; // Wrap-around index - keeps the search within pool bounds
 
-            if (aTechPool[Active_aTech] != null) // If slot 0 has a weapon...
+            if (aTechPool[candidate] != null) // Found the next occupied slot - switch to it
             {
-                aTechPool[Active_aTech].SwitchGun();                                                           // Apply its stats
-                gameObject.GetComponent<MeshFilter>().sharedMesh = GunMeshes[(int)aTechPool[Active_aTech].typeMod]; // sharedMesh assigns the asset directly - typeMod is the runtime value set by EventPickUp(), not puTypeMod which is Inspector-only
-            }
-            else // Slot 0 is empty - fall back to the base revolver
-            {
-                gameObject.GetComponent<MeshFilter>().sharedMesh = BaseMesh; // sharedMesh assigns the asset directly - show the default revolver mesh
+                Active_aTech = candidate;
+                aTechPool[Active_aTech].SwitchGun();                                             // Apply the new weapon's archetype stats
+                GunMeshFilter.sharedMesh = GunMeshes[(int)aTechPool[Active_aTech].typeMod];      // sharedMesh assigns the asset directly - typeMod is the runtime value set by EventPickUp(), not puTypeMod which is Inspector-only
+                gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);     // Restore correct display scale after mesh swap
+                return;                                                                           // Stop searching - first non-null hit is enough
             }
         }
+
+        // Every slot in the pool is null - fall back to the base revolver
+        GunMeshFilter.sharedMesh = BaseMesh;                                                     // sharedMesh assigns the asset directly - show the default revolver mesh
+        gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);             // Restore correct display scale after mesh swap
     }
 
     // Called from Shoot() when the active weapon's CurrAmmo drops to zero or below.
     // Reverts all mods the weapon applied to the player before removing it, enforcing the risk/reward economy.
+    // Destroys the AlienTech component from the player's gun before removing the pool entry - without this
+    // the component leaks onto the GameObject indefinitely.
     // Clamps Active_aTech after removal and applies the next weapon's stats directly - SwitchWeapons() is
     // intentionally NOT called here because it would increment the index again on the now-shorter list.
     public void DestroyActiveGun()
     {
-        aTechPool[Active_aTech].RevertMods(); // Undo every stat buff this weapon's mods applied to the player
+        if (Active_aTech == 0) { return; } // Slot 0 is permanent - only weapons beyond the first slot are destroyed on empty
 
-        MaxAmmo.RemoveAt(Active_aTech);       // Remove this slot's max ammo entry to keep lists in sync
-        CurrAmmo.RemoveAt(Active_aTech);      // Remove this slot's current ammo entry
-        aTechPool.RemoveAt(Active_aTech);     // Remove the weapon from the pool - all three lists are now one shorter
+        if (aTechPool[Active_aTech] == null) // Guard against a null active slot - cleans up orphaned ammo entries and returns early
+        {
+            Debug.LogWarning("DestroyActiveGun: slot " + Active_aTech + " is already null - removing orphaned ammo entries.");
+            MaxAmmo.RemoveAt(Active_aTech);
+            CurrAmmo.RemoveAt(Active_aTech);
+            aTechPool.RemoveAt(Active_aTech);
+            Active_aTech = Mathf.Clamp(Active_aTech, 0, Mathf.Max(0, aTechPool.Count - 1));
+            return;
+        }
+
+        aTechPool[Active_aTech].RevertMods();           // Undo every stat buff this weapon's mods applied to the player
+        Destroy(aTechPool[Active_aTech]);               // Destroy the AlienTech component from the player's gun - RemoveAt only drops the reference, leaving the component leaked on the GameObject
+
+        MaxAmmo.RemoveAt(Active_aTech);                 // Remove this slot's max ammo entry to keep lists in sync
+        CurrAmmo.RemoveAt(Active_aTech);                // Remove this slot's current ammo entry
+        aTechPool.RemoveAt(Active_aTech);               // Remove the now-destroyed component reference from the pool - all three lists are now one shorter
 
         if (aTechPool.Count > 0) // If any weapons remain in the arsenal...
         {
             // Clamp BEFORE any list access - if we just removed the last index, Active_aTech is now out of range
             Active_aTech = Mathf.Clamp(Active_aTech, 0, aTechPool.Count - 1);
 
-            // Apply the now-active weapon's stats and mesh directly rather than calling SwitchWeapons(),
-            // which would increment Active_aTech again and go out of range on the freshly shortened list
-            aTechPool[Active_aTech].SwitchGun();
-            gameObject.GetComponent<MeshFilter>().sharedMesh = GunMeshes[(int)aTechPool[Active_aTech].typeMod]; // sharedMesh assigns the asset directly - typeMod is the runtime value set by EventPickUp(), not puTypeMod which is Inspector-only
+            if (aTechPool[Active_aTech] != null) // Slot exists but may still be null - guard before any member access
+            {
+                // Apply the now-active weapon's stats and mesh directly rather than calling SwitchWeapons(),
+                // which would increment Active_aTech again and go out of range on the freshly shortened list
+                aTechPool[Active_aTech].SwitchGun();
+                GunMeshFilter.sharedMesh = GunMeshes[(int)aTechPool[Active_aTech].typeMod]; // sharedMesh assigns the asset directly - typeMod is the runtime value set by EventPickUp(), not puTypeMod which is Inspector-only
+                gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);                        // Restore correct display scale after mesh swap
+            }
         }
         else // Arsenal is completely empty - fall back to the base revolver
         {
-            Active_aTech = 0;                                                   // Reset index ready for the next pickup
-            gameObject.GetComponent<MeshFilter>().sharedMesh = BaseMesh;        // sharedMesh assigns the asset directly - show the default revolver mesh
+            Active_aTech = 0;                                                                     // Reset index ready for the next pickup
+            GunMeshFilter.sharedMesh = BaseMesh;                                                  // sharedMesh assigns the asset directly - show the default revolver mesh
+            gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);          // Restore correct display scale after mesh swap
         }
     }
 }

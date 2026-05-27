@@ -52,17 +52,28 @@ public class AlienTech_Pickup : PickUp_Interact
     // GunMeshes is indexed by the enum int value - Inspector order must match enum order exactly.
     public override void Start()
     {
-        base.Start();                                                                          // Initialize outline material tracking in PickUp_Interact
-        gameObject.GetComponent<MeshFilter>().sharedMesh = GunMeshes[(int)puTypeMod];         // sharedMesh assigns the asset directly - avoids a runtime copy with zeroed bounds that would make the object invisible
+        base.Start(); // Initialize outline material tracking in PickUp_Interact
+
+        MeshFilter mf = gameObject.GetComponent<MeshFilter>();
+
+        if (mf == null)                                                                           // Guard against missing MeshFilter - logs the offending object for fast diagnosis
+        { Debug.LogError("AlienTech_Pickup: MeshFilter missing on " + gameObject.name, gameObject); return; }
+
+        int meshIndex = (int)puTypeMod;
+        if (GunMeshes == null || meshIndex >= GunMeshes.Count || GunMeshes[meshIndex] == null)    // Guard against unpopulated or mismatched GunMeshes list
+        { Debug.LogError("AlienTech_Pickup: GunMeshes not configured for " + puTypeMod + " on " + gameObject.name, gameObject); return; }
+
+        mf.sharedMesh = GunMeshes[meshIndex];                                                     // sharedMesh assigns the asset directly - avoids a runtime copy with zeroed bounds
+        gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);              // Restore correct display scale - mesh assets require this scale to appear at the right size
     }
 
 
     //===[Pickup]===\\
 
     // Called from PickUp_Interact.Update() when the player presses E while in range.
-    // Finds the first null (free) slot in the player's aTechPool, assigns this component into it,
-    // then applies gun stats and mods. The slot assignment must happen before any field access
-    // since the slot is null until that line runs.
+    // Finds the first null (free) slot in the player's aTechPool, adds a fresh AlienTech component
+    // to the player's gun for that slot, then assigns pGun, applies gun stats, and applies mods.
+    // The pickup carries only configuration data - the AlienTech component itself lives on the player's gun.
     // If no free slot exists the pickup silently does nothing - the player's arsenal is full.
     public override void EventPickUp()
     {
@@ -77,17 +88,18 @@ public class AlienTech_Pickup : PickUp_Interact
             { FreeSlot = index; break; }                    // Record the index and stop - first free slot is enough
         }
 
-        if (FreeSlot > 0) // Proceed only if a free slot was found - mirrors original success check
+        if (FreeSlot >= 0) // >= 0 catches slot 0 - the original > 0 silently skipped the first slot every time
         {
-            pGun.aTechPool[FreeSlot] = this as AlienTech;                // Assign this component into the slot FIRST - it is null until this line
-            pGun.aTechPool[FreeSlot].typeMod = puTypeMod;                // Now safe to set the archetype - slot is no longer null
-            Debug.Log("Gun Type: " + puTypeMod);                         // Debug log for pickup confirmation
-            pGun.aTechPool[FreeSlot].SwitchGun();                        // Apply all stat values for this archetype immediately
+            pGun.aTechPool[FreeSlot] = pGun.gameObject.AddComponent<AlienTech>(); // Add a fresh AlienTech to the player's gun - the pickup carries config data only, not the component itself
+            pGun.aTechPool[FreeSlot].pGun = pGun;                                 // Assign the PlayerGun reference so SwitchGun() and mod logic can access player stats
+            pGun.aTechPool[FreeSlot].typeMod = puTypeMod;                         // Set the archetype on the newly created component
+            Debug.Log("Gun Type: " + puTypeMod);                                  // Debug log for pickup confirmation
+            pGun.aTechPool[FreeSlot].SwitchGun();                                 // Apply all stat values for this archetype immediately
 
-            for (int index = 0; index < ModCount; index++)               // Apply each mod slot this pickup carries
-            { pGun.aTechPool[FreeSlot].AddMod(); }                       // Create, register, and apply one random mod
+            for (int index = 0; index < ModCount; index++)                        // Apply each mod slot this pickup carries
+            { pGun.aTechPool[FreeSlot].AddMod(); }                                // Create, register, and apply one random mod
 
-            Destroy(gameObject);                                         // Remove the pickup from the world on successful pickup
+            Destroy(gameObject);                                                  // Remove the pickup from the world on successful pickup
         }
     }
 }

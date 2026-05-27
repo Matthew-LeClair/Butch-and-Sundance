@@ -26,6 +26,15 @@ public class AlienTech : AlienTech_Pickup
     public Gun eGun;        // Reference to an enemy gun component - set when this script is attached to an enemy weapon
 
 
+    //===[Lifecycle]===\\
+
+    // Called once by Unity before the first frame.
+    // AlienTech lives as a runtime component on the player's gun, not as a world pickup object.
+    // Intentionally suppresses AlienTech_Pickup.Start() - mesh assignment and scale setup do not apply here
+    // because this component is added via AddComponent at runtime and has no Inspector-assigned GunMeshes.
+    public override void Start() { }
+
+
     //===[Gun Config]===\\
 
     // Called once from PlayerGun.Start(), PlayerGun.SwitchWeapons(), and AlienTech_Pickup.EventPickUp().
