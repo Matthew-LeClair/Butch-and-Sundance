@@ -2,146 +2,288 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Manages all player weapon behaviour - shooting, aiming, ammo tracking, and weapon switching.
+// Maintains parallel lists (aTechPool, MaxAmmo, CurrAmmo) where each index represents one weapon slot,
+// so the active weapon's stats are always accessed via Active_aTech as the shared index.
 public class PlayerGun : MonoBehaviour
 {
-    [Header("Config")]
-    [SerializeField] LayerMask IgnoreLayer;
 
-    [SerializeField] public Transform GunPivot;
-    [SerializeField] Transform ShootPos;
+    //===[Config]===\\
+
+    [Header("Config")]
+    [SerializeField] LayerMask IgnoreLayer; // Layers the shoot raycast should pass through - typically the Player layer
+
+    [SerializeField] public Transform GunPivot;  // Pivot point used by animations or visual rotation
+    [SerializeField] Transform ShootPos;         // World position the raycast originates from (unused in current raycast - kept for future muzzle FX)
+
+
+    //===[Stats]===\\
 
     [Header("Stats")]
-    public int MinDamage;
-    public int MaxDamage;
+    public int BaseMinDamage;     // Unmodified minimum damage - source of truth used by Aim() to scale from
+    public int MinDamage;         // Active minimum damage - equals Base unless aim boost is active
+    public int BaseMaxDamage;     // Unmodified maximum damage
+    public int MaxDamage;         // Active maximum damage
+    public float FireRate;        // Minimum seconds between shots - lower = faster
+    public float ShootTimer;      // Accumulates Time.deltaTime each frame; shot fires when this >= FireRate
+    public float ShootDistance;   // Maximum raycast distance in world units
+    public List<int> MaxAmmo;     // Per-slot maximum ammo - indexed in parallel with aTechPool
+    public int ActiveMaxAmmo;     // Convenience mirror of MaxAmmo[Active_aTech] - kept for UI reads
+    public List<int> CurrAmmo;    // Per-slot current ammo - decremented on each shot
+    public int ActiveCurrAmmo;    // Convenience mirror of CurrAmmo[Active_aTech] - kept for UI reads
+    public float ReloadSpeed;     // Duration in seconds of the reload animation (referenced externally)
 
-    public float FireRate;
-    public float ShootTimer;
 
-    public float ShootDistance;
-
-    public int MaxAmmo;
-    public int CurrAmmo;
-    int AmmoReserve;
-
-    public float ReloadSpeed;
+    //===[Aim]===\\
 
     [Header("Aim")]
-    public bool IsAiming;
-    [SerializeField] Camera PlayerCamera;
-    CameraController CC;
+    public bool IsAiming;                      // True while the player is in aimed fire mode - read by PlayerController for time scale
+    [SerializeField] Camera PlayerCamera;      // The player's main camera - used to fetch CameraController
+    CameraController CC;                       // Cached CameraController used for any camera-driven aim effects
+
+
+    //===[Alien Tech]===\\
 
     [Header("Alien Tech")]
-    public AlienTech aTech;
+    public List<AlienTech> aTechPool;          // Active weapon arsenal - null slots are empty; non-null slots are equipped guns
+    public int Active_aTech;                   // Index of the currently wielded weapon in aTechPool
+    [SerializeField] public Mesh BaseMesh;     // The default revolver mesh shown when no AlienTech is equipped
+    [SerializeField] public List<Mesh> GunMeshes; // Meshes indexed by GunTypeMod int value - updated by pickup
+
+
+    //===[Shotgun]===\\
 
     [Header("Shotgun")]
-    [SerializeField] public bool Spread;
-    [SerializeField] public int PelletCount;
-    [SerializeField] public int SpreadAngle;
+    [SerializeField] public bool Spread;       // True when the active weapon fires a pellet spread instead of a single ray
+    [SerializeField] public int PelletCount;   // Number of individual pellets fired per shot when Spread is true
+    [SerializeField] public int SpreadAngle;   // Half-angle of the spread cone in degrees - larger = wider
 
+
+    //===[Cache]===\\
+
+    MeshFilter GunMeshFilter; // Cached MeshFilter on this GameObject - fetched once in Start() to avoid repeated GetComponent calls
+
+
+    //===[Lifecycle]===\\
+
+    // Called once by Unity before the first frame.
+    // Caches the CameraController and MeshFilter, ensures MaxAmmo and CurrAmmo are sized to match aTechPool,
+    // then initializes the starting weapon slot. MaxAmmo and CurrAmmo start as empty lists in the
+    // Inspector so the while loops must run before any index access or every subsequent line throws.
     private void Start()
     {
-        CC = PlayerCamera.GetComponent<CameraController>(); // Get CameraController from Main Camera
+        CC = PlayerCamera.GetComponent<CameraController>();                    // Cache CameraController from the assigned camera
+        GunMeshFilter = gameObject.GetComponent<MeshFilter>();                 // Cache MeshFilter once - avoids repeated GetComponent calls across Shoot, Switch, and Destroy paths
 
-        if (aTech != null) { aTech.SwitchGun(); }
-        else
+        while (MaxAmmo.Count < aTechPool.Count) { MaxAmmo.Add(0); }   // Pad MaxAmmo to match aTechPool size - avoids index out of range on first access
+        while (CurrAmmo.Count < aTechPool.Count) { CurrAmmo.Add(0); } // Pad CurrAmmo to match aTechPool size - avoids index out of range on first access
+
+        if (aTechPool[Active_aTech] != null)  // If an AlienTech weapon occupies the starting slot...
         {
-            ShootDistance = 8;
-            Spread = false;
-            FireRate = .6f;
-            ReloadSpeed = .85f;
-            MaxAmmo = Random.Range(3, 5);
-            MinDamage = Random.Range(4, 12);
-            MaxDamage = (int)(MinDamage * Random.Range(1.25f, 2f));
+            aTechPool[Active_aTech].SwitchGun(); // Apply that weapon's archetype stats immediately
+        }
+        else // No AlienTech in slot 0 - initialize as the base revolver
+        {
+            ShootDistance = 8;                           // Medium range
+            Spread = false;                              // Single projectile
+            FireRate = .6f;                              // Moderate fire rate
+            ReloadSpeed = .85f;                          // Fast reload
+            MaxAmmo[Active_aTech] = Random.Range(3, 5); // Set this slot's ammo - do NOT Add()
+            CurrAmmo[Active_aTech] = MaxAmmo[Active_aTech]; // Fill to max
+            BaseMinDamage = Random.Range(4, 12);         // Low base damage
+            BaseMaxDamage = (int)(BaseMinDamage * Random.Range(1.25f, 2f)); // Max is 1.25x-2x the min
         }
     }
 
+    // Called every frame by Unity.
+    // Advances the shoot cooldown timer - this is the only weapon logic that belongs in Update.
+    // All stat configuration is handled once in Start() and SwitchWeapons() - never re-run here.
     private void Update()
-    { 
-        ShootTimer += Time.deltaTime;
+    {
+        ShootTimer += Time.deltaTime; // Accumulate time toward the next allowed shot
     }
 
-    public void Shoot() 
+
+    //===[Shooting]===\\
+
+    // Called from PlayerController.HandleInput() when Fire1 is held.
+    // Guards against the fire rate timer and current ammo before casting.
+    // Fires either a single raycast or a spread of pellet raycasts depending on the active weapon type,
+    // then decrements ammo and calls DestroyActiveGun() when the clip hits zero.
+    public void Shoot()
     {
-        if (ShootTimer >= FireRate) 
+        if (ShootTimer >= FireRate) // Only shoot if enough time has passed since the last shot
         {
-            ShootTimer = 0; // Reset Shoot Timer
-            RaycastHit hit; // Init the Raycast Hit
-            if (!Spread)
+            ShootTimer = 0; // Reset the cooldown timer for the next shot
+
+            RaycastHit hit; // Will store whatever the raycast collides with
+
+            if (!Spread) // Single projectile path
             {
-                // If the Ray Hits then it will apply Damage after Debug Printing
-                if (Physics.Raycast(Camera.main.transform.position, // Ray Position is Camera Position 
-                    Camera.main.transform.forward, // Ray Direction is Camera Forward
-                    out hit, // Hit is now what the Raycast Hit
-                    ShootDistance, // Ray is long as Shoot Distance
-                    ~IgnoreLayer)) // It will now Ignore the Player in Collision
+                if (Physics.Raycast(
+                    Camera.main.transform.position,  // Origin: camera position
+                    Camera.main.transform.forward,   // Direction: camera forward
+                    out hit,                         // Populate hit with collision data
+                    ShootDistance,                   // Maximum travel distance
+                    ~IgnoreLayer))                   // Exclude the player's own layer
                 {
-                    Debug.Log(hit.collider.name); // Debug Print the name of what the Ray Collides with
+                    Debug.Log(hit.collider.name); // Debug: log name of hit object
 
-                    I_Damage dmg = hit.collider.GetComponent<I_Damage>(); // Init and Set the Interface as the Hit GameObjects Version
+                    I_Damage dmg = hit.collider.GetComponent<I_Damage>(); // Try to get the damage interface on the hit object
 
-                    if (dmg != null) // If the GameObjects Damage Interface is NOT Null...
-                    { // Hit GameObject takes Damage
-                        int Damage = Random.Range(MinDamage, MaxDamage);
-                        if (IsAiming) { Damage = (int)(Damage * 1.5f); }
-                        dmg.TakeDamage(Damage, aTech != null);
-                    } 
+                    if (dmg != null) // Only apply damage if the hit object implements I_Damage
+                    {
+                        int Damage = Random.Range(MinDamage, MaxDamage);          // Roll damage in the active range
+                        if (IsAiming) { Damage = (int)(Damage * 1.5f); }          // Aim multiplier stacks on top of the rolled value
+                        dmg.TakeDamage(Damage, aTechPool[Active_aTech] != null);  // Pass whether this is an AlienTech shot
+                    }
                 }
             }
-            else 
+            else // Spread / shotgun path - fire one ray per pellet
             {
-                // Fire multiple pellets in a spread pattern to simulate a shotgun blast
-                for (int i = 0; i < PelletCount; i++) // Loop through each pellet
+                for (int i = 0; i < PelletCount; i++) // One iteration per pellet
                 {
-                    // Calculate a random spread direction based on the camera's forward direction
-                    Vector3 spreadDirection = Camera.main.transform.forward // Base direction is Camera Forward
+                    Vector3 spreadDirection =
+                        Camera.main.transform.forward                          // Start from camera forward
                         + new Vector3(
-                            Random.Range(-SpreadAngle, SpreadAngle), // Random horizontal spread
-                            Random.Range(-SpreadAngle, SpreadAngle), // Random vertical spread
-                            0f); // No spread on Z axis
+                            Random.Range(-SpreadAngle, SpreadAngle) * 0.01f,  // Small horizontal deviation - scaled down to keep in radians range
+                            Random.Range(-SpreadAngle, SpreadAngle) * 0.01f,  // Small vertical deviation
+                            0f);                                               // No Z deviation needed
 
-                    // If the Ray Hits then it will apply Damage after Debug Printing
-                    if (Physics.Raycast(Camera.main.transform.position, // Ray Position is Camera Position
-                        spreadDirection.normalized,                      // Ray Direction is Spread Direction (Normalized)
-                        out hit,                                         // Hit is now what the Raycast Hit
-                        ShootDistance,                                   // Ray is as long as Shoot Distance
-                        ~IgnoreLayer))                                   // It will now Ignore the Player in Collision
+                    if (Physics.Raycast(
+                        Camera.main.transform.position, // Origin: camera position
+                        spreadDirection.normalized,     // Direction: randomized spread vector normalized
+                        out hit,                        // Populate hit with collision data
+                        ShootDistance,                  // Maximum travel distance
+                        ~IgnoreLayer))                  // Exclude the player's own layer
                     {
-                        Debug.Log(hit.collider.name); // Debug Print the name of what the Ray Collides with
-                        I_Damage dmg = hit.collider.GetComponent<I_Damage>(); // Init and Set the Interface as the Hit GameObjects Version
-                        if (dmg != null) // If the GameObjects Damage Interface is NOT Null...
-                        { // Hit GameObject takes Damage
-                            int Damage = Random.Range(MinDamage, MaxDamage);
-                            if (IsAiming) { Damage = (int)(Damage * 1.5f); }
-                            dmg.TakeDamage(Damage, aTech != null);
+                        Debug.Log(hit.collider.name); // Debug: log name of hit object
+
+                        I_Damage dmg = hit.collider.GetComponent<I_Damage>(); // Try to get the damage interface on the hit object
+
+                        if (dmg != null) // Only apply damage if the hit object implements I_Damage
+                        {
+                            int Damage = Random.Range(MinDamage, MaxDamage);          // Roll damage in the active range
+                            if (IsAiming) { Damage = (int)(Damage * 1.5f); }          // Aim multiplier stacks on top
+                            dmg.TakeDamage(Damage, aTechPool[Active_aTech] != null);  // Pass whether this is an AlienTech shot
                         }
                     }
                 }
             }
+
+            CurrAmmo[Active_aTech]--; // Consume one round from the active weapon's clip
+
+            if (CurrAmmo[Active_aTech] <= 0) // Clip is empty
+            {
+                if (Active_aTech == 0)
+                {
+                    CurrAmmo[Active_aTech] = MaxAmmo[Active_aTech]; // Slot 0 never runs dry - refill silently on empty
+                }
+                else
+                {
+                    DestroyActiveGun(); // Revert mods, remove weapon from pool, and advance to the next
+                }
+            }
         }
     }
 
-    public void Reload()
-    {
-        if (CurrAmmo < MaxAmmo && AmmoReserve > 0 && !IsReloading) // If Ammo is Needed, there is Reserve, and not already Reloading...
-        { StartCoroutine(ReloadCoroutine()); } // Start the Reload Coroutine
-    }
 
-    bool IsReloading = false; // Track if the Gun is currently Reloading
+    //===[Aim]===\\
 
-    IEnumerator ReloadCoroutine()
-    {
-        IsReloading = true; // Set Reloading to True
-        yield return new WaitForSeconds(ReloadSpeed); // Wait for the Reload Speed Duration
-        int AmmoNeeded = MaxAmmo - CurrAmmo;   // Calculate how much Ammo is Needed
-        AmmoReserve -= AmmoNeeded; // Subtract the Needed Ammo from the Reserve
-        CurrAmmo = MaxAmmo; // Refill Current Ammo to Max
-        IsReloading = false; // Set Reloading to False
-        Debug.Log(CurrAmmo); // Debug Print the Current Ammo
-    }
-
+    // Called from PlayerController.HandleInput() on both Fire2 down and Fire2 up.
+    // Toggles IsAiming and scales MinDamage/MaxDamage up from their base values when entering aim,
+    // or restores them to base values when exiting. The toggle must flip IsAiming at the end so
+    // the next call reads the updated state correctly.
     public void Aim()
     {
-        if (!IsAiming) { }
-        else { }
+        if (!IsAiming) // Entering aim mode
+        {
+            MinDamage = (int)(BaseMinDamage * Random.Range(1.5f, 3)); // Boost min damage by 1.5x-3x
+            MaxDamage = (int)(BaseMaxDamage * Random.Range(1.5f, 3)); // Boost max damage by the same range
+        }
+        else // Exiting aim mode
+        {
+            MinDamage = BaseMinDamage; // Restore min damage to unmodified base
+            MaxDamage = BaseMaxDamage; // Restore max damage to unmodified base
+        }
+
+        IsAiming = !IsAiming; // Flip the flag AFTER the branch so this call always transitions correctly
+    }
+
+
+    //===[Weapon Switching]===\\
+
+    // Called from PlayerController.HandleInput() on R press to manually cycle the arsenal.
+    // Walks forward from the current slot (wrapping at the end) and stops at the first non-null entry.
+    // Null slots - empty or not yet filled - are skipped entirely so the player only ever lands on real weapons.
+    // If no non-null slot exists anywhere in the pool, falls back to the base revolver mesh.
+    public void SwitchWeapons()
+    {
+        for (int i = 1; i <= aTechPool.Count; i++) // Start at 1 so the search always moves forward at least one slot
+        {
+            int candidate = (Active_aTech + i) % aTechPool.Count; // Wrap-around index - keeps the search within pool bounds
+
+            if (aTechPool[candidate] != null) // Found the next occupied slot - switch to it
+            {
+                Active_aTech = candidate;
+                aTechPool[Active_aTech].SwitchGun();                                             // Apply the new weapon's archetype stats
+                GunMeshFilter.sharedMesh = GunMeshes[(int)aTechPool[Active_aTech].typeMod];      // sharedMesh assigns the asset directly - typeMod is the runtime value set by EventPickUp(), not puTypeMod which is Inspector-only
+                gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);     // Restore correct display scale after mesh swap
+                return;                                                                           // Stop searching - first non-null hit is enough
+            }
+        }
+
+        // Every slot in the pool is null - fall back to the base revolver
+        GunMeshFilter.sharedMesh = BaseMesh;                                                     // sharedMesh assigns the asset directly - show the default revolver mesh
+        gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);             // Restore correct display scale after mesh swap
+    }
+
+    // Called from Shoot() when the active weapon's CurrAmmo drops to zero or below.
+    // Reverts all mods the weapon applied to the player before removing it, enforcing the risk/reward economy.
+    // Destroys the AlienTech component from the player's gun before removing the pool entry - without this
+    // the component leaks onto the GameObject indefinitely.
+    // Clamps Active_aTech after removal and applies the next weapon's stats directly - SwitchWeapons() is
+    // intentionally NOT called here because it would increment the index again on the now-shorter list.
+    public void DestroyActiveGun()
+    {
+        if (Active_aTech == 0) { return; } // Slot 0 is permanent - only weapons beyond the first slot are destroyed on empty
+
+        if (aTechPool[Active_aTech] == null) // Guard against a null active slot - cleans up orphaned ammo entries and returns early
+        {
+            Debug.LogWarning("DestroyActiveGun: slot " + Active_aTech + " is already null - removing orphaned ammo entries.");
+            MaxAmmo.RemoveAt(Active_aTech);
+            CurrAmmo.RemoveAt(Active_aTech);
+            aTechPool.RemoveAt(Active_aTech);
+            Active_aTech = Mathf.Clamp(Active_aTech, 0, Mathf.Max(0, aTechPool.Count - 1));
+            return;
+        }
+
+        aTechPool[Active_aTech].RevertMods();           // Undo every stat buff this weapon's mods applied to the player
+        Destroy(aTechPool[Active_aTech]);               // Destroy the AlienTech component from the player's gun - RemoveAt only drops the reference, leaving the component leaked on the GameObject
+
+        MaxAmmo.RemoveAt(Active_aTech);                 // Remove this slot's max ammo entry to keep lists in sync
+        CurrAmmo.RemoveAt(Active_aTech);                // Remove this slot's current ammo entry
+        aTechPool.RemoveAt(Active_aTech);               // Remove the now-destroyed component reference from the pool - all three lists are now one shorter
+
+        if (aTechPool.Count > 0) // If any weapons remain in the arsenal...
+        {
+            // Clamp BEFORE any list access - if we just removed the last index, Active_aTech is now out of range
+            Active_aTech = Mathf.Clamp(Active_aTech, 0, aTechPool.Count - 1);
+
+            if (aTechPool[Active_aTech] != null) // Slot exists but may still be null - guard before any member access
+            {
+                // Apply the now-active weapon's stats and mesh directly rather than calling SwitchWeapons(),
+                // which would increment Active_aTech again and go out of range on the freshly shortened list
+                aTechPool[Active_aTech].SwitchGun();
+                GunMeshFilter.sharedMesh = GunMeshes[(int)aTechPool[Active_aTech].typeMod]; // sharedMesh assigns the asset directly - typeMod is the runtime value set by EventPickUp(), not puTypeMod which is Inspector-only
+                gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);                        // Restore correct display scale after mesh swap
+            }
+        }
+        else // Arsenal is completely empty - fall back to the base revolver
+        {
+            Active_aTech = 0;                                                                     // Reset index ready for the next pickup
+            GunMeshFilter.sharedMesh = BaseMesh;                                                  // sharedMesh assigns the asset directly - show the default revolver mesh
+            gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);          // Restore correct display scale after mesh swap
+        }
     }
 }
