@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text GameGoalAmount_Text;
     public int KillCount;
     public bool GoalCompleted;
+    public Vector3 RespawnPosition;
 
 
     // Awake is called once before the first execution of Start after the MonoBehaviour is created
@@ -64,6 +65,8 @@ public class GameManager : MonoBehaviour
             else if (MenuActive == MenuPause) // If Menu Active is NOT Null and instead EQUAL TO MenuPause
             { StatePause(false); } // Resume Game
         }
+
+        RespawnPosition = Player.transform.position;
     }
 
     public void StatePause(bool ShouldPause) // Made Modular for Pause and Unpause || Easier for me to use and understand

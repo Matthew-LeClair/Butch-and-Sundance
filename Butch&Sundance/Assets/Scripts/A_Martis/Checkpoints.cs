@@ -5,6 +5,7 @@ using System.Collections;
 // Updates the player's respawn position and displays a checkpoint popup
 public class Checkpoint : MonoBehaviour
 {
+
     private void OnTriggerEnter(Collider other)
     {
         // Ensure the collider belongs to the player and prevent reactivating the same checkpoint repeatedly
