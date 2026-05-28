@@ -15,11 +15,13 @@ public class MomentumSurge : PowerupBase
 
         player.MomentumBuildRate *= momentumMultiplier;
         player.SpeedBase += speedBonus;
+        GameManager.Instance.PlayerMomentum.SetActive(true);
     }
 
     protected override void RemoveEffect(PlayerController player)
     {
         player.MomentumBuildRate = originalMomentum;
         player.SpeedBase = originalSpeed;
+        GameManager.Instance.PlayerMomentum.SetActive(false);
     }
 }

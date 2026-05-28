@@ -1,45 +1,55 @@
 using UnityEngine;
 using System.Collections;
 
+// Handles an interactable sliding door system.
+// The player can open the door while inside the trigger area, and the door automatically closes when the player exits.
+
 public class DoorBehavior : MonoBehaviour
 {
-    [SerializeField] GameObject doorModel;
-    [SerializeField] GameObject doorButtons;
+    [SerializeField] GameObject doorModel; // Physical door object that moves
+    [SerializeField] GameObject doorButtons; // Interaction UI/buttons
 
-    [SerializeField] float slideDistance;
-    [SerializeField] float slideSpeed;
+    [SerializeField] float slideDistance; // Distance the door moves when opening
+    [SerializeField] float slideSpeed; // Speed of the sliding movement
 
-    [SerializeField] Vector3 slideDirection;
+    [SerializeField] Vector3 slideDirection; // Direction the door slides toward
 
-    bool playerInTrigger;
-    bool isOpen;
-    bool isMoving;
+    bool playerInTrigger; // Tracks if the player is within interaction range
+    bool isOpen; // Tracks whether the door is currently open
+    bool isMoving; // Prevents overlapping movement coroutines
 
     Vector3 closedPos;
     Vector3 openPos;
 
     private void Start()
     {
+        // Store the starting position as the closed position
         closedPos = doorModel.transform.position;
 
+        // Calculate the open position using direction and distanc
         openPos = closedPos + slideDirection.normalized * slideDistance;
 
-        if(doorButtons != null ) doorButtons.SetActive(false);
+        // Hide interaction buttons at start
+        if (doorButtons != null ) doorButtons.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Allow interaction only if player is nearby and door is not moving
         if (playerInTrigger && !isMoving)
         {
+            // Check for interaction input
             if (Input.GetButtonDown("Interact"))
             {
+                // Open the door if currently closed
                 if (!isOpen)
                 {
                     StartCoroutine(MoveDoor(openPos, true));
                 }
 
-                if(doorButtons != null)
+                // Hide interaction UI after interacting
+                if (doorButtons != null)
                 {
                     doorButtons.SetActive(false);
                 }
@@ -50,18 +60,23 @@ public class DoorBehavior : MonoBehaviour
     IEnumerator MoveDoor(Vector3 targetPos, bool opening)
     {
         isMoving = true;
+
+        // Continue moving until the door reaches the target position
         while (Vector3.Distance(doorModel.transform.position, targetPos) > 0.01f)
         {
             doorModel.transform.position = Vector3.MoveTowards(
                 doorModel.transform.position, targetPos, slideSpeed * Time.deltaTime);
             yield return null;
         }
+        // Snap exactly to the target position
         doorModel.transform.position = targetPos;
 
         isOpen = opening;
         isMoving = false;
     }
 
+
+    // Detects the player for interactions
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -74,6 +89,7 @@ public class DoorBehavior : MonoBehaviour
         }
     }
 
+    // Detects when player has left for interactions
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
