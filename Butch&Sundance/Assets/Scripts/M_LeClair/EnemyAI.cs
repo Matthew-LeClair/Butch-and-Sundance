@@ -73,6 +73,10 @@ public class EnemyAI : EnemyBase
 
     public void CheckRoam()
     {
+        if (!agent.isOnNavMesh) { 
+            return;
+        }
+
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance + 0.1f)
         {
             roamTimer += Time.deltaTime;
