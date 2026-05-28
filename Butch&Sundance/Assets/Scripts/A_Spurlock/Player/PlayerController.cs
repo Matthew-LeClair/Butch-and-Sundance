@@ -156,7 +156,7 @@ public class PlayerController : MonoBehaviour, I_Damage
         MomentumBuildRate = BaseMomentumBuildRate; // Set Momentum Build Rate to Base on Start
         Health = HealthMax; // Set Health to Max on Start
         Shield = ShieldMax; // Set Shield to Max on Start
-        UpdatePlayerUI(); // Update Player UI on Start
+        ChangeStartPos();
     }
 
     // Called every frame by Unity.
@@ -842,5 +842,12 @@ public class PlayerController : MonoBehaviour, I_Damage
         }
 
         PredictionHit = RaycastHit.point == Vector3.zero ? SphereCastHit : RaycastHit; // Set Prediction Hit to best available hit
+    }
+    public void ChangeStartPos()
+    {
+        Controller.transform.position = GameManager.Instance.PlayerStartPos.transform.position;
+        Physics.SyncTransforms(); // Ensure CharacterController is in sync with new position
+        Health = HealthMax; // Restore Health on Respawn
+        UpdatePlayerUI(); // Update UI to reflect restored health
     }
 }

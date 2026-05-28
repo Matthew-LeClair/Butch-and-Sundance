@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Grapple
+  - Player Start Pos
   layers:
   - Default
   - TransparentFX

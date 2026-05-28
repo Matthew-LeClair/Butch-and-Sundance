@@ -16,6 +16,11 @@ public class ButtonFunctions : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // Load Next Scene
         GameManager.Instance.StatePause(true);
     }
+    public void Respawn()
+    {         
+        GameManager.Instance.PlayerScript.ChangeStartPos(); // Respawn Player
+        GameManager.Instance.StatePause(false); // Unpause
+    }
 
     public void Quit()
     {

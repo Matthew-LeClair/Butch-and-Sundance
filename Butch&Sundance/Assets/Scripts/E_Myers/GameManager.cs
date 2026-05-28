@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
         Player = GameObject.FindWithTag("Player"); // Find Player GameObject by Tag 
         PlayerScript = Player.GetComponent<PlayerController>(); // Get the Player Controller Script Component from Player
         TimeScale_Original = Time.timeScale; // Set Time Scale Original
+        PlayerStartPos = GameObject.FindWithTag("Player Start Pos"); // Find Player Start Position GameObject by Tag
     }
 
     // Update is called once per frame
