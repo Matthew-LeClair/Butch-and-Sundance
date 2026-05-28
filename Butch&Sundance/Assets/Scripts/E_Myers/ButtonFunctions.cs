@@ -11,6 +11,11 @@ public class ButtonFunctions : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload Active Scene
         GameManager.Instance.StatePause(false); // Unpause
     }
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // Load Next Scene
+        GameManager.Instance.StatePause(true);
+    }
 
     public void Quit()
     {
