@@ -290,9 +290,11 @@ MonoBehaviour:
   FlashColor: {r: 0, g: 0, b: 0, a: 0}
   CurrHealth: 10
   MaxHealth: 10
+  WeaponDrops:
+  - {fileID: 919132149155446097, guid: b7f0c0e8e11c6944b932623d678ca9d0, type: 3}
   WeaponArm_R: {fileID: 2700625720807135894}
   WeaponSlot_R: {fileID: 4506725575220829388}
-  ActiveWeapon_R: {fileID: 4964227604967343413}
+  ActiveWeapon_R: {fileID: 6274608284521951333, guid: 154415a30c17b6e4289ecc7057598a56, type: 3}
   Weapon_R: {fileID: 8445122871575540042}
   WeaponArm_L: {fileID: 0}
   WeaponSlot_L: {fileID: 0}
@@ -1081,17 +1083,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6029331776851316008, guid: 154415a30c17b6e4289ecc7057598a56, type: 3}
   m_PrefabInstance: {fileID: 1438786045501191504}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4964227604967343413 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6274608284521951333, guid: 154415a30c17b6e4289ecc7057598a56, type: 3}
-  m_PrefabInstance: {fileID: 1438786045501191504}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8445122871575540042 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7405187486586651674, guid: 154415a30c17b6e4289ecc7057598a56, type: 3}
   m_PrefabInstance: {fileID: 1438786045501191504}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4964227604967343413}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d87b2157408417942aa4a514029d2e6b, type: 3}
