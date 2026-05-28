@@ -483,6 +483,7 @@ public class PlayerController : MonoBehaviour, I_Damage
     {
         Debug.Log(Health); // Debug Print Health
         GameManager.Instance.YouLose(); // Lose UI
+        Respawn();
     }
 
 
@@ -842,5 +843,18 @@ public class PlayerController : MonoBehaviour, I_Damage
         }
 
         PredictionHit = RaycastHit.point == Vector3.zero ? SphereCastHit : RaycastHit; // Set Prediction Hit to best available hit
+    }
+
+    public void Respawn()
+    {
+        Controller.enabled = false;
+        transform.position = GameManager.Instance.RespawnPosition;
+        Health = HealthMax;
+        Shield = ShieldMax;
+
+        UpdatePlayerUI();
+
+        Controller.enabled = true;
+        Controller.enabled = true;
     }
 }

@@ -39,6 +39,9 @@ public class GameManager : MonoBehaviour
     public int KillCount;
     public bool GoalCompleted;
 
+    [Header("Checkpoints")]
+    public GameObject checkpointPopup;
+    public Vector3 RespawnPosition;
 
     // Awake is called once before the first execution of Start after the MonoBehaviour is created
     void Awake()
@@ -47,6 +50,8 @@ public class GameManager : MonoBehaviour
         Player = GameObject.FindWithTag("Player"); // Find Player GameObject by Tag 
         PlayerScript = Player.GetComponent<PlayerController>(); // Get the Player Controller Script Component from Player
         TimeScale_Original = Time.timeScale; // Set Time Scale Original
+
+        RespawnPosition = Player.transform.position;
     }
 
     // Update is called once per frame
