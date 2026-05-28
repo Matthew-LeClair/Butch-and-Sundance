@@ -22,9 +22,10 @@ public class AverageBehavior : EnemyBehavior
         }
         else
         {
-            foreach(AimControl aim in ai.aimControllers)
+            ai.CheckRoam();
+            ai.FOV = ai.FOVOrig;
+            foreach (AimControl aim in ai.aimControllers)
             {
-                ai.FOV = ai.FOVOrig;
                 aim.ResetAim();
             }
         }

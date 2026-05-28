@@ -22,6 +22,7 @@ public class GoonBehavior : EnemyBehavior
         }
         else
         {
+            ai.CheckRoam();
             ai.FOV = ai.FOVOrig;
             foreach (AimControl aim in ai.aimControllers)
             {

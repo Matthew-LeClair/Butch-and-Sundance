@@ -8,6 +8,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5965127268365769826, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5965127268365769826, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5965127268365769826, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5965127268365769826, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 6860211766224948355, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
       propertyPath: Spread
       value: 1
@@ -44,21 +60,37 @@ PrefabInstance:
       propertyPath: ShootDistance
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 7201647469656816511, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7342528574767976957, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: b89a61edde076e7408cabb2560788417, type: 2}
     - target: {fileID: 7664178544780756401, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.10000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 7664178544780756401, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.0838326
+      objectReference: {fileID: 0}
+    - target: {fileID: 7664178544780756401, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.11146471
+      objectReference: {fileID: 0}
+    - target: {fileID: 7664178544780756401, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.182
+      value: -0.019999743
       objectReference: {fileID: 0}
     - target: {fileID: 7664178544780756401, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.05000004
+      value: -1.0504185
       objectReference: {fileID: 0}
     - target: {fileID: 7664178544780756401, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.6554792
+      value: -0.029046535
       objectReference: {fileID: 0}
     - target: {fileID: 7664178544780756401, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
       propertyPath: m_LocalRotation.w
@@ -66,15 +98,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7664178544780756401, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7664178544780756401, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7664178544780756401, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7664178544780756401, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -91,6 +123,10 @@ PrefabInstance:
     - target: {fileID: 7990298833152522492, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
       propertyPath: m_Name
       value: Shotgun
+      objectReference: {fileID: 0}
+    - target: {fileID: 7990298833152522492, guid: 5dfb2c6618751ef4f8e343aec1981f07, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

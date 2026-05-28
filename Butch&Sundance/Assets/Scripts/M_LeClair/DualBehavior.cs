@@ -27,11 +27,12 @@ public class DualBehavior : EnemyBehavior
         }
         else
         {
+            ai.CheckRoam();
+            ai.FOV = ai.FOVOrig;
             foreach (AimControl aim in ai.aimControllers)
             {
                 aim.ResetAim();
             }
-            ai.FOV = ai.FOVOrig;
         }
     }
 }

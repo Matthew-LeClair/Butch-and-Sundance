@@ -14,11 +14,17 @@ public class EnemyAI : EnemyBase
     [SerializeField] public NavMeshAgent agent;
 
     [SerializeField] public float FOV;
-     public float FOVOrig;
+    public float FOVOrig;
+
+    [SerializeField] public int RoamDistance;
+    [SerializeField] public int RoamPauseTime;
+    Vector3 startingPos;
+    float roamTimer;
 
     public override void Start()
     {
         base.Start();
+        startingPos = transform.position;
         FOVOrig = FOV;
         agent.speed = MoveSpeed;
         agent.angularSpeed = MoveSpeed;
@@ -62,6 +68,28 @@ public class EnemyAI : EnemyBase
         if (Weapon_L != null && Weapon_L.IsOut)
         {
             Weapon_L.Reload();
+        }
+    }
+
+    public void CheckRoam()
+    {
+        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance + 0.1f)
+        {
+            roamTimer += Time.deltaTime;
+
+            if (roamTimer >= RoamPauseTime)
+            {
+                roamTimer = 0;
+
+                Vector3 randPos = Random.insideUnitSphere * RoamDistance;
+                randPos += startingPos;
+
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(randPos, out hit, RoamDistance, 1))
+                {
+                    agent.SetDestination(hit.position);
+                }
+            }
         }
     }
 

@@ -451,6 +451,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc295737d05a49843ab1e37e20d6f187, type: 3}
+--- !u!1 &1193843915 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4506725575220829388, guid: b60ac39aa1ca12d4385c5e68170632c6, type: 3}
+  m_PrefabInstance: {fileID: 1883559709}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1230618559
 GameObject:
   m_ObjectHideFlags: 0
@@ -761,7 +766,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3322868057849035280, guid: b60ac39aa1ca12d4385c5e68170632c6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.713719
+      value: -9.8
       objectReference: {fileID: 0}
     - target: {fileID: 3322868057849035280, guid: b60ac39aa1ca12d4385c5e68170632c6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -769,7 +774,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3322868057849035280, guid: b60ac39aa1ca12d4385c5e68170632c6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.4238224
+      value: -5.8
       objectReference: {fileID: 0}
     - target: {fileID: 3322868057849035280, guid: b60ac39aa1ca12d4385c5e68170632c6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -799,6 +804,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8833397689779589650, guid: b60ac39aa1ca12d4385c5e68170632c6, type: 3}
+      propertyPath: WeaponSlot_R
+      value: 
+      objectReference: {fileID: 1193843915}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

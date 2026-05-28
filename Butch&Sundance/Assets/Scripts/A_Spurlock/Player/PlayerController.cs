@@ -363,6 +363,7 @@ public class PlayerController : MonoBehaviour, I_Damage
     {
         if (Input.GetButtonDown("Jump") && JumpCount < 2) // If Jump pressed and under Jump Limit...
         {
+            AudioPlayer.PlayOneShot(JumpSound[Random.Range(0, JumpSound.Length)], JumpSoundVol);
             if (!IsWallRunning) // If not Wall Running...
             {
                 Jumped = true; // Set Jumped Flag
@@ -376,7 +377,6 @@ public class PlayerController : MonoBehaviour, I_Damage
             }
             else { WallJump(); } // Call Wall Jump if Wall Running
         }
-        AudioPlayer.PlayOneShot(JumpSound[Random.Range(0, JumpSound.Length)], JumpSoundVol);
     }
 
     // Called from HandleInput() when Shift is pressed and conditions are met.

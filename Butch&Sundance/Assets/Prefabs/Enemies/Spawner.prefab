@@ -55,8 +55,6 @@ MonoBehaviour:
   amountToSpawn: 5
   spawnRate: 1
   spawnDist: 5
-  roamDistance: 100
-  roamPauseTime: 0
 --- !u!114 &7002240020958395647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,14 +89,17 @@ MonoBehaviour:
   MoveSpeed: 5
   masks:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   player: {fileID: 0}
   seePlayer: 0
   playerDir: {x: 0, y: 0, z: 0}
   DistanceToPlayer: 0
   behavior: {fileID: 607201488483725025}
   agent: {fileID: 6052701668053811933}
-  FOV: 180
+  FOV: 360
+  FOVOrig: 0
+  RoamDistance: 50
+  RoamPauseTime: 1
 --- !u!135 &8648908203112038376
 SphereCollider:
   m_ObjectHideFlags: 0

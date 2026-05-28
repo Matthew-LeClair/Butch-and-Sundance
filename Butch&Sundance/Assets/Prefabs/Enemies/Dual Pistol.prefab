@@ -1230,6 +1230,8 @@ MonoBehaviour:
   agent: {fileID: 8901627560063801594}
   FOV: 45
   FOVOrig: 0
+  RoamDistance: 15
+  RoamPauseTime: 3
 --- !u!114 &5346593166715801901
 MonoBehaviour:
   m_ObjectHideFlags: 0

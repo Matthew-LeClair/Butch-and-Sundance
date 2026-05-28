@@ -8,30 +8,21 @@ public class Spawner : EnemyBehavior
     [SerializeField] int amountToSpawn;
     [SerializeField] int spawnRate;
     [SerializeField] int spawnDist;
-    [SerializeField] int roamDistance;
-    [SerializeField] int roamPauseTime;
 
     int spawnCount;
     float spawnTimer;
-    float roamTimer;
-    int roamSpeed;
 
     bool onCooldown = false;
-    bool seePlayer;
-
-    Vector3 startingPos;
-
-    private void Start()
-    {
-        startingPos = transform.position;
-        roamSpeed = ai.MoveSpeed;
-    }
 
     public override void Tick()
     {
-        if (!seePlayer)
+        if (!ai.seePlayer)
         {
-            checkRoam();
+            ai.CheckRoam();
+        }
+        else
+        {
+            ai.agent.ResetPath();
         }
 
         if (!onCooldown)
@@ -43,52 +34,11 @@ public class Spawner : EnemyBehavior
                 spawn();
             }
 
-            if(spawnCount >= amountToSpawn && !onCooldown)
+            if (spawnCount >= amountToSpawn && !onCooldown)
             {
                 onCooldown = true;
                 StartCoroutine(spawnCooldown());
             }
-        }
-    }
-
-    void checkRoam()
-    {
-        if (ai.agent.remainingDistance < 0.01f)
-        {
-            roamTimer += Time.deltaTime;
-
-            if (roamTimer >= roamPauseTime)
-            {
-                roam();
-            }
-        }
-    }
-
-    void roam()
-    {
-        roamTimer = 0;
-        Vector3 randPos = Random.insideUnitSphere * roamDistance;
-        randPos += startingPos;
-
-        NavMeshHit hit;
-        NavMesh.SamplePosition(randPos, out hit, roamDistance, 1);
-        ai.agent.SetDestination(hit.position);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            seePlayer = true;
-            ai.agent.ResetPath();
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            seePlayer = false;
         }
     }
 
@@ -101,14 +51,14 @@ public class Spawner : EnemyBehavior
         ranPos += transform.position;
 
         NavMeshHit hit;
-        if (!NavMesh.SamplePosition(ranPos, out hit, spawnDist, 1)) { return; } // abort if no valid position found
+        if (!NavMesh.SamplePosition(ranPos, out hit, spawnDist, 1)) { return; }
 
         Instantiate(objectToSpawn[Random.Range(0, objectToSpawn.Length)], hit.position + Vector3.up * 0.5f, Quaternion.Euler(0, Random.Range(0, 360), 0));
     }
 
     IEnumerator spawnCooldown()
     {
-        if (seePlayer)
+        if (ai.seePlayer)
         {
             yield return new WaitForSeconds(10);
         }

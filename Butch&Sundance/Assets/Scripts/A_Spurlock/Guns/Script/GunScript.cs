@@ -14,7 +14,7 @@ public class Gun : MonoBehaviour
     float ShootTimer;
 
     [SerializeField] public Transform GunPivot;
-    [SerializeField] Transform ShootPos;
+    [SerializeField] public Transform ShootPos;
     [SerializeField] public int ShootDistance;
 
     public int CurrAmmo;
