@@ -6,6 +6,7 @@ public class AverageBehavior : EnemyBehavior
     {
         if (ai.seePlayer)
         {
+            ai.FOV = 180f;
             ai.agent.SetDestination(ai.player.transform.position);
             ai.rotateToTarget();
             bool rightInRange = ai.Weapon_R != null && ai.DistanceToPlayer < ai.Weapon_R.ShootDistance;
@@ -23,6 +24,7 @@ public class AverageBehavior : EnemyBehavior
         {
             foreach(AimControl aim in ai.aimControllers)
             {
+                ai.FOV = ai.FOVOrig;
                 aim.ResetAim();
             }
         }

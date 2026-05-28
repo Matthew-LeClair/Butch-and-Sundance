@@ -74,6 +74,7 @@ MonoBehaviour:
   FlashColor: {r: 0, g: 0, b: 0, a: 0}
   CurrHealth: 10
   MaxHealth: 10
+  WeaponDrops: []
   WeaponArm_R: {fileID: 0}
   WeaponSlot_R: {fileID: 0}
   ActiveWeapon_R: {fileID: 0}
@@ -97,6 +98,7 @@ MonoBehaviour:
   DistanceToPlayer: 0
   behavior: {fileID: 607201488483725025}
   agent: {fileID: 6052701668053811933}
+  FOV: 180
 --- !u!135 &8648908203112038376
 SphereCollider:
   m_ObjectHideFlags: 0

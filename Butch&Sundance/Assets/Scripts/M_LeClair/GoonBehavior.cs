@@ -6,6 +6,7 @@ public class GoonBehavior : EnemyBehavior
     {
         if (ai.seePlayer)
         {
+            ai.FOV = 180f;
             ai.agent.SetDestination(ai.player.transform.position);
             ai.rotateToTarget();
             bool rightInRange = ai.Weapon_R != null && ai.DistanceToPlayer < ai.Weapon_R.ShootDistance;
@@ -21,6 +22,7 @@ public class GoonBehavior : EnemyBehavior
         }
         else
         {
+            ai.FOV = ai.FOVOrig;
             foreach (AimControl aim in ai.aimControllers)
             {
                 aim.ResetAim();
