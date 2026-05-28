@@ -12,7 +12,7 @@ public class Checkpoint : MonoBehaviour
         if (other.CompareTag("Player") && GameManager.Instance.RespawnPosition != transform.position)
         {
             GameManager.Instance.RespawnPosition = transform.position;
-            StartCoroutine(displayPopup());
+            StartCoroutine(displayPopup()); 
         }
     }
 

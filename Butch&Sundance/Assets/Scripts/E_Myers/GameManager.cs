@@ -66,8 +66,6 @@ public class GameManager : MonoBehaviour
             else if (MenuActive == MenuPause) // If Menu Active is NOT Null and instead EQUAL TO MenuPause
             { StatePause(false); } // Resume Game
         }
-
-        RespawnPosition = Player.transform.position;
     }
 
     public void StatePause(bool ShouldPause) // Made Modular for Pause and Unpause || Easier for me to use and understand
