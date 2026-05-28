@@ -413,6 +413,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7257416168946339993}
+  - component: {fileID: 5054785185571912163}
   - component: {fileID: 2833765580816190799}
   - component: {fileID: 9008465376011355494}
   - component: {fileID: 8038631709194760505}
@@ -440,6 +441,31 @@ Transform:
   - {fileID: 794861827060116603}
   m_Father: {fileID: 1249223304994655085}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5054785185571912163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538664098464358764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cc324d9ef7382d4fae965f5a27c8f75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AlienTech
+  Mat: {fileID: 0}
+  Outline: {fileID: 0}
+  puTypeMod: 1
+  ModCount: 0
+  GunMeshes:
+  - {fileID: -5495902117074765545, guid: de340571d723394429c7a5e476e53da4, type: 3}
+  - {fileID: -5495902117074765545, guid: b7f0c0e8e11c6944b932623d678ca9d0, type: 3}
+  - {fileID: -5495902117074765545, guid: d58beb3957cf7e94f9be72f605f6e440, type: 3}
+  - {fileID: -5495902117074765545, guid: 10acb03013f81b6448748b14da88ddbd, type: 3}
+  - {fileID: -5495902117074765545, guid: 7fff68229dc818d499d9b77d7fc6ee44, type: 3}
+  typeMod: 1
+  pGun: {fileID: 0}
+  eGun: {fileID: 2833765580816190799}
 --- !u!114 &2833765580816190799
 MonoBehaviour:
   m_ObjectHideFlags: 0
