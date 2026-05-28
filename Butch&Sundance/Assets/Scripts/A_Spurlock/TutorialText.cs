@@ -8,6 +8,12 @@ public class TutorialText : MonoBehaviour
     [SerializeField] public GameObject TutorialTxt;
     [SerializeField] public TMP_Text UI_Text;
 
+
+    private void Start()
+    {
+        TutorialTxt.SetActive(false);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         TutorialTxt.gameObject.SetActive(true);
