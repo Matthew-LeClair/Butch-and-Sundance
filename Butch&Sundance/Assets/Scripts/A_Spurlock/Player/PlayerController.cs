@@ -368,6 +368,8 @@ public class PlayerController : MonoBehaviour, I_Damage
                 Jumped = true; // Set Jumped Flag
                 JumpCount++; // Increment Jump Count
 
+                AudioPlayer.PlayOneShot(JumpSound[Random.Range(0, JumpSound.Length)], JumpSoundVol);
+
                 float MomentumBoost = CurrMomentum / MaxMomentum; // Momentum as a Percentage
                 PlayerVel.y = JumpSpeedBase * (1f + MomentumBoost * 0.4f); // Scale Jump Height with Momentum
 
@@ -376,7 +378,6 @@ public class PlayerController : MonoBehaviour, I_Damage
             }
             else { WallJump(); } // Call Wall Jump if Wall Running
         }
-        AudioPlayer.PlayOneShot(JumpSound[Random.Range(0, JumpSound.Length)], JumpSoundVol);
     }
 
     // Called from HandleInput() when Shift is pressed and conditions are met.
