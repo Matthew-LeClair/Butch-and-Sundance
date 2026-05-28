@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public Image PlayerHP_Bar;
     public Image AlienEnergy_Bar;
     public Image PlayerShieldHP_Bar;
+    public TMP_Text WeaponNameText;
     public TMP_Text AmmoCount;
     public GameObject PlayerDamage_Screen;
     public GameObject PlayerShield_Screen;
@@ -103,10 +104,16 @@ public class GameManager : MonoBehaviour
 
         if (KillCount <= 0 ) // If Goal is MET
         { // WIN!!
-            GameGoalAmount_Text.text = KillCount.ToString("F0");
             GoalCompleted = true;
             Debug.Log("Objective complete");
         }
+    }
+    public void OnWeaponChanged(AlienTech weapon, int slotIndex)
+    {
+        if (weapon != null)
+            Debug.Log($"Equipped: {weapon.typeMod} in slot {slotIndex}");
+        else
+            Debug.Log("Equipped: Base Revolver (slot 0)");
     }
 
     public void YouWin()
