@@ -782,7 +782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c206db0260b07354c9edcbf817c79fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Damage
-  DamageType: 0
+  DamageType: 1
   Body: {fileID: 0}
   DamageAmount: 9999
   DamageRate: 0
@@ -932,7 +932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c206db0260b07354c9edcbf817c79fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Damage
-  DamageType: 0
+  DamageType: 1
   Body: {fileID: 0}
   DamageAmount: 9999
   DamageRate: 0
@@ -3643,7 +3643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c206db0260b07354c9edcbf817c79fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Damage
-  DamageType: 0
+  DamageType: 1
   Body: {fileID: 0}
   DamageAmount: 9999
   DamageRate: 0
@@ -3793,7 +3793,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c206db0260b07354c9edcbf817c79fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Damage
-  DamageType: 0
+  DamageType: 1
   Body: {fileID: 0}
   DamageAmount: 9999
   DamageRate: 0
@@ -4809,7 +4809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c206db0260b07354c9edcbf817c79fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Damage
-  DamageType: 0
+  DamageType: 1
   Body: {fileID: 0}
   DamageAmount: 9999
   DamageRate: 0
