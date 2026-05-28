@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using Unity.VisualScripting;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour, I_Damage
 {
@@ -132,6 +133,16 @@ public class PlayerController : MonoBehaviour, I_Damage
     public bool Reloaded; // Has the Player Reloaded
     public bool Moved; // Has the Player Moved
     public bool Jumped; // Has the Player Jumped
+
+    [Header("Audio")]
+    [SerializeField] AudioSource AudioPlayer;
+    [SerializeField] AudioClip[] JumpSound;
+    [SerializeField] float JumpSoundVol;
+    [SerializeField] AudioClip[] HurtSound;
+    [SerializeField] float HurtSoundVol;
+    [SerializeField] AudioClip[] StepSounds;
+    [SerializeField] float StepSoundVol;
+
 
 
     //===[Basic]===\\
@@ -365,6 +376,7 @@ public class PlayerController : MonoBehaviour, I_Damage
             }
             else { WallJump(); } // Call Wall Jump if Wall Running
         }
+        AudioPlayer.PlayOneShot(JumpSound[Random.Range(0, JumpSound.Length)], JumpSoundVol);
     }
 
     // Called from HandleInput() when Shift is pressed and conditions are met.

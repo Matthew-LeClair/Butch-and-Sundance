@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public Image PlayerHP_Bar;
     public Image AlienEnergy_Bar;
     public Image PlayerShieldHP_Bar;
-    public GameObject AmmoCount;
+    public TMP_Text AmmoCount;
     public GameObject PlayerDamage_Screen;
     public GameObject PlayerShield_Screen;
     public GameObject PlayerMomentum;
