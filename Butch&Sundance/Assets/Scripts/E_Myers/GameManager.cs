@@ -99,7 +99,9 @@ public class GameManager : MonoBehaviour
 
         GameGoalAmount_Text.text = KillCount.ToString("F0");
 
-        if (KillCount <= 0) // If Goal is MET
+        KillCount = Mathf.Max(0, KillCount);
+
+        if (KillCount <= 0 ) // If Goal is MET
         { // WIN!!
             GameGoalAmount_Text.text = KillCount.ToString("F0");
             GoalCompleted = true;
