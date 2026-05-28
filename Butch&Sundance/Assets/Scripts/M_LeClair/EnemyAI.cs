@@ -13,9 +13,13 @@ public class EnemyAI : EnemyBase
     [SerializeField] EnemyBehavior behavior;
     [SerializeField] public NavMeshAgent agent;
 
+    [SerializeField] public float FOV;
+     public float FOVOrig;
+
     public override void Start()
     {
         base.Start();
+        FOVOrig = FOV;
         agent.speed = MoveSpeed;
         agent.angularSpeed = MoveSpeed;
         if (Weapon_R != null)
@@ -25,10 +29,10 @@ public class EnemyAI : EnemyBase
 
         GameManager.Instance.UpdateGameGoal(1);
     }
-    // Update is called once per frame
+
     void Update()
     {
-        if(player == null)
+        if (player == null)
         {
             seePlayer = false;
         }
@@ -37,13 +41,18 @@ public class EnemyAI : EnemyBase
             seePlayer = false;
             playerDir = player.position - transform.position;
             DistanceToPlayer = playerDir.magnitude;
-            RaycastHit hit;
-            Vector3 origin = transform.position;
-            if (Physics.Raycast(origin, playerDir.normalized, out hit, DistanceToPlayer, masks))
+
+            float angleToPlayer = Vector3.Angle(transform.forward, playerDir);
+            if (angleToPlayer <= FOV)
             {
-                seePlayer = hit.transform.root.CompareTag("Player");
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, playerDir.normalized, out hit, DistanceToPlayer, masks))
+                {
+                    seePlayer = hit.transform.root.CompareTag("Player");
+                }
             }
         }
+
         behavior.Tick();
 
         if (Weapon_R != null && Weapon_R.IsOut)
@@ -55,6 +64,7 @@ public class EnemyAI : EnemyBase
             Weapon_L.Reload();
         }
     }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))

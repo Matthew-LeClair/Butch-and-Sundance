@@ -6,6 +6,7 @@ public class DualBehavior : EnemyBehavior
     {
         if (ai.seePlayer)
         {
+            ai.FOV = 180f;
             ai.agent.SetDestination(ai.player.transform.position);
             ai.rotateToTarget();
             bool rightInRange = ai.Weapon_R != null && ai.DistanceToPlayer < ai.Weapon_R.ShootDistance;
@@ -30,6 +31,7 @@ public class DualBehavior : EnemyBehavior
             {
                 aim.ResetAim();
             }
+            ai.FOV = ai.FOVOrig;
         }
     }
 }
