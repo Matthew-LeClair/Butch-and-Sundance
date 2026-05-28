@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 600a229e5b3080f4ab31105e9c34bf45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AlienTech_Pickup
-  Mat: {fileID: 0}
-  Outline: {fileID: 2100000, guid: 8d6a8090dce357941b97bd715bbf7f47, type: 2}
+  Mat: {fileID: 2395759477447840578}
+  Outline: {fileID: 2100000, guid: cf1c2bb98d86ecc4096df53dfd233f71, type: 2}
   puTypeMod: 2
   ModCount: 5
   GunMeshes:
@@ -133,5 +133,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.25
+  m_Radius: 0.05
   m_Center: {x: 0, y: 0, z: 0}

@@ -1119,8 +1119,8 @@ MonoBehaviour:
   HealthMax: 1000
   Shield: 500
   ShieldMax: 0
-  AlienEnergy: 100
-  AlienEnergyMax: 0
+  AlienEnergy: 500
+  AlienEnergyMax: 500
   AlienEnergyRegenRate: 5
   AlienEnergyRegenCap: 25
   WallRunEnergyCost: 5
