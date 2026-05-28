@@ -21,6 +21,8 @@ public class DoorBehavior : MonoBehaviour
     Vector3 closedPos;
     Vector3 openPos;
 
+    Transform playerOnDoor;
+
     private void Start()
     {
         // Store the starting position as the closed position
@@ -64,8 +66,21 @@ public class DoorBehavior : MonoBehaviour
         // Continue moving until the door reaches the target position
         while (Vector3.Distance(doorModel.transform.position, targetPos) > 0.01f)
         {
+            // Store previous position
+            Vector3 previousPos = doorModel.transform.position;
+
+            // Move door
             doorModel.transform.position = Vector3.MoveTowards(
                 doorModel.transform.position, targetPos, slideSpeed * Time.deltaTime);
+
+            // Move player WITH door
+            Vector3 moveDelta = doorModel.transform.position - previousPos;
+            if (playerOnDoor != null)
+            {
+                playerOnDoor.position += moveDelta;
+            }
+
+
             yield return null;
         }
         // Snap exactly to the target position
@@ -104,6 +119,29 @@ public class DoorBehavior : MonoBehaviour
             if(isOpen && !isMoving)
             {
                 StartCoroutine (MoveDoor(closedPos, false));
+            }
+        }
+    }
+
+    // Detect player TOUCHING door
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            playerOnDoor = collision.transform;
+        }
+    }
+
+    // Detect when player STOPS TOUCHING door
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            if (playerOnDoor == collision.transform)
+            {
+                playerOnDoor = null;
             }
         }
     }
