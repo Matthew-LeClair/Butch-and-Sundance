@@ -8,9 +8,9 @@ public class Checkpoint : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Ensure the collider belongs to the player and prevent reactivating the same checkpoint repeatedly
-        if (other.CompareTag("Player") && GameManager.Instance.PlayerStartPos.transform.position != transform.position)
+        if (other.CompareTag("Player") && GameManager.Instance.RespawnPosition != transform.position)
         {
-            GameManager.Instance.PlayerStartPos.transform.position = transform.position;
+            GameManager.Instance.RespawnPosition = transform.position;
             StartCoroutine(displayPopup());
         }
     }
