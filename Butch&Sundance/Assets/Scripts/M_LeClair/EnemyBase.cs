@@ -11,10 +11,11 @@ public class EnemyBase : MonoBehaviour, I_Damage
     public float CurrHealth;
     [SerializeField] public float MaxHealth;
 
+    [SerializeField] GameObject[] WeaponDrops;
     [SerializeField] public GameObject WeaponArm_R;
     [SerializeField] public GameObject WeaponSlot_R;
     [SerializeField] public GameObject ActiveWeapon_R;
-    public Gun Weapon_R; 
+    public Gun Weapon_R;
     [SerializeField] public GameObject WeaponArm_L;
     [SerializeField] public GameObject WeaponSlot_L;
     [SerializeField] public GameObject ActiveWeapon_L;
@@ -26,18 +27,21 @@ public class EnemyBase : MonoBehaviour, I_Damage
 
     public bool IsAiming;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    Material[] CachedMaterials;
+
     public virtual void Start()
     {
+        CurrHealth = MaxHealth;
         DamageReduc = DamageReducBase;
-
-        // Set the Material Color as the Original Color, Modular Version
-        Body.material.color = OriginalColor;
 
         Renderer[] Renderers = GetComponentsInChildren<Renderer>();
 
-        foreach (Renderer R in Renderers)
-        { R.material.color = OriginalColor; }
+        CachedMaterials = new Material[Renderers.Length];
+        for (int i = 0; i < Renderers.Length; i++)
+        {
+            CachedMaterials[i] = Renderers[i].material;
+            CachedMaterials[i].color = OriginalColor;
+        }
 
         if (ActiveWeapon_R != null && WeaponSlot_R != null)
         {
@@ -48,9 +52,9 @@ public class EnemyBase : MonoBehaviour, I_Damage
             ActiveGun_R.transform.localScale = Vector3.one;
 
             Weapon_R = ActiveGun_R.GetComponent<Gun>();
-
             Weapon_R.GunPivot = WeaponSlot_R.transform;
         }
+
         if (ActiveWeapon_L != null && WeaponSlot_L != null)
         {
             GameObject ActiveGun_L = Instantiate(ActiveWeapon_L).gameObject;
@@ -60,51 +64,37 @@ public class EnemyBase : MonoBehaviour, I_Damage
             ActiveGun_L.transform.localScale = Vector3.one;
 
             Weapon_L = ActiveGun_L.GetComponent<Gun>();
-
             Weapon_L.GunPivot = WeaponSlot_L.transform;
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    void Update() { }
+
+    public virtual void TakeDamage(int Amount, bool AlienTech)
     {
-        
-    }
+        CurrHealth -= (Amount * CritMulti) * DamageReduc;
 
-    public virtual void TakeDamage(int Amount, bool AlienTech) // Take Damage, Damage Interface Override
-    {
+        CritMulti = 1;
 
-        CurrHealth -= (Amount * CritMulti) * DamageReduc; // Subtract Health by Amount
-
-        CritMulti = 1; //Resets crit multi after damage
-
-        if (CurrHealth <= 0) // If Health is Less Than or Equal To 0...
+        if (CurrHealth <= 0)
         {
             GameManager.Instance.UpdateGameGoal(-1);
-
-            Death(); // Destroy the Object
-        } 
-        else { StartCoroutine(Flash()); } // Call the Flash Function, Modular Version
-
+            Death();
+        }
+        else { StartCoroutine(Flash()); }
     }
 
     IEnumerator Flash()
     {
-        Transform tPart = gameObject.transform;
+        if (CachedMaterials == null) { yield break; }
 
-        if (tPart == null) { yield break; }
-
-        Renderer rPart = tPart.GetComponent<Renderer>();
-
-        if (rPart == null) { yield break; }
-
-        // Flash Body Part
-        rPart.material.color = FlashColor;
+        foreach (Material mat in CachedMaterials)
+        { mat.color = FlashColor; }
 
         yield return new WaitForSeconds(0.1f);
 
-        // Reset Body Part
-        rPart.material.color = OriginalColor;
+        foreach (Material mat in CachedMaterials)
+        { mat.color = OriginalColor; }
     }
 
     public void Aim()
@@ -115,30 +105,32 @@ public class EnemyBase : MonoBehaviour, I_Damage
         Vector3 OriginalRot = new Vector3(-14, 90, 0);
         Vector3 AimRot = new Vector3(-14, 90, -90);
 
-
-        if (!IsAiming) 
+        if (!IsAiming)
         {
             IsAiming = true;
-
             WeaponArm_R.transform.localPosition = AimPos;
-
-            Quaternion Aim = Quaternion.Euler(AimRot);
-            WeaponArm_R.transform.localRotation = Aim;
-
+            WeaponArm_R.transform.localRotation = Quaternion.Euler(AimRot);
             Debug.Log("Should be aiming");
-        } 
+        }
         else
         {
             IsAiming = false;
-
             WeaponArm_R.transform.localPosition = OriginalPos;
-
-            Quaternion Aim = Quaternion.Euler(OriginalRot);
-            WeaponArm_R.transform.localRotation = Aim;
-
+            WeaponArm_R.transform.localRotation = Quaternion.Euler(OriginalRot);
             Debug.Log("Should NOT be aiming");
         }
     }
 
-    public virtual void Death() { Debug.Log("Blegh! I'm dead! :)"); Destroy(gameObject); }
+    public virtual void Death()
+    {
+        Debug.Log("Blegh! I'm dead! :)");
+
+        if (WeaponDrops != null && WeaponDrops.Length > 0)
+        {
+            int index = Random.Range(0, WeaponDrops.Length);
+            Instantiate(WeaponDrops[index], transform.position, Quaternion.identity);
+        }
+
+        Destroy(gameObject);
+    }
 }

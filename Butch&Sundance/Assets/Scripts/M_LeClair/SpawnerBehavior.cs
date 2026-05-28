@@ -101,9 +101,9 @@ public class Spawner : EnemyBehavior
         ranPos += transform.position;
 
         NavMeshHit hit;
-        NavMesh.SamplePosition(ranPos, out hit, spawnDist, 1);
+        if (!NavMesh.SamplePosition(ranPos, out hit, spawnDist, 1)) { return; } // abort if no valid position found
 
-        Instantiate(objectToSpawn[Random.Range(0, objectToSpawn.Length)], hit.position, Quaternion.Euler(0, Random.Range(0, 360), 0));
+        Instantiate(objectToSpawn[Random.Range(0, objectToSpawn.Length)], hit.position + Vector3.up * 0.5f, Quaternion.Euler(0, Random.Range(0, 360), 0));
     }
 
     IEnumerator spawnCooldown()

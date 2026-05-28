@@ -129,7 +129,7 @@ public class PlayerGun : MonoBehaviour
                 {
                     Debug.Log(hit.collider.name); // Debug: log name of hit object
 
-                    I_Damage dmg = hit.collider.GetComponent<I_Damage>(); // Try to get the damage interface on the hit object
+                    I_Damage dmg = hit.collider.GetComponentInParent<I_Damage>(); // Try to get the damage interface on the hit object
 
                     if (dmg != null) // Only apply damage if the hit object implements I_Damage
                     {
@@ -159,7 +159,7 @@ public class PlayerGun : MonoBehaviour
                     {
                         Debug.Log(hit.collider.name); // Debug: log name of hit object
 
-                        I_Damage dmg = hit.collider.GetComponent<I_Damage>(); // Try to get the damage interface on the hit object
+                        I_Damage dmg = hit.collider.GetComponentInParent<I_Damage>(); // Try to get the damage interface on the hit object
 
                         if (dmg != null) // Only apply damage if the hit object implements I_Damage
                         {
