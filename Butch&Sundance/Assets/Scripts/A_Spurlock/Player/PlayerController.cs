@@ -459,6 +459,9 @@ public class PlayerController : MonoBehaviour, I_Damage
             }
 
             Health -= Amount; // Subtract Health by Amount
+
+            AudioPlayer.PlayOneShot(HurtSound[Random.Range(0, HurtSound.Length)], HurtSoundVol);
+
             if (Health <= 0) // If Health is Zero or less...
             {
                 GameManager.Instance.YouLose(); // Trigger Lose State
@@ -466,7 +469,8 @@ public class PlayerController : MonoBehaviour, I_Damage
             }
             StartCoroutine(FlashDamageScreen()); // Flash Damage Screen
         }
-        else { StartCoroutine(FlashShieldScreen()); } // Flash Shield Screen if Shield absorbed damage
+        else { StartCoroutine(FlashShieldScreen());
+        } // Flash Shield Screen if Shield absorbed damage
 
         UpdatePlayerUI(); // Update Player UI
     }
