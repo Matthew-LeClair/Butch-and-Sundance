@@ -110,10 +110,18 @@ public class GameManager : MonoBehaviour
     }
     public void OnWeaponChanged(AlienTech weapon, int slotIndex)
     {
-        if (weapon != null)
-            Debug.Log($"Equipped: {weapon.typeMod} in slot {slotIndex}");
+         if (weapon != null)
+        {
+            Debug.Log($"[WeaponChanged] Slot {slotIndex}: {weapon.typeMod}");
+            if (WeaponNameText != null)
+                WeaponNameText.text = weapon.typeMod.ToString(); // Update UI with AlienTech type name
+        }
         else
-            Debug.Log("Equipped: Base Revolver (slot 0)");
+        {
+            Debug.Log("[WeaponChanged] Slot 0: Base Revolver");
+            if (WeaponNameText != null)
+                WeaponNameText.text = "Revolver";               // Update UI with base weapon name
+        }
     }
 
     public void YouWin()

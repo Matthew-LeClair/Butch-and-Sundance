@@ -62,7 +62,7 @@ public class PlayerGun : MonoBehaviour
     //===[Cache]===\\
 
     MeshFilter GunMeshFilter; // Cached MeshFilter on this GameObject - fetched once in Start() to avoid repeated GetComponent calls
-
+    GameManager GM;
 
     //===[Lifecycle]===\\
 
@@ -74,6 +74,7 @@ public class PlayerGun : MonoBehaviour
     {
         CC = PlayerCamera.GetComponent<CameraController>();                    // Cache CameraController from the assigned camera
         GunMeshFilter = gameObject.GetComponent<MeshFilter>();                 // Cache MeshFilter once - avoids repeated GetComponent calls across Shoot, Switch, and Destroy paths
+        GM = GameManager.Instance;
 
         while (MaxAmmo.Count < aTechPool.Count) { MaxAmmo.Add(0); }   // Pad MaxAmmo to match aTechPool size - avoids index out of range on first access
         while (CurrAmmo.Count < aTechPool.Count) { CurrAmmo.Add(0); } // Pad CurrAmmo to match aTechPool size - avoids index out of range on first access
@@ -93,6 +94,7 @@ public class PlayerGun : MonoBehaviour
             BaseMinDamage = Random.Range(4, 12);         // Low base damage
             BaseMaxDamage = (int)(BaseMinDamage * Random.Range(1.25f, 2f)); // Max is 1.25x-2x the min
         }
+        GM.OnWeaponChanged(aTechPool[Active_aTech], Active_aTech);
     }
 
     // Called every frame by Unity.
@@ -227,6 +229,7 @@ public class PlayerGun : MonoBehaviour
             {
                 Active_aTech = candidate;
                 aTechPool[Active_aTech].SwitchGun();                                             // Apply the new weapon's archetype stats
+                GM.OnWeaponChanged(aTechPool[Active_aTech], Active_aTech);
                 GunMeshFilter.sharedMesh = GunMeshes[(int)aTechPool[Active_aTech].typeMod];      // sharedMesh assigns the asset directly - typeMod is the runtime value set by EventPickUp(), not puTypeMod which is Inspector-only
                 gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);     // Restore correct display scale after mesh swap
                 return;                                                                           // Stop searching - first non-null hit is enough
@@ -235,6 +238,7 @@ public class PlayerGun : MonoBehaviour
 
         // Every slot in the pool is null - fall back to the base revolver
         GunMeshFilter.sharedMesh = BaseMesh;                                                     // sharedMesh assigns the asset directly - show the default revolver mesh
+        GM.OnWeaponChanged(null, 0);                                             // Notify GM - reverted to base revolver
         gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);             // Restore correct display scale after mesh swap
     }
 
@@ -275,6 +279,14 @@ public class PlayerGun : MonoBehaviour
                 // Apply the now-active weapon's stats and mesh directly rather than calling SwitchWeapons(),
                 // which would increment Active_aTech again and go out of range on the freshly shortened list
                 aTechPool[Active_aTech].SwitchGun();
+                // Next weapon branch:
+                aTechPool[Active_aTech].SwitchGun();
+                GM.OnWeaponChanged(aTechPool[Active_aTech], Active_aTech); // Notify GM - auto-switched after destroy
+
+                // Base revolver fallback:
+                GunMeshFilter.sharedMesh = BaseMesh;
+                GM.OnWeaponChanged(null, 0); // Notify GM - arsenal empty, back to revolver
+
                 GunMeshFilter.sharedMesh = GunMeshes[(int)aTechPool[Active_aTech].typeMod]; // sharedMesh assigns the asset directly - typeMod is the runtime value set by EventPickUp(), not puTypeMod which is Inspector-only
                 gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);                        // Restore correct display scale after mesh swap
             }
@@ -283,6 +295,7 @@ public class PlayerGun : MonoBehaviour
         {
             Active_aTech = 0;                                                                     // Reset index ready for the next pickup
             GunMeshFilter.sharedMesh = BaseMesh;                                                  // sharedMesh assigns the asset directly - show the default revolver mesh
+            GM.OnWeaponChanged(null, 0);
             gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);          // Restore correct display scale after mesh swap
         }
     }
