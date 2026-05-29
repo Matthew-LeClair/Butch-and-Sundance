@@ -579,7 +579,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -1118,7 +1118,7 @@ MonoBehaviour:
   Health: 0
   HealthMax: 1000
   Shield: 500
-  ShieldMax: 0
+  ShieldMax: 1000
   AlienEnergy: 500
   AlienEnergyMax: 500
   AlienEnergyRegenRate: 5
