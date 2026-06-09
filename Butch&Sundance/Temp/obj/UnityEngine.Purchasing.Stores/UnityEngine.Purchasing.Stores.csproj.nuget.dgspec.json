@@ -1,0 +1,1326 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.Stores.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Purchasing.Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Purchasing.Common.csproj",
+        "projectName": "Purchasing.Common",
+        "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Purchasing.Common.csproj",
+        "packagesPath": "C:\\Users\\thefa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Temp\\obj\\Purchasing.Common\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\thefa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "framework": "netstandard2.1",
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.Internal.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.Internal.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "framework": "netstandard2.1",
+          "targetAlias": "netstandard2.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Analytics.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Analytics.csproj",
+        "projectName": "Unity.Services.Analytics",
+        "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Analytics.csproj",
+        "packagesPath": "C:\\Users\\thefa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Temp\\obj\\Unity.Services.Analytics\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\thefa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "framework": "netstandard2.1",
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.Internal.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.Internal.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "framework": "netstandard2.1",
+          "targetAlias": "netstandard2.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.csproj",
+        "projectName": "Unity.Services.Core",
+        "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.csproj",
+        "packagesPath": "C:\\Users\\thefa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Temp\\obj\\Unity.Services.Core\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\thefa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "framework": "netstandard2.1",
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "framework": "netstandard2.1",
+          "targetAlias": "netstandard2.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.Environments.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.Environments.csproj",
+        "projectName": "Unity.Services.Core.Environments",
+        "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.Environments.csproj",
+        "packagesPath": "C:\\Users\\thefa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Temp\\obj\\Unity.Services.Core.Environments\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\thefa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "framework": "netstandard2.1",
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.Internal.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.Internal.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "framework": "netstandard2.1",
+          "targetAlias": "netstandard2.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.Internal.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.Internal.csproj",
+        "projectName": "Unity.Services.Core.Internal",
+        "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.Internal.csproj",
+        "packagesPath": "C:\\Users\\thefa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Temp\\obj\\Unity.Services.Core.Internal\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\thefa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "framework": "netstandard2.1",
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "framework": "netstandard2.1",
+          "targetAlias": "netstandard2.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.TestRunner.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.TestRunner.csproj",
+        "projectName": "UnityEditor.TestRunner",
+        "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.TestRunner.csproj",
+        "packagesPath": "C:\\Users\\thefa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Temp\\obj\\UnityEditor.TestRunner\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\thefa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "framework": "netstandard2.1",
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.TestRunner.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.TestRunner.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "framework": "netstandard2.1",
+          "targetAlias": "netstandard2.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj",
+        "projectName": "UnityEditor.UI",
+        "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj",
+        "packagesPath": "C:\\Users\\thefa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Temp\\obj\\UnityEditor.UI\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\thefa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "framework": "netstandard2.1",
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.TestRunner.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.TestRunner.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.TestRunner.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.TestRunner.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "framework": "netstandard2.1",
+          "targetAlias": "netstandard2.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.AppleCore.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.AppleCore.csproj",
+        "projectName": "UnityEngine.Purchasing.AppleCore",
+        "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.AppleCore.csproj",
+        "packagesPath": "C:\\Users\\thefa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Temp\\obj\\UnityEngine.Purchasing.AppleCore\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\thefa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "framework": "netstandard2.1",
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Purchasing.Common.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Purchasing.Common.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "framework": "netstandard2.1",
+          "targetAlias": "netstandard2.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.AppleMacosStub.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.AppleMacosStub.csproj",
+        "projectName": "UnityEngine.Purchasing.AppleMacosStub",
+        "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.AppleMacosStub.csproj",
+        "packagesPath": "C:\\Users\\thefa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Temp\\obj\\UnityEngine.Purchasing.AppleMacosStub\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\thefa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "framework": "netstandard2.1",
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Purchasing.Common.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Purchasing.Common.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.AppleCore.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.AppleCore.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "framework": "netstandard2.1",
+          "targetAlias": "netstandard2.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.AppleStub.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.AppleStub.csproj",
+        "projectName": "UnityEngine.Purchasing.AppleStub",
+        "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.AppleStub.csproj",
+        "packagesPath": "C:\\Users\\thefa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Temp\\obj\\UnityEngine.Purchasing.AppleStub\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\thefa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "framework": "netstandard2.1",
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Purchasing.Common.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Purchasing.Common.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.AppleCore.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.AppleCore.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "framework": "netstandard2.1",
+          "targetAlias": "netstandard2.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.csproj",
+        "projectName": "UnityEngine.Purchasing",
+        "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.csproj",
+        "packagesPath": "C:\\Users\\thefa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Temp\\obj\\UnityEngine.Purchasing\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\thefa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "framework": "netstandard2.1",
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Purchasing.Common.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Purchasing.Common.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Analytics.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Analytics.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.Environments.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.Environments.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.Internal.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.Internal.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "framework": "netstandard2.1",
+          "targetAlias": "netstandard2.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.SecurityCore.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.SecurityCore.csproj",
+        "projectName": "UnityEngine.Purchasing.SecurityCore",
+        "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.SecurityCore.csproj",
+        "packagesPath": "C:\\Users\\thefa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Temp\\obj\\UnityEngine.Purchasing.SecurityCore\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\thefa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "framework": "netstandard2.1",
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "framework": "netstandard2.1",
+          "targetAlias": "netstandard2.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.SecurityStub.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.SecurityStub.csproj",
+        "projectName": "UnityEngine.Purchasing.SecurityStub",
+        "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.SecurityStub.csproj",
+        "packagesPath": "C:\\Users\\thefa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Temp\\obj\\UnityEngine.Purchasing.SecurityStub\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\thefa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "framework": "netstandard2.1",
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.SecurityCore.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.SecurityCore.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "framework": "netstandard2.1",
+          "targetAlias": "netstandard2.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.Stores.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.Stores.csproj",
+        "projectName": "UnityEngine.Purchasing.Stores",
+        "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.Stores.csproj",
+        "packagesPath": "C:\\Users\\thefa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Temp\\obj\\UnityEngine.Purchasing.Stores\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\thefa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "framework": "netstandard2.1",
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Purchasing.Common.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Purchasing.Common.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.Internal.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Unity.Services.Core.Internal.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.AppleCore.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.AppleCore.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.AppleMacosStub.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.AppleMacosStub.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.AppleStub.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.AppleStub.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.SecurityCore.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.SecurityCore.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.SecurityStub.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.SecurityStub.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.WinRTCore.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.WinRTCore.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.WinRTStub.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.WinRTStub.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "framework": "netstandard2.1",
+          "targetAlias": "netstandard2.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.WinRTCore.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.WinRTCore.csproj",
+        "projectName": "UnityEngine.Purchasing.WinRTCore",
+        "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.WinRTCore.csproj",
+        "packagesPath": "C:\\Users\\thefa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Temp\\obj\\UnityEngine.Purchasing.WinRTCore\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\thefa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "framework": "netstandard2.1",
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "framework": "netstandard2.1",
+          "targetAlias": "netstandard2.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.WinRTStub.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.WinRTStub.csproj",
+        "projectName": "UnityEngine.Purchasing.WinRTStub",
+        "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.WinRTStub.csproj",
+        "packagesPath": "C:\\Users\\thefa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Temp\\obj\\UnityEngine.Purchasing.WinRTStub\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\thefa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "framework": "netstandard2.1",
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEditor.UI.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.WinRTCore.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.Purchasing.WinRTCore.csproj"
+              },
+              "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj": {
+                "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "framework": "netstandard2.1",
+          "targetAlias": "netstandard2.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.TestRunner.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.TestRunner.csproj",
+        "projectName": "UnityEngine.TestRunner",
+        "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.TestRunner.csproj",
+        "packagesPath": "C:\\Users\\thefa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Temp\\obj\\UnityEngine.TestRunner\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\thefa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "framework": "netstandard2.1",
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "framework": "netstandard2.1",
+          "targetAlias": "netstandard2.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj",
+        "projectName": "UnityEngine.UI",
+        "projectPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\UnityEngine.UI.csproj",
+        "packagesPath": "C:\\Users\\thefa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thefa\\OneDrive\\Documents\\GitHub\\Butch-and-Sundance\\Butch&Sundance\\Temp\\obj\\UnityEngine.UI\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\thefa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "framework": "netstandard2.1",
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "framework": "netstandard2.1",
+          "targetAlias": "netstandard2.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
