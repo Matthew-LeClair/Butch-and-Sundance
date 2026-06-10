@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour, I_Damage
 {
+
     [Header("Config")]
     [SerializeField] public CharacterController Controller;
     float Gravity = 35; // Gravity Force
@@ -74,9 +75,9 @@ public class PlayerController : MonoBehaviour, I_Damage
     [SerializeField] public bool IsRightWall; // Is there a Wall on the Right
     [SerializeField] public float GravityCounterForce; // Counter Force against Gravity during Wall Run
 
-    public enum RopeModeType { Grapple, Swing } // Available Rope Modes
+    public enum RopeModeType { None, Grapple, Swing, Pull } // Available Rope Modes
     [Header("Rope Mode")]
-    public RopeModeType RopeMode = RopeModeType.Grapple; // Currently active rope mode - for reference/UI only
+    public RopeModeType RopeMode = RopeModeType.None; // Currently active rope mode - for reference/UI only
 
     [Header("Rope Input")]
     [SerializeField] public float SwingHoldThreshold = 0.2f; // Seconds Tab must be held before Swing fires instead of Grapple
@@ -126,6 +127,11 @@ public class PlayerController : MonoBehaviour, I_Damage
     [SerializeField] public float CurrMomentum = 0; // Current Momentum
     float MaxMomentum = 50; // Max Momentum
     Vector3 MomentumVelocity = Vector3.zero; // Momentum Velocity
+
+    [Header("Object Grapple")]
+    [SerializeField] float PullObjectForce;
+    private PullableObject CurrentPullable;
+    private Coroutine PullCoroutine;
 
     [Header("Tutorial")]
     public bool Aimed; // Has the Player Aimed
@@ -282,7 +288,7 @@ public class PlayerController : MonoBehaviour, I_Damage
         {
             TabHoldTimer += Time.deltaTime; // Count up every frame Tab is down
 
-            if (!SwingStartedThisHold && TabHoldTimer >= SwingHoldThreshold && !IsGrapple && !IsSwinging) // Threshold crossed and nothing active...
+            if (!SwingStartedThisHold && TabHoldTimer >= SwingHoldThreshold && PredictionHit.collider != null && PredictionHit.collider.CompareTag("Grapple"))
             {
                 SwingStartedThisHold = true; // Guard - Swing only fires once per hold
                 StartSwing(); // Swing launches immediately; player releases Tab later to stop it
@@ -649,11 +655,24 @@ public class PlayerController : MonoBehaviour, I_Damage
     void StartGrapple()
     {
         if (!HasPhaseBoots) return; // Grapple requires Phase Boots
-        if (AlienEnergy < GrappleEnergyCost) { Debug.Log("Not enough energy"); return; } // Guard against no energy
-        if (PredictionHit.point == Vector3.zero) { Debug.Log("No valid grapple point"); return; } // Guard against no prediction hit
-        if (!PredictionHit.collider.CompareTag("Grapple")) { Debug.Log("Hit " + PredictionHit.collider.name + " but not tagged Grapple"); return; } // Guard against wrong tag
+        if (PredictionHit.collider == null) return;
+        
+        if (PredictionHit.collider.CompareTag("Pullable"))
+        {
+            RopeMode = RopeModeType.Pull;
+            PullableObject pullable = PredictionHit.collider.GetComponent<PullableObject>();
 
-        if (SpawnedPrediction != null) { Destroy(SpawnedPrediction); SpawnedPrediction = null; } // Destroy Prediction Prefab on Grapple Start
+            if (pullable != null)
+            {
+                CurrentPullable = pullable;
+                PullCoroutine = StartCoroutine(PullObject(pullable));
+                return;
+            }
+        }
+
+        if (!PredictionHit.collider.CompareTag("Grapple")) return; 
+        
+        RopeMode = RopeModeType.Grapple;
 
         IsGrapple = true; // Set Grapple State
         AlienEnergy -= GrappleEnergyCost; // Consume Energy on Grapple
@@ -667,6 +686,7 @@ public class PlayerController : MonoBehaviour, I_Damage
         GrappleLine.enabled = true; // Enable Grapple Line
         GrappleLine.positionCount = RopePoints; // Set Rope Points
         StartCoroutine(ExtendGrappleLine(GrapplePoint)); // Extend Rope to Grapple Point
+
         Debug.Log("Grapple Started at: " + GrapplePoint); // Debug Log
     }
 
@@ -675,12 +695,21 @@ public class PlayerController : MonoBehaviour, I_Damage
     // Used as an emergency cancel so the player is never locked into a grapple.
     void CancelGrapple()
     {
+        if (PullCoroutine != null)
+        {
+            StopCoroutine(PullCoroutine);
+            PullCoroutine = null;
+        }
+        CurrentPullable = null;
+        
         GrappleLine.enabled = false; // Disable Grapple Line
         IsGrapple = false; // Stop Grappling
         MomentumVelocity = Vector3.zero; // Zero out Momentum Velocity
         PlayerVel = Vector3.zero; // Zero all player velocity
         if (GrappleRB != null) { Destroy(GrappleRB); GrappleRB = null; } // Destroy Rigidbody
         Controller.enabled = true; // Re-enable CharacterController
+
+        RopeMode = RopeModeType.None;
     }
 
     // Called from StartGrapple() as a coroutine.
@@ -724,8 +753,8 @@ public class PlayerController : MonoBehaviour, I_Damage
     bool IsValidGrappleTarget(RaycastHit hit)
     {
         if(hit.collider == null) return false;
-        if(!hit.collider.CompareTag("Grapple")) return false;
-        return true;
+
+        return hit.collider.CompareTag("Grapple") || hit.collider.CompareTag("Pullable");
     }
 
 
@@ -737,6 +766,7 @@ public class PlayerController : MonoBehaviour, I_Damage
     void StartSwing()
     {
         if (!HasPhaseBoots) return; // Swing requires Phase Boots
+
         if (PredictionHit.point == Vector3.zero) return; // No valid swing point found
 
         if (SpawnedPrediction != null) { Destroy(SpawnedPrediction); SpawnedPrediction = null; } // Destroy Prediction Prefab on Swing Start
@@ -785,6 +815,8 @@ public class PlayerController : MonoBehaviour, I_Damage
         Controller.enabled = true; // Re-enable CharacterController
 
         GrappleLine.enabled = false; // Disable Grapple Line
+        RopeMode = RopeModeType.None;
+
         Debug.Log("Swing Stopped"); // Debug Log
     }
 
@@ -869,6 +901,38 @@ public class PlayerController : MonoBehaviour, I_Damage
         PredictionHit = hasRay && IsValidGrappleTarget(rayHit ) ? rayHit : sphereHit;
 
         UpdatePredictionVisual(PredictionHit.point);
+    }
+
+    IEnumerator PullObject(PullableObject pullable)
+    {
+        Debug.Log("PULL STARTED");
+
+        IsGrapple = true;
+
+        GrappleLine.enabled = true;
+        GrappleLine.positionCount = RopePoints;
+
+        while (pullable != null)
+        {
+            pullable.PullTowards(transform.position, PullObjectForce);
+
+            UpdateRopePoints(new Vector3(CamTransform.position.x, CamTransform.position.y - .5f, CamTransform.position.z), pullable.transform.position);
+
+
+            if (Vector3.Distance(transform.position, pullable.transform.position) < 2f)
+            {
+                break;
+            }
+
+            yield return null;
+        }
+        GrappleLine.enabled = false;
+
+        CurrentPullable = null;
+        PullCoroutine = null;
+        IsGrapple = false;
+        RopeMode = RopeModeType.None;
+
     }
 
     void UpdatePredictionVisual(Vector3 point)

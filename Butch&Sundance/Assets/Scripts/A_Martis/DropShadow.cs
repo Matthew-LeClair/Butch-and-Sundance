@@ -16,7 +16,6 @@ public class DropShadow : MonoBehaviour
         if(Physics.Raycast(downRay, out hit))
         {
             shadow.transform.position = hit.point;
-            print(hit.transform);
         }
     }
 }
