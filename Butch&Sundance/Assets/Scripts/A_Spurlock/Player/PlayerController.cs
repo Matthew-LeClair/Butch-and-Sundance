@@ -392,18 +392,20 @@ public class PlayerController : MonoBehaviour, I_Damage
         Vector3 DodgeDir = MoveDir.magnitude > 0.1f ? MoveDir.normalized : transform.forward; // Dodge in move direction or forward
         float Timer = 0f; // Init Timer
 
-        Controller.enabled = false; // Disable Collision for Phase Effect
+        float originalYVel = PlayerVel.y;
 
         while (Timer < DodgeDuration) // While Dodge is active...
         {
             Timer += Time.deltaTime; // Increment Timer
-            Vector3 DodgeMove = DodgeDir * (DodgeDistance / DodgeDuration) * Time.deltaTime; // Calculate Dodge Move
-            DodgeMove.y = 0f; // Lock Y to prevent phasing through floor
-            transform.position += DodgeMove; // Move Player directly through geometry
+
+            float stepSpeed = DodgeDistance / DodgeDuration;
+            Vector3 DodgeMove = DodgeDir * stepSpeed * Time.deltaTime; // Calculate Dodge Move
+
+            DodgeMove.y = originalYVel * Time.deltaTime; // Lock Y to prevent phasing through floor
+            Controller.Move(DodgeMove);
             yield return null; // Wait for next frame
         }
 
-        Controller.enabled = true; // Re-enable Collision after Phase
         DodgeCooldownTimer = DodgeCooldown; // Start Cooldown
         IsDodging = false; // End Dodge
     }
@@ -548,23 +550,42 @@ public class PlayerController : MonoBehaviour, I_Damage
     {
         if (!HasPhaseBoots) return; // Wall Run requires Phase Boots
 
-        if (!IsExitWallRun) // If not in exit state...
+        if(IsExitWallRun)
         {
-            if (WallRunTimer >= MaxWallRunTime) { IsWallRunning = false; WallRunTimer = 0; } // Stop Wall Run if Timer exceeds Max
+            ExitTimer += Time.deltaTime;
 
-            WallRunTimer += Time.deltaTime; // Increment Wall Run Timer
-            CheckForWall(); // Check for Walls
+            if(ExitTimer >= ExitTime)
+            {
+                IsExitWallRun = false;
+                ExitTimer = 0f;
+            }
 
-            if ((IsRightWall || IsLeftWall) && MoveDir.magnitude > 0.1f && AboveGround() && !Controller.isGrounded && !IsExitWallRun) // If Wall Run conditions are met...
-            { IsWallRunning = true; } // Start Wall Running
-            else { IsWallRunning = false; } // Stop Wall Running
-
-            if (IsWallRunning) { WallRunMovement(); JumpCount = 0; } // Call Wall Run Movement and reset Jump Count
+            return;
         }
-        else // If in exit state...
+
+        CheckForWall();
+
+        bool wallDetected = IsRightWall || IsLeftWall;
+
+        if (wallDetected && !Controller.isGrounded && AboveGround() && MoveDir.magnitude > 0.1f)
         {
-            if (ExitTimer >= ExitTime) { IsExitWallRun = false; ExitTimer = 0; } // Clear Exit State when Timer expires
-            else { ExitTimer += Time.deltaTime; } // Increment Exit Timer
+            IsWallRunning = true;
+            WallRunTimer += Time.deltaTime;
+
+            if(WallRunTimer >= MaxWallRunTime)
+            {
+                IsWallRunning = false;
+                WallRunTimer = 0f;
+                return;
+            }
+
+            WallRunMovement();
+            JumpCount = 0;
+        }
+        else
+        {
+            IsWallRunning = false;
+            WallRunTimer = 0f;
         }
     }
 
@@ -573,23 +594,32 @@ public class PlayerController : MonoBehaviour, I_Damage
     // Drains Alien Energy each frame and stops the wall run if energy runs out.
     void WallRunMovement()
     {
-        if (AlienEnergy <= 0) { IsWallRunning = false; return; } // Stop Wall Run if no Energy
+        // Stop Wall Run if no Energy
+        if (AlienEnergy <= 0) 
+        { 
+            IsWallRunning = false; 
+            return;
+        }
         AlienEnergy = Mathf.Max(AlienEnergy - WallRunEnergyCost * Time.deltaTime, 0); // Drain Energy while Wall Running
 
-        PlayerVel.y -= Gravity * Time.deltaTime; // Apply Gravity while Wall Running
-        PlayerVel.y += GravityCounterForce * Time.deltaTime; // Counter Gravity to slow the fall
+        Vector3 wallNormal = IsRightWall ? RightWall.normal : LeftWall.normal; // Get Wall Normal
+        wallNormal.Normalize();
 
-        Vector3 Normal = IsRightWall ? RightWall.normal : LeftWall.normal; // Get Wall Normal
-        Vector3 WallForward = Vector3.Cross(Normal, transform.up); // Calculate Wall Forward Direction
+        Vector3 wallTangent = Vector3.Cross(wallNormal, Vector3.up);
 
-        if ((transform.forward - WallForward).magnitude > (transform.forward - -WallForward).magnitude) // If Wall Forward is wrong direction...
-        { WallForward = -WallForward; } // Flip Wall Forward Direction
+        if(Vector3.Dot(wallTangent, transform.forward) < 0)
+        {
+            wallTangent = -wallTangent;
+        }
 
-        if (Vector3.Dot(WallForward, transform.forward) < 0) // If Wall Forward is behind the Player...
-        { WallForward = -WallForward; } // Flip Wall Forward Direction
+        float inputVertical = Input.GetAxis("Vertical");
+        Vector3 alongWallMove = wallTangent * inputVertical * Speed;
 
-        float VerticalDot = Vector3.Dot(Camera.main.transform.forward, Vector3.up); // How much Camera is pointing Up or Down
-        PlayerVel.y = VerticalDot * Speed; // Apply Vertical Velocity based on Camera Tilt
+        float targetFallSpeed = -2.5f;
+
+        PlayerVel.y = Mathf.MoveTowards(PlayerVel.y, targetFallSpeed, Gravity * 0.6f * Time.deltaTime);
+
+        MomentumVelocity = new Vector3(alongWallMove.x, 0f, alongWallMove.z);
     }
 
     // Called from Jump() when the player jumps while wall running.
@@ -599,12 +629,13 @@ public class PlayerController : MonoBehaviour, I_Damage
     {
         IsWallRunning = false; // Stop Wall Running
         WallRunTimer = 0; // Reset Wall Run Timer
+
         IsExitWallRun = true; // Enter Exit State
+        ExitTimer = 0f;
 
         Vector3 Normal = IsRightWall ? RightWall.normal : LeftWall.normal; // Get Wall Normal
         Vector3 ForceToApply = transform.up * UpJumpForce + Normal * OutJumpForce; // Calculate Jump Force
 
-        PlayerVel.y = 0f; // Reset Y Velocity before Jump
         PlayerVel = ForceToApply; // Apply Jump Force to Player Velocity
         MomentumVelocity = Vector3.zero; // Zero out Momentum Velocity on Wall Jump
     }
@@ -688,6 +719,13 @@ public class PlayerController : MonoBehaviour, I_Damage
             Point.y -= Sag; // Apply sag downward
             GrappleLine.SetPosition(i, Point); // Set rope point position
         }
+    }
+
+    bool IsValidGrappleTarget(RaycastHit hit)
+    {
+        if(hit.collider == null) return false;
+        if(!hit.collider.CompareTag("Grapple")) return false;
+        return true;
     }
 
 
@@ -807,41 +845,53 @@ public class PlayerController : MonoBehaviour, I_Damage
     // Hides the prediction indicator during an active grapple launch so it only shows when the player can actually fire.
     void CheckForSwingPoints()
     {
-        if (SwingJoint != null) return; // Don't check if already Swinging
-        if (IsGrapple) return; // Don't show Prediction Indicator during active Grapple launch
+        if (SwingJoint != null) return;
+        if (IsGrapple) return;
 
-        RaycastHit SphereCastHit; // Init Sphere Cast Hit
-        Physics.SphereCast(CamTransform.position, PredictionSphereCastRadius, CamTransform.forward, out SphereCastHit, MaxSwingDistance); // Sphere Cast for nearby Swing Points
+        RaycastHit rayHit;
+        RaycastHit sphereHit;
 
-        RaycastHit RaycastHit; // Init Raycast Hit
-        Physics.Raycast(CamTransform.position, CamTransform.forward, out RaycastHit, MaxSwingDistance); // Raycast for direct Swing Points
+        bool hasRay = Physics.Raycast(CamTransform.position, CamTransform.forward, out rayHit, MaxSwingDistance);
 
-        Vector3 RealHitPoint; // Init Real Hit Point
+        bool hasSphere = Physics.SphereCast(CamTransform.position, PredictionSphereCastRadius, CamTransform.forward, out sphereHit, MaxSwingDistance);
 
-        if (RaycastHit.point != Vector3.zero) // Option 1 - Direct Hit
-        { RealHitPoint = RaycastHit.point; } // Use Raycast Hit Point
-        else if (SphereCastHit.point != Vector3.zero) // Option 2 - Indirect Predicted Hit
-        { RealHitPoint = SphereCastHit.point; } // Use Sphere Cast Hit Point
-        else // Option 3 - Miss
-        { RealHitPoint = Vector3.zero; } // No Hit Point
+        RaycastHit bestHit = hasRay ? rayHit : sphereHit;
 
-        if (RealHitPoint != Vector3.zero) // If a Hit Point was found...
+        bool hasValidHit = (hasRay && IsValidGrappleTarget(rayHit)) || (hasSphere && IsValidGrappleTarget(sphereHit));
+
+        if (!hasValidHit)
         {
-            if (SpawnedPrediction == null && PredictionPrefab != null) // If no Prefab spawned yet...
-            {
-                SpawnedPrediction = Instantiate(PredictionPrefab, RealHitPoint, Quaternion.identity); // Spawn Prefab at Hit Point
-                PredictionPoint = SpawnedPrediction.transform; // Set Prediction Point to Spawned Prefab Transform
-            }
-            else if (SpawnedPrediction != null) // If Prefab already spawned...
-            { SpawnedPrediction.transform.position = RealHitPoint; } // Move Prefab to Hit Point
-        }
-        else // If no Hit Point was found...
-        {
-            if (SpawnedPrediction != null) // If Prefab is spawned...
-            { Destroy(SpawnedPrediction); SpawnedPrediction = null; PredictionPoint = null; } // Destroy Prefab and clear Point when invalid
+            ClearPrediction();
+            PredictionHit = default;
+            return;
         }
 
-        PredictionHit = RaycastHit.point == Vector3.zero ? SphereCastHit : RaycastHit; // Set Prediction Hit to best available hit
+        PredictionHit = hasRay && IsValidGrappleTarget(rayHit ) ? rayHit : sphereHit;
+
+        UpdatePredictionVisual(PredictionHit.point);
+    }
+
+    void UpdatePredictionVisual(Vector3 point)
+    {
+        if(SpawnedPrediction == null && PredictionPrefab != null)
+        {
+            SpawnedPrediction = Instantiate(PredictionPrefab, point, Quaternion.identity);
+            PredictionPoint = SpawnedPrediction.transform;
+        }
+        else if (SpawnedPrediction != null)
+        {
+            SpawnedPrediction.transform.position = point;
+        }
+    }
+
+    void ClearPrediction()
+    {
+        if (SpawnedPrediction != null)
+        {
+            Destroy(SpawnedPrediction);
+            SpawnedPrediction = null;
+            PredictionPoint = null;
+        }
     }
     public void ChangeStartPos()
     {
