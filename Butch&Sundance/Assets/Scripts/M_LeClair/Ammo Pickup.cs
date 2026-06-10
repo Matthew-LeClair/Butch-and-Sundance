@@ -6,7 +6,10 @@ public class AmmoPickup : PowerupBase
 
     protected override void ApplyEffect(PlayerController player)
     {
-        player.pGun.ActiveCurrAmmo += ammoAmount;
+        PlayerGun gun = player.pGun;
+        int slot = gun.Active_aTech;
+
+        gun.CurrAmmo[slot] = Mathf.Min(gun.CurrAmmo[slot] + ammoAmount, gun.MaxAmmo[slot]);
 
         // Refresh UI
         player.UpdatePlayerUI();
