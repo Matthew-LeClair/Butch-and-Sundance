@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 // Base class for all AlienTech weapon pickups in the world.
@@ -43,6 +44,8 @@ public class AlienTech_Pickup : PickUp_Interact
     [Header("Visual")]
     [SerializeField] public List<Mesh> GunMeshes; // All five gun meshes in GunTypeMod enum order - Pistol, Shotgun, SMG, AssaultRifle, Sniper
 
+    [Header("GunLibrary")]
+    [SerializeField] public List<GunData> GunLibrary;
 
     //===[Lifecycle]===\\
 
@@ -93,6 +96,7 @@ public class AlienTech_Pickup : PickUp_Interact
             pGun.aTechPool[FreeSlot] = pGun.gameObject.AddComponent<AlienTech>(); // Add a fresh AlienTech to the player's gun - the pickup carries config data only, not the component itself
             pGun.aTechPool[FreeSlot].pGun = pGun;                                 // Assign the PlayerGun reference so SwitchGun() and mod logic can access player stats
             pGun.aTechPool[FreeSlot].typeMod = puTypeMod;                         // Set the archetype on the newly created component
+            pGun.aTechPool[FreeSlot].GunLibrary = GunLibrary;
             Debug.Log("Gun Type: " + puTypeMod);                                  // Debug log for pickup confirmation
             pGun.aTechPool[FreeSlot].SwitchGun();                                 // Apply all stat values for this archetype immediately
 

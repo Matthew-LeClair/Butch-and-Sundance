@@ -18,6 +18,8 @@ public class AlienTech : AlienTech_Pickup
     [Header("Mods")]
     List<WeaponMod> Mods = new List<WeaponMod>(); // All mods currently active on this weapon - applied on equip, reverted on destroy/switch
 
+    [Header("Gun Library")]
+    [SerializeField] public List<GunData> GunLibrary;
 
     //===[References]===\\
 
@@ -42,127 +44,51 @@ public class AlienTech : AlienTech_Pickup
     // Stats are randomized within archetype-appropriate ranges to give each weapon a unique feel within its class.
     public void SwitchGun()
     {
-        if (eGun != null) // Only configure enemy gun if one is assigned
+        // Find the matching GunData asset for this weapon's type
+        GunData data = GunLibrary.Find(g => g.GunType == typeMod);
+
+        if (data == null)
         {
-            switch (typeMod)
+            Debug.LogWarning("AlienTech: No GunData found for type " + typeMod);
+            return;
+        }
+
+        if (eGun != null)
+        {
+            eGun.ShootDistance = (int)data.ShootDistance;
+            eGun.Spread = data.HasSpread;
+            eGun.ShootRate = data.FireRate;
+            eGun.ReloadSpeed = data.ReloadSpeed;
+            eGun.MaxAmmo = Random.Range(data.AmmoMin, data.AmmoMax + 1);
+            eGun.DamageMin = Random.Range(data.DamageMin, data.DamageMax);
+            eGun.DamageMax = (int)(eGun.DamageMin * Random.Range(1.5f, 2.5f));
+
+            if (data.HasSpread)
             {
-                case GunTypeMod.Pistol:
-                    eGun.ShootDistance = 8;                                              // Medium range
-                    eGun.Spread = false;                                                 // Single projectile
-                    eGun.ShootRate = .5f;                                                // Moderate fire rate
-                    eGun.ReloadSpeed = .75f;                                             // Fast reload
-                    eGun.MaxAmmo = Random.Range(4, 6);                                   // Small clip
-                    eGun.DamageMin = Random.Range(5, 15);                                // Low-to-mid base damage
-                    eGun.DamageMax = (int)(eGun.DamageMin * Random.Range(1.5f, 2.5f));  // Max is 1.5x-2.5x the min
-                    break;
-
-                case GunTypeMod.Shotgun:
-                    eGun.ShootDistance = 5;                                              // Short range
-                    eGun.Spread = true;                                                  // Multi-pellet spread
-                    eGun.PelletCount = Random.Range(4, 8);                               // 4 to 8 pellets per shot
-                    eGun.SpreadAngle = Random.Range(25, 45);                             // Wide cone
-                    eGun.ShootRate = .8f;                                                // Slow fire rate
-                    eGun.ReloadSpeed = .5f;                                              // Slower reload
-                    eGun.MaxAmmo = Random.Range(1, 2);                                   // Very small clip - high risk
-                    eGun.DamageMin = Random.Range(10, 20);                               // Mid base damage per pellet
-                    eGun.DamageMax = (int)(eGun.DamageMin * Random.Range(1.5f, 2.5f));  // Max is 1.5x-2.5x the min
-                    break;
-
-                case GunTypeMod.SMG:
-                    eGun.ShootDistance = 8;                                              // Medium range
-                    eGun.Spread = false;                                                 // Single projectile
-                    eGun.ShootRate = .2f;                                                // Very fast fire rate
-                    eGun.ReloadSpeed = 1f;                                               // Standard reload
-                    eGun.MaxAmmo = Random.Range(28, 32);                                 // Large clip
-                    eGun.DamageMin = Random.Range(10, 17);                               // Low-to-mid damage per shot
-                    eGun.DamageMax = (int)(eGun.DamageMin * Random.Range(1.5f, 2.5f));  // Max is 1.5x-2.5x the min
-                    break;
-
-                case GunTypeMod.AssualtRifle:
-                    eGun.ShootDistance = 10;                                             // Long-medium range
-                    eGun.Spread = false;                                                 // Single projectile
-                    eGun.ShootRate = .1f;                                                // Fastest fire rate
-                    eGun.ReloadSpeed = 1.1f;                                             // Slightly slow reload
-                    eGun.MaxAmmo = Random.Range(32, 52);                                 // Largest clip
-                    eGun.DamageMin = Random.Range(10, 20);                               // Mid base damage
-                    eGun.DamageMax = (int)(eGun.DamageMin * Random.Range(1.5f, 2.5f));  // Max is 1.5x-2.5x the min
-                    break;
-
-                case GunTypeMod.Sniper:
-                    eGun.ShootDistance = 15;                                             // Maximum range
-                    eGun.Spread = false;                                                 // Single projectile
-                    eGun.ShootRate = .9f;                                                // Slowest fire rate
-                    eGun.ReloadSpeed = 1.5f;                                             // Slowest reload
-                    eGun.MaxAmmo = Random.Range(1, 5);                                   // Tiny clip - high risk
-                    eGun.DamageMin = Random.Range(15, 30);                               // Highest base damage
-                    eGun.DamageMax = (int)(eGun.DamageMin * Random.Range(1.5f, 2.5f));  // Max is 1.5x-2.5x the min
-                    break;
+                eGun.PelletCount = Random.Range(data.PelletCountMin, data.PelletCountMax + 1);
+                eGun.SpreadAngle = Random.Range(data.SpreadAngleMin, data.SpreadAngleMax + 1);
             }
         }
 
-        if (pGun != null) // Only configure player gun if one is assigned
+        if (pGun != null)
         {
-            switch (typeMod)
+            pGun.ShootDistance = data.ShootDistance;
+            pGun.Spread = data.HasSpread;
+            pGun.FireRate = data.FireRate;
+            pGun.ReloadSpeed = data.ReloadSpeed;
+            pGun.MaxAmmo[pGun.Active_aTech] = Random.Range(data.AmmoMin, data.AmmoMax + 1);
+            pGun.CurrAmmo[pGun.Active_aTech] = pGun.MaxAmmo[pGun.Active_aTech];
+            pGun.BaseMinDamage = Random.Range(data.DamageMin, data.DamageMax);
+            pGun.BaseMaxDamage = (int)(pGun.BaseMinDamage * Random.Range(1.5f, 2.5f));
+
+            if (data.HasSpread)
             {
-                case GunTypeMod.Pistol:
-                    pGun.ShootDistance = 8;                                                        // Medium range
-                    pGun.Spread = false;                                                           // Single projectile
-                    pGun.FireRate = .5f;                                                           // Moderate fire rate
-                    pGun.ReloadSpeed = .75f;                                                       // Fast reload
-                    pGun.MaxAmmo[pGun.Active_aTech] = Random.Range(4, 6);                          // Set this slot's ammo count - do NOT Add()
-                    pGun.CurrAmmo[pGun.Active_aTech] = pGun.MaxAmmo[pGun.Active_aTech];            // Fill to max on equip
-                    pGun.BaseMinDamage = Random.Range(5, 15);                                      // Low-to-mid base damage
-                    pGun.BaseMaxDamage = (int)(pGun.BaseMinDamage * Random.Range(1.5f, 2.5f));    // Max is 1.5x-2.5x the min
-                    break;
-
-                case GunTypeMod.Shotgun:
-                    pGun.ShootDistance = 5;                                                        // Short range
-                    pGun.Spread = true;                                                            // Multi-pellet spread
-                    pGun.PelletCount = Random.Range(4, 8);                                         // 4 to 8 pellets per shot
-                    pGun.SpreadAngle = Random.Range(25, 45);                                       // Wide cone
-                    pGun.FireRate = .8f;                                                           // Slow fire rate
-                    pGun.ReloadSpeed = .5f;                                                        // Slower reload
-                    pGun.MaxAmmo[pGun.Active_aTech] = Random.Range(1, 2);                          // Very small clip
-                    pGun.CurrAmmo[pGun.Active_aTech] = pGun.MaxAmmo[pGun.Active_aTech];            // Fill to max on equip
-                    pGun.BaseMinDamage = Random.Range(10, 20);                                     // Mid base damage per pellet
-                    pGun.BaseMaxDamage = (int)(pGun.BaseMinDamage * Random.Range(1.5f, 2.5f));    // Max is 1.5x-2.5x the min
-                    break;
-
-                case GunTypeMod.SMG:
-                    pGun.ShootDistance = 8;                                                        // Medium range
-                    pGun.Spread = false;                                                           // Single projectile
-                    pGun.FireRate = .2f;                                                           // Very fast fire rate
-                    pGun.ReloadSpeed = 1f;                                                         // Standard reload
-                    pGun.MaxAmmo[pGun.Active_aTech] = Random.Range(28, 32);                        // Large clip
-                    pGun.CurrAmmo[pGun.Active_aTech] = pGun.MaxAmmo[pGun.Active_aTech];            // Fill to max on equip
-                    pGun.BaseMinDamage = Random.Range(10, 17);                                     // Low-to-mid damage per shot
-                    pGun.BaseMaxDamage = (int)(pGun.BaseMinDamage * Random.Range(1.5f, 2.5f));    // Max is 1.5x-2.5x the min
-                    break;
-
-                case GunTypeMod.AssualtRifle:
-                    pGun.ShootDistance = 10;                                                       // Long-medium range
-                    pGun.Spread = false;                                                           // Single projectile
-                    pGun.FireRate = .1f;                                                           // Fastest fire rate
-                    pGun.ReloadSpeed = 1.1f;                                                       // Slightly slow reload
-                    pGun.MaxAmmo[pGun.Active_aTech] = Random.Range(32, 52);                        // Largest clip
-                    pGun.CurrAmmo[pGun.Active_aTech] = pGun.MaxAmmo[pGun.Active_aTech];            // Fill to max on equip
-                    pGun.BaseMinDamage = Random.Range(10, 20);                                     // Mid base damage
-                    pGun.BaseMaxDamage = (int)(pGun.BaseMinDamage * Random.Range(1.5f, 2.5f));    // Max is 1.5x-2.5x the min
-                    break;
-
-                case GunTypeMod.Sniper:
-                    pGun.ShootDistance = 15;                                                       // Maximum range
-                    pGun.Spread = false;                                                           // Single projectile
-                    pGun.FireRate = .9f;                                                           // Slowest fire rate
-                    pGun.ReloadSpeed = 1.5f;                                                       // Slowest reload
-                    pGun.MaxAmmo[pGun.Active_aTech] = Random.Range(1, 5);                          // Tiny clip
-                    pGun.CurrAmmo[pGun.Active_aTech] = pGun.MaxAmmo[pGun.Active_aTech];            // Fill to max on equip
-                    pGun.BaseMinDamage = Random.Range(15, 30);                                     // Highest base damage
-                    pGun.BaseMaxDamage = (int)(pGun.BaseMinDamage * Random.Range(1.5f, 2.5f));    // Max is 1.5x-2.5x the min
-                    break;
+                pGun.PelletCount = Random.Range(data.PelletCountMin, data.PelletCountMax + 1);
+                pGun.SpreadAngle = Random.Range(data.SpreadAngleMin, data.SpreadAngleMax + 1);
             }
         }
     }
+
 
 
     //===[Mod Management]===\\
