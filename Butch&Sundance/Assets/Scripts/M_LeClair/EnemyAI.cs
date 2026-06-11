@@ -33,7 +33,7 @@ public class EnemyAI : EnemyBase
             agent.stoppingDistance = Weapon_R.ShootDistance;
         }
 
-        GameManager.Instance.UpdateGameGoal(1);
+        //GameManager.Instance.UpdateGameGoal(1);
     }
 
     void Update()

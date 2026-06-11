@@ -35,12 +35,15 @@ public class GameManager : MonoBehaviour
 
     float TimeScale_Original; // Chached Original Time Scale for better setting
 
-    [Header("Game Goal Elements")]
-    public TMP_Text GameGoalAmount_Text;
+    [Header("Objective Items")]
+    public int CollectedItems;
+    public int RequiredItems = 3;
+    public TMP_Text ObjectiveText;
+
+    // Old stuff that needs to be reworked
     public int KillCount;
     public bool GoalCompleted;
     public Vector3 RespawnPosition;
-
 
     // Awake is called once before the first execution of Start after the MonoBehaviour is created
     void Awake()
@@ -92,20 +95,25 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void UpdateGameGoal(int Amount) 
+    public void CollectedObjectiveItem() 
     {
-        KillCount += Amount; // Dynamically Increment or Decrement GameGoalCount
+        CollectedItems++;
 
-        GameGoalAmount_Text.text = KillCount.ToString("F0");
+        CollectedItems = Mathf.Clamp(CollectedItems, 0, RequiredItems);
 
-        KillCount = Mathf.Max(0, KillCount);
-
-        if (KillCount <= 0 ) // If Goal is MET
-        { // WIN!!
-            GoalCompleted = true;
-            Debug.Log("Objective complete");
+        if (ObjectiveText != null)
+        {
+            ObjectiveText.text = CollectedItems + "/" + RequiredItems;
         }
+
+        Debug.Log("Collected Item: " + CollectedItems + "/" + RequiredItems);
     }
+
+    public bool HasAllObjectiveItems()
+    {
+        return CollectedItems >= RequiredItems;
+    }
+
     public void OnWeaponChanged(AlienTech weapon, int slotIndex)
     {
          if (weapon != null)

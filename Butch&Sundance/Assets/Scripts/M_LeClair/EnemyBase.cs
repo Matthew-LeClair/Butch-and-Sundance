@@ -78,7 +78,7 @@ public class EnemyBase : MonoBehaviour, I_Damage
 
         if (CurrHealth <= 0)
         {
-            GameManager.Instance.UpdateGameGoal(-1);
+            // GameManager.Instance.UpdateGameGoal(-1);
             Death();
         }
         else { StartCoroutine(Flash()); }

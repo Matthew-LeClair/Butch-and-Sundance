@@ -23,6 +23,8 @@ public class DoorBehavior : MonoBehaviour
 
     Transform playerOnDoor;
 
+    [SerializeField] bool IsBossDoor;
+
     private void Start()
     {
         // Store the starting position as the closed position
@@ -44,17 +46,33 @@ public class DoorBehavior : MonoBehaviour
             // Check for interaction input
             if (Input.GetButtonDown("Interact"))
             {
-                // Open the door if currently closed
-                if (!isOpen)
+                if (IsBossDoor)
                 {
-                    StartCoroutine(MoveDoor(openPos, true));
+                    if (GameManager.Instance.HasAllObjectiveItems())
+                    {
+                        if (!isOpen)
+                        {
+                            StartCoroutine(MoveDoor(openPos, true));
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("Need all objective items.");
+                    }
                 }
-
-                // Hide interaction UI after interacting
-                if (doorButtons != null)
+                else
                 {
-                    doorButtons.SetActive(false);
+                    // Open the door if currently closed
+                    if (!isOpen)
+                    {
+                        StartCoroutine(MoveDoor(openPos, true));
+                    }
                 }
+                    // Hide interaction UI after interacting
+                    if (doorButtons != null)
+                    {
+                        doorButtons.SetActive(false);
+                    }                
             }
         }
     }
