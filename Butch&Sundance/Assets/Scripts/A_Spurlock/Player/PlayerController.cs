@@ -162,7 +162,7 @@ public class PlayerController : MonoBehaviour, I_Damage
         MomentumBuildRate = BaseMomentumBuildRate; // Set Momentum Build Rate to Base on Start
         Health = HealthMax; // Set Health to Max on Start
         Shield = ShieldMax; // Set Shield to Max on Start
-        ChangeStartPos();
+        SetStartPosition();
     }
 
     // Called every frame by Unity.
@@ -491,6 +491,7 @@ public class PlayerController : MonoBehaviour, I_Damage
     {
         Debug.Log(Health); // Debug Print Health
         GameManager.Instance.YouLose(); // Lose UI
+        ChangeRespawnPos();
     }
 
 
@@ -957,9 +958,22 @@ public class PlayerController : MonoBehaviour, I_Damage
             PredictionPoint = null;
         }
     }
-    public void ChangeStartPos()
+
+    public void SetStartPosition()
     {
-        Controller.transform.position = GameManager.Instance.PlayerStartPos.transform.position;
+        Controller.enabled = false;
+        transform.position = GameManager.Instance.PlayerStartPos.transform.position;
+        Controller.enabled = true;
+        Physics.SyncTransforms();
+        Health = HealthMax;
+        UpdatePlayerUI();
+    }
+
+    public void ChangeRespawnPos()
+    {
+        Controller.enabled = false;
+        transform.position = GameManager.Instance.RespawnPosition;
+        Controller.enabled = true;
         Physics.SyncTransforms(); // Ensure CharacterController is in sync with new position
         Health = HealthMax; // Restore Health on Respawn
         UpdatePlayerUI(); // Update UI to reflect restored health

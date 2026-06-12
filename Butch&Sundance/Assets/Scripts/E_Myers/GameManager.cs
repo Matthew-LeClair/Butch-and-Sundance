@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour
         PlayerScript = Player.GetComponent<PlayerController>(); // Get the Player Controller Script Component from Player
         TimeScale_Original = Time.timeScale; // Set Time Scale Original
         PlayerStartPos = GameObject.FindWithTag("Player Start Pos"); // Find Player Start Position GameObject by Tag
+        RespawnPosition = PlayerStartPos.transform.position;
     }
 
     // Update is called once per frame
@@ -142,5 +144,25 @@ public class GameManager : MonoBehaviour
         StatePause(true); // Pause Game
         MenuActive = MenuLose; // Set MenuActive as MenuLose
         MenuActive.SetActive(true); // Set MenuActive as Active
+    }
+
+    Coroutine ActiveCheckpointPopup;
+    public Checkpoint ActiveCheckpoint;
+
+    public void ShowCheckpointPopup(float dur = 3f)
+    {
+        if(ActiveCheckpointPopup != null)
+        {
+            StopCoroutine(ActiveCheckpointPopup);
+        }
+        ActiveCheckpointPopup = StartCoroutine(CheckpointPopupRoutine(dur));
+    }
+
+    IEnumerator CheckpointPopupRoutine(float duration)
+    {
+        CheckpointPopup.SetActive(true);
+        yield return new WaitForSeconds(duration);
+        CheckpointPopup.SetActive(false);
+        ActiveCheckpointPopup = null;
     }
 }

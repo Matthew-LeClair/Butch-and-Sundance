@@ -18,7 +18,7 @@ public class ButtonFunctions : MonoBehaviour
     }
     public void Respawn()
     {         
-        GameManager.Instance.PlayerScript.ChangeStartPos(); // Respawn Player
+        GameManager.Instance.PlayerScript.ChangeRespawnPos(); // Respawn Player
         GameManager.Instance.StatePause(false); // Unpause
     }
 
