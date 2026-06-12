@@ -53,6 +53,8 @@ MonoBehaviour:
   healAmount: 50
   allowOverheal: 1
   maxOverheal: 25
+  pickupSound: {fileID: 8300000, guid: 6f8809af21d9fc6439bf269543a4fbaa, type: 3}
+  volume: 0.61
 --- !u!33 &9208151580686655589
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -52,6 +52,8 @@ MonoBehaviour:
   destroyOnPickup: 1
   momentumMultiplier: 2
   speedBonus: 10
+  pickupSound: {fileID: 8300000, guid: 6f15ecb339a620541b60c9d47eb9220a, type: 3}
+  volume: 1
 --- !u!33 &7326904407912109525
 MeshFilter:
   m_ObjectHideFlags: 0

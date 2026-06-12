@@ -214,6 +214,7 @@ public class PlayerController : MonoBehaviour, I_Damage
             Controller.Move(PlayerVel * Time.deltaTime); // Move Player using Player Velocity
             PlayerVel.y -= Gravity * Time.deltaTime; // Apply Gravity to Player Velocity
         }
+        UpdatePlayerUI();
     }
 
 

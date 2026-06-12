@@ -9,8 +9,15 @@ public class HealthPowerUp : PowerupBase
     [SerializeField] bool allowOverheal;
     [SerializeField] int maxOverheal;
 
+    [SerializeField] AudioClip pickupSound;
+    [SerializeField, Range(0f, 1f)] float volume;
+
     protected override void ApplyEffect(PlayerController player)
     {
+        if(pickupSound != null)
+        {
+            AudioSource.PlayClipAtPoint(pickupSound,transform.position,volume);
+        }
         //Store player's normal maximum
         float maxHealth = player.HealthMax;
 
