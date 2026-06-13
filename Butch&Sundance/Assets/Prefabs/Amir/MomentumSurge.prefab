@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4823211065983282731}
-  - component: {fileID: 6346244277271481338}
+  - component: {fileID: 4318269734523322471}
   - component: {fileID: 7326904407912109525}
   - component: {fileID: 260480343972983404}
   - component: {fileID: 3703702659977096374}
@@ -36,7 +36,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6346244277271481338
+--- !u!114 &4318269734523322471
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,12 +48,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32fefbba66d95ad44a010df562899fcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MomentumSurge
-  duration: 2
+  duration: 5
   destroyOnPickup: 1
   momentumMultiplier: 2
-  speedBonus: 10
+  speedBonus: 5
+  jumpBonus: 5
   pickupSound: {fileID: 8300000, guid: 6f15ecb339a620541b60c9d47eb9220a, type: 3}
   volume: 1
+  powerupVFX: {fileID: 3311653253390530834, guid: 4c78896683a8f4149a21d24fff08b9d7, type: 3}
 --- !u!33 &7326904407912109525
 MeshFilter:
   m_ObjectHideFlags: 0
