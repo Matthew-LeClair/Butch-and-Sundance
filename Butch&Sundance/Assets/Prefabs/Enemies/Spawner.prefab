@@ -72,6 +72,10 @@ MonoBehaviour:
   FlashColor: {r: 0, g: 0, b: 0, a: 0}
   CurrHealth: 10
   MaxHealth: 10
+  PowerupDrops:
+  - {fileID: 5019287632633886545, guid: 5e7919d0a5153b74cb655055f0e2351e, type: 3}
+  - {fileID: 1719288878346681042, guid: 818b7d833a382b5488b2841acf9ee557, type: 3}
+  PowerupDropChance: 0.5
   WeaponDrops: []
   WeaponArm_R: {fileID: 0}
   WeaponSlot_R: {fileID: 0}

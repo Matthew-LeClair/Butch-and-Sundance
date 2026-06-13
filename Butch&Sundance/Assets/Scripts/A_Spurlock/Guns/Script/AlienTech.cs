@@ -18,8 +18,6 @@ public class AlienTech : AlienTech_Pickup
     [Header("Mods")]
     List<WeaponMod> Mods = new List<WeaponMod>(); // All mods currently active on this weapon - applied on equip, reverted on destroy/switch
 
-    [Header("Gun Library")]
-    [SerializeField] public List<GunData> GunLibrary;
 
     //===[References]===\\
 

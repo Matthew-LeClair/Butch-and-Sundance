@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88df46d5cae576d48b82e5f04bd323ab, type: 3}
   m_Name: SniperRifle
   m_EditorClassIdentifier: Assembly-CSharp::GunData
-  GunName: 
-  GunType: 0
-  ShootDistance: 0
-  FireRate: 0
-  ReloadSpeed: 0
-  AmmoMin: 0
-  AmmoMax: 0
-  DamageMin: 0
-  DamageMax: 0
+  GunName: SniperRifle
+  GunType: 4
+  ShootDistance: 15
+  FireRate: 0.9
+  ReloadSpeed: 1.5
+  AmmoMin: 1
+  AmmoMax: 5
+  DamageMin: 15
+  DamageMax: 30
   HasSpread: 0
   PelletCountMin: 0
   PelletCountMax: 0

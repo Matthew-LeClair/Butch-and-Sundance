@@ -962,8 +962,14 @@ public class PlayerController : MonoBehaviour, I_Damage
 
     public void SetStartPosition()
     {
+        StartCoroutine(InitPosition());
+    }
+
+    IEnumerator InitPosition()
+    {
         Controller.enabled = false;
         transform.position = GameManager.Instance.PlayerStartPos.transform.position;
+        yield return null; // wait one frame before re-enabling
         Controller.enabled = true;
         Physics.SyncTransforms();
         Health = HealthMax;

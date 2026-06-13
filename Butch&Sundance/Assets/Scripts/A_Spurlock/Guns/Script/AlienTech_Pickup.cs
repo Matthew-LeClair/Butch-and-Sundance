@@ -56,18 +56,6 @@ public class AlienTech_Pickup : PickUp_Interact
     public override void Start()
     {
         base.Start(); // Initialize outline material tracking in PickUp_Interact
-
-        MeshFilter mf = gameObject.GetComponent<MeshFilter>();
-
-        if (mf == null)                                                                           // Guard against missing MeshFilter - logs the offending object for fast diagnosis
-        { Debug.LogError("AlienTech_Pickup: MeshFilter missing on " + gameObject.name, gameObject); return; }
-
-        int meshIndex = (int)puTypeMod;
-        if (GunMeshes == null || meshIndex >= GunMeshes.Count || GunMeshes[meshIndex] == null)    // Guard against unpopulated or mismatched GunMeshes list
-        { Debug.LogError("AlienTech_Pickup: GunMeshes not configured for " + puTypeMod + " on " + gameObject.name, gameObject); return; }
-
-        mf.sharedMesh = GunMeshes[meshIndex];                                                     // sharedMesh assigns the asset directly - avoids a runtime copy with zeroed bounds
-        gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);              // Restore correct display scale - mesh assets require this scale to appear at the right size
     }
 
 
@@ -82,6 +70,17 @@ public class AlienTech_Pickup : PickUp_Interact
     {
         PlayerGun pGun = GameManager.Instance.Player
             .GetComponent<PlayerController>().pGun;         // Fetch PlayerGun directly - pickup is a world object with no parent relationship to the player
+
+        for(int i = 0; i < pGun.aTechPool.Count; i++)
+        {
+            if (pGun.aTechPool[i] != null && pGun.aTechPool[i].typeMod == puTypeMod)
+            {
+                pGun.CurrAmmo[i] = pGun.MaxAmmo[i];
+                GameManager.Instance.PlayerScript.UpdatePlayerUI();
+                Destroy(gameObject);
+                return;
+            }
+        }
 
         int FreeSlot = -1;                                  // Default to -1 meaning no free slot found
 

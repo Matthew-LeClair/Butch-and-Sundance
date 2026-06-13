@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GunData
   GunName: SMG
   GunType: 2
-  ShootDistance: 0
-  FireRate: 0
-  ReloadSpeed: 0
-  AmmoMin: 0
-  AmmoMax: 0
-  DamageMin: 0
-  DamageMax: 0
+  ShootDistance: 8
+  FireRate: 0.2
+  ReloadSpeed: 1
+  AmmoMin: 28
+  AmmoMax: 32
+  DamageMin: 10
+  DamageMax: 17
   HasSpread: 0
   PelletCountMin: 0
   PelletCountMax: 0

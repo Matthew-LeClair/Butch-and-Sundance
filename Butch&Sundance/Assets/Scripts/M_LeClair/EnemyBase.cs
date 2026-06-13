@@ -11,6 +11,8 @@ public class EnemyBase : MonoBehaviour, I_Damage
     public float CurrHealth;
     [SerializeField] public float MaxHealth;
 
+    [SerializeField] GameObject[] PowerupDrops;
+    [SerializeField] float PowerupDropChance = 0.5f;
     [SerializeField] GameObject[] WeaponDrops;
     [SerializeField] public GameObject WeaponArm_R;
     [SerializeField] public GameObject WeaponSlot_R;
@@ -129,6 +131,15 @@ public class EnemyBase : MonoBehaviour, I_Damage
         {
             int index = Random.Range(0, WeaponDrops.Length);
             Instantiate(WeaponDrops[index], transform.position, Quaternion.identity);
+        }
+
+        if(PowerupDrops != null && PowerupDrops.Length > 0)
+        {
+            if(Random.value <= PowerupDropChance)
+            {
+                int index = Random.Range(0, PowerupDrops.Length);
+                Instantiate(PowerupDrops[index], transform.position, Quaternion.identity);
+            }
         }
 
         Destroy(gameObject);

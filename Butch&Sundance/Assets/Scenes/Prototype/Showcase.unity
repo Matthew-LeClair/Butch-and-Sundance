@@ -190,7 +190,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 718641632567244554, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.06
+      value: 1.29
       objectReference: {fileID: 0}
     - target: {fileID: 718641632567244554, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -223,6 +223,30 @@ PrefabInstance:
     - target: {fileID: 718641632567244554, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2242511476109349019, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 2758307325571454043, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 3727682976041924433, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 4386608956623407256, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 4447826174741325666, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+      propertyPath: typeMod
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328796369497191880, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+      propertyPath: m_TagString
+      value: Player Start Pos
       objectReference: {fileID: 0}
     - target: {fileID: 8677270422375201963, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
       propertyPath: m_Name
