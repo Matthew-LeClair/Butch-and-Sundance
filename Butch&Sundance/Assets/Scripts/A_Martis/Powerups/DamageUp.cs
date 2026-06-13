@@ -1,20 +1,16 @@
 using UnityEngine;
 
-public class MomentumSurge : PowerupBase
+public class DamageUp : PowerupBase
 {
-    [SerializeField] float momentumMultiplier;
-    [SerializeField] float speedBonus;
-    [SerializeField] float jumpBonus;
+    [SerializeField] float damageMult;
 
     [SerializeField] AudioClip pickupSound;
     [SerializeField, Range(0f, 1f)] float volume;
 
+    float originalDamage;
+
     [SerializeField] GameObject powerupVFX;
     GameObject vfxInstance;
-
-    float originalMomentum;
-    float originalSpeed;
-    float originalJump;
 
     protected override void ApplyEffect(PlayerController player)
     {
@@ -23,15 +19,11 @@ public class MomentumSurge : PowerupBase
             AudioSource.PlayClipAtPoint(pickupSound, transform.position, volume);
         }
 
-        originalMomentum = player.MomentumBuildRate;
-        originalSpeed = player.SpeedBase;
-        originalJump = player.JumpSpeedBase;
+        originalDamage = player.pGun.damageMuliplier;
 
-        player.MomentumBuildRate *= momentumMultiplier;
-        player.SpeedBase += speedBonus;
-        player.JumpSpeedBase += jumpBonus;
+        player.pGun.damageMuliplier *= damageMult;
 
-        if(powerupVFX != null && vfxInstance == null)
+        if (powerupVFX != null && vfxInstance == null)
         {
             vfxInstance = Instantiate(powerupVFX, player.CamTransform);
         }
@@ -43,23 +35,19 @@ public class MomentumSurge : PowerupBase
             if (ps != null) ps.Play();
         }
 
-        GameManager.Instance.PlayerMomentum.SetActive(true);
+
     }
 
     protected override void RemoveEffect(PlayerController player)
     {
-        player.MomentumBuildRate = originalMomentum;
-        player.SpeedBase = originalSpeed;
-        player.JumpSpeedBase = originalJump;
+        player.pGun.damageMuliplier = originalDamage;
 
-        if(powerupVFX != null)
+        if (powerupVFX != null)
         {
             var ps = vfxInstance.GetComponent<ParticleSystem>();
             if (ps != null) ps.Stop();
             Destroy(vfxInstance);
-            vfxInstance= null;
+            vfxInstance = null;
         }
-
-        GameManager.Instance.PlayerMomentum.SetActive(false);
     }
 }

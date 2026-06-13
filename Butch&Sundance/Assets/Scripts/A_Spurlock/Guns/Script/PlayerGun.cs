@@ -64,6 +64,9 @@ public class PlayerGun : MonoBehaviour
     MeshFilter GunMeshFilter; // Cached MeshFilter on this GameObject - fetched once in Start() to avoid repeated GetComponent calls
     GameManager GM;
 
+
+    public float damageMuliplier;
+
     //===[Lifecycle]===\\
 
     // Called once by Unity before the first frame.
