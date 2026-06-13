@@ -45,14 +45,19 @@ public class EnemyAI : EnemyBase
         else
         {
             seePlayer = false;
-            playerDir = player.position - transform.position;
-            DistanceToPlayer = playerDir.magnitude;
+            Vector3 rayOrigin = transform.position + Vector3.up * 1f;
+            Vector3 rayTarget = player.position + Vector3.up * 1f;
+            Vector3 rayDir = (rayTarget - rayOrigin).normalized;
+            float dist = Vector3.Distance(rayOrigin, rayTarget);
+
+            playerDir = (player.position + Vector3.up * 1f) - (transform.position + Vector3.up * 1f);
+            DistanceToPlayer = dist;
 
             float angleToPlayer = Vector3.Angle(transform.forward, playerDir);
             if (angleToPlayer <= FOV)
             {
                 RaycastHit hit;
-                if (Physics.Raycast(transform.position, playerDir.normalized, out hit, DistanceToPlayer, masks))
+                if (Physics.Raycast(rayOrigin, rayDir, out hit, dist, masks))
                 {
                     seePlayer = hit.transform.root.CompareTag("Player");
                 }
