@@ -3,6 +3,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GunData", menuName = "Gun Data")]
 public class GunData : ScriptableObject
 {
+    public enum ProjectileType
+    {
+        Basic, 
+        Lobbed, 
+        Seeking
+    }
+
     [Header("Identity")]
     public string GunName;
     public AlienTech_Pickup.GunTypeMod GunType;
@@ -11,6 +18,7 @@ public class GunData : ScriptableObject
     public float ShootDistance;
     public float FireRate;
     public float ReloadSpeed;
+    public float MaxRange;
 
     [Header("Ammo")]
     public int AmmoMin;
@@ -26,4 +34,8 @@ public class GunData : ScriptableObject
     public int PelletCountMax;
     public int SpreadAngleMin;
     public int SpreadAngleMax;
+
+    [Header("Projectile")]
+    public ProjectileType BulletType;
+    public GameObject BulletPrefab;
 }

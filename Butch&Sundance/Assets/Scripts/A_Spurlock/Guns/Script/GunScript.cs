@@ -5,7 +5,7 @@ using UnityEngine.Rendering;
 
 public class Gun : MonoBehaviour
 {
-    [SerializeField] GameObject Bullet;
+    [SerializeField] public GameObject BulletPrefab;
     [SerializeField] public bool Spread;
     [SerializeField] public int PelletCount;
     [SerializeField] public int SpreadAngle;
@@ -65,27 +65,27 @@ public class Gun : MonoBehaviour
                 ShootTimer = 0; // Reset Shoot Timer
                 CurrAmmo -= 1; // Decrement Ammo
 
-                Bullet.GetComponent<Damage>().DamageAmount = Random.Range(DamageMin, DamageMax);
+                BulletPrefab.GetComponent<Damage>().DamageAmount = Random.Range(DamageMin, DamageMax);
 
                 if (!Spread)
                 {
                     // Spawn Bullet at the Shoot Pos at the Gun Pivot Rotation
-                    Instantiate(Bullet, ShootPos.position, ShootPos.rotation);
+                    Instantiate(BulletPrefab, ShootPos.position, ShootPos.rotation);
                 }
                 else
                 {
-                    Debug.Log(Bullet.GetComponent<Damage>().DamageAmount);
-                    Bullet.GetComponent<Damage>().DamageAmount = 
-                        (Bullet.GetComponent<Damage>().DamageAmount / 
+                    Debug.Log(BulletPrefab.GetComponent<Damage>().DamageAmount);
+                    BulletPrefab.GetComponent<Damage>().DamageAmount = 
+                        (BulletPrefab.GetComponent<Damage>().DamageAmount / 
                         (PelletCount)) * Random.Range(2, 3);
 
-                    Bullet.GetComponent<Damage>().DamageAmount = 
-                        Mathf.Clamp(Bullet.GetComponent<Damage>().DamageAmount, 1, (30));
+                    BulletPrefab.GetComponent<Damage>().DamageAmount = 
+                        Mathf.Clamp(BulletPrefab.GetComponent<Damage>().DamageAmount, 1, (30));
 
 
                     for (int i = 0; i < PelletCount; i++)
                     {
-                        Debug.Log(Bullet.GetComponent<Damage>().DamageAmount);
+                        Debug.Log(BulletPrefab.GetComponent<Damage>().DamageAmount);
                         float SpreadX = Random.Range(-SpreadAngle, SpreadAngle);
                         float SpreadY = Random.Range(-SpreadAngle, SpreadAngle);
 
@@ -93,8 +93,8 @@ public class Gun : MonoBehaviour
                             ShootPos.rotation *
                             Quaternion.Euler(SpreadX, SpreadY, 0);
 
-                        Instantiate(Bullet, ShootPos.position, SpreadRot);
-                        Damage cDamage = Bullet.GetComponent<Damage>();
+                        Instantiate(BulletPrefab, ShootPos.position, SpreadRot);
+                        Damage cDamage = BulletPrefab.GetComponent<Damage>();
                         cDamage.OwnerTag = cOwnerTag;
                     }
                 }

@@ -232,6 +232,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 2776064752822907975, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+      propertyPath: BulletPrefab
+      value: 
+      objectReference: {fileID: 3668983745716674504, guid: 002850591ffd4c54f8032c54cd4defb6, type: 3}
     - target: {fileID: 3727682976041924433, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
       propertyPath: m_TagString
       value: Untagged

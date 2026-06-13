@@ -142,6 +142,47 @@ public class EnemyBase : MonoBehaviour, I_Damage
             }
         }
 
+        var agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        if(agent != null)
+        {
+            agent.enabled = false;
+        }
+        var col = GetComponent<Collider>();
+        if (col != null)
+        {
+            col.enabled = false;
+        }
+        StartCoroutine(DeathSequence());
+    }
+
+    IEnumerator DeathSequence()
+    {
+        float fallDuration = 0.5f;
+        float fadeDuration = 3f;
+        float fadeDelay = 2f;
+        Quaternion startRot = transform.rotation;
+        Quaternion deadRot = startRot * Quaternion.Euler(90f, 0f, 0f);
+        float t = 0f;
+
+        while (t < fallDuration)
+        {
+            t += Time.deltaTime;
+            transform.rotation = Quaternion.Lerp(startRot, deadRot, t / fallDuration);
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(fadeDelay);
+
+        Vector3 originalScale = transform.localScale;
+        Vector3 sunkenScale = new Vector3(originalScale.x, 0f, originalScale.z);
+        t = 0f;
+
+        while(t < fadeDuration)
+        {
+            t += Time.deltaTime;
+            transform.localScale = Vector3.Lerp(originalScale, sunkenScale, t / fadeDuration);
+            yield return null;
+        }
         Destroy(gameObject);
     }
 }

@@ -17,6 +17,7 @@ MonoBehaviour:
   ShootDistance: 8
   FireRate: 0.5
   ReloadSpeed: 0.75
+  MaxRange: 15
   AmmoMin: 4
   AmmoMax: 6
   DamageMin: 5
@@ -26,3 +27,5 @@ MonoBehaviour:
   PelletCountMax: 0
   SpreadAngleMin: 0
   SpreadAngleMax: 0
+  BulletType: 0
+  BulletPrefab: {fileID: 3668983745716674504, guid: 002850591ffd4c54f8032c54cd4defb6, type: 3}

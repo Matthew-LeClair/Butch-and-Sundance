@@ -60,7 +60,8 @@ public class AlienTech : AlienTech_Pickup
             eGun.MaxAmmo = Random.Range(data.AmmoMin, data.AmmoMax + 1);
             eGun.DamageMin = Random.Range(data.DamageMin, data.DamageMax);
             eGun.DamageMax = (int)(eGun.DamageMin * Random.Range(1.5f, 2.5f));
-
+            eGun.BulletPrefab = data.BulletPrefab;
+            
             if (data.HasSpread)
             {
                 eGun.PelletCount = Random.Range(data.PelletCountMin, data.PelletCountMax + 1);
@@ -78,6 +79,7 @@ public class AlienTech : AlienTech_Pickup
             pGun.CurrAmmo[pGun.Active_aTech] = pGun.MaxAmmo[pGun.Active_aTech];
             pGun.BaseMinDamage = Random.Range(data.DamageMin, data.DamageMax);
             pGun.BaseMaxDamage = (int)(pGun.BaseMinDamage * Random.Range(1.5f, 2.5f));
+            pGun.BulletPrefab = data.BulletPrefab;
 
             if (data.HasSpread)
             {

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5313716266033088782}
   - component: {fileID: 860473500329455641}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: Bullet_Seeking
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,11 +47,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c206db0260b07354c9edcbf817c79fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Damage
-  DamageType: 0
+  DamageType: 4
   Body: {fileID: 6099907061278772420}
   DamageAmount: 10
   DamageRate: 0
-  BulletSpeed: 10
+  BulletSpeed: 5
   BulletDeathClock: 3
   ImpactFX: {fileID: 0}
   OwnerTag: 

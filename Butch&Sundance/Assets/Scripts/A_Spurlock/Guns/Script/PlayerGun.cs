@@ -7,7 +7,7 @@ using UnityEngine;
 // so the active weapon's stats are always accessed via Active_aTech as the shared index.
 public class PlayerGun : MonoBehaviour
 {
-
+    public enum ProjectileType { Basic, Lobbed, Seeking }
     //===[Config]===\\
 
     [Header("Config")]
@@ -32,6 +32,11 @@ public class PlayerGun : MonoBehaviour
     public List<int> CurrAmmo;    // Per-slot current ammo - decremented on each shot
     public int ActiveCurrAmmo;    // Convenience mirror of CurrAmmo[Active_aTech] - kept for UI reads
     public float ReloadSpeed;     // Duration in seconds of the reload animation (referenced externally)
+
+
+    [Header("Projectile")]
+    public ProjectileType BulletType;
+    public GameObject BulletPrefab;
 
 
     //===[Aim]===\\
@@ -109,84 +114,78 @@ public class PlayerGun : MonoBehaviour
     }
 
 
-    //===[Shooting]===\\
-
-    // Called from PlayerController.HandleInput() when Fire1 is held.
-    // Guards against the fire rate timer and current ammo before casting.
-    // Fires either a single raycast or a spread of pellet raycasts depending on the active weapon type,
-    // then decrements ammo and calls DestroyActiveGun() when the clip hits zero.
     public void Shoot()
     {
-        if (ShootTimer >= FireRate) // Only shoot if enough time has passed since the last shot
+        if (ShootTimer >= FireRate)
         {
-            ShootTimer = 0; // Reset the cooldown timer for the next shot
+            ShootTimer = 0;
 
-            RaycastHit hit; // Will store whatever the raycast collides with
-
-            if (!Spread) // Single projectile path
+            if (BulletPrefab == null)
             {
-                if (Physics.Raycast(
-                    Camera.main.transform.position,  // Origin: camera position
-                    Camera.main.transform.forward,   // Direction: camera forward
-                    out hit,                         // Populate hit with collision data
-                    ShootDistance,                   // Maximum travel distance
-                    ~IgnoreLayer))                   // Exclude the player's own layer
+                Debug.LogWarning("No BulletPrefab assigned on PlayerGun");
+                return;
+            }
+
+            GunData activeData = null;
+            if (aTechPool[Active_aTech] != null)
+            {
+                activeData = aTechPool[Active_aTech].GunLibrary.Find(g => g.GunType == aTechPool[Active_aTech].typeMod);
+            }
+
+            if (!Spread)
+            {
+                GameObject bullet = Instantiate(
+                    BulletPrefab,
+                    Camera.main.transform.position + Camera.main.transform.forward,
+                    Camera.main.transform.rotation);
+
+                Damage dmg = bullet.GetComponent<Damage>();
+                if (dmg != null)
                 {
-                    Debug.Log(hit.collider.name); // Debug: log name of hit object
+                    dmg.DamageAmount = Random.Range(MinDamage, MaxDamage);
+                    if (IsAiming) { dmg.DamageAmount = (int)(dmg.DamageAmount * 1.5f); }
+                    dmg.OwnerTag = "Player";
+                    dmg.IsAlienTech = aTechPool[Active_aTech] != null;
+                    dmg.MaxRange = activeData != null ? activeData.MaxRange : 20f;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < PelletCount; i++)
+                {
+                    float spreadX = Random.Range(-SpreadAngle, SpreadAngle) * 0.01f;
+                    float spreadY = Random.Range(-SpreadAngle, SpreadAngle) * 0.01f;
 
-                    I_Damage dmg = hit.collider.GetComponentInParent<I_Damage>(); // Try to get the damage interface on the hit object
+                    Quaternion spreadRot = Camera.main.transform.rotation *
+                        Quaternion.Euler(spreadX, spreadY, 0f);
 
-                    if (dmg != null) // Only apply damage if the hit object implements I_Damage
+                    GameObject bullet = Instantiate(
+                        BulletPrefab,
+                        Camera.main.transform.position + Camera.main.transform.forward,
+                        spreadRot);
+
+                    Damage dmg = bullet.GetComponent<Damage>();
+                    if (dmg != null)
                     {
-                        int Damage = Random.Range(MinDamage, MaxDamage);          // Roll damage in the active range
-                        if (IsAiming) { Damage = (int)(Damage * 1.5f); }          // Aim multiplier stacks on top of the rolled value
-                        dmg.TakeDamage(Damage, aTechPool[Active_aTech] != null);  // Pass whether this is an AlienTech shot
+                        dmg.DamageAmount = Random.Range(MinDamage, MaxDamage);
+                        if (IsAiming) { dmg.DamageAmount = (int)(dmg.DamageAmount * 1.5f); }
+                        dmg.OwnerTag = "Player";
+                        dmg.IsAlienTech = aTechPool[Active_aTech] != null;
                     }
                 }
             }
-            else // Spread / shotgun path - fire one ray per pellet
-            {
-                for (int i = 0; i < PelletCount; i++) // One iteration per pellet
-                {
-                    Vector3 spreadDirection =
-                        Camera.main.transform.forward                          // Start from camera forward
-                        + new Vector3(
-                            Random.Range(-SpreadAngle, SpreadAngle) * 0.01f,  // Small horizontal deviation - scaled down to keep in radians range
-                            Random.Range(-SpreadAngle, SpreadAngle) * 0.01f,  // Small vertical deviation
-                            0f);                                               // No Z deviation needed
 
-                    if (Physics.Raycast(
-                        Camera.main.transform.position, // Origin: camera position
-                        spreadDirection.normalized,     // Direction: randomized spread vector normalized
-                        out hit,                        // Populate hit with collision data
-                        ShootDistance,                  // Maximum travel distance
-                        ~IgnoreLayer))                  // Exclude the player's own layer
-                    {
-                        Debug.Log(hit.collider.name); // Debug: log name of hit object
+            CurrAmmo[Active_aTech]--;
 
-                        I_Damage dmg = hit.collider.GetComponentInParent<I_Damage>(); // Try to get the damage interface on the hit object
-
-                        if (dmg != null) // Only apply damage if the hit object implements I_Damage
-                        {
-                            int Damage = Random.Range(MinDamage, MaxDamage);          // Roll damage in the active range
-                            if (IsAiming) { Damage = (int)(Damage * 1.5f); }          // Aim multiplier stacks on top
-                            dmg.TakeDamage(Damage, aTechPool[Active_aTech] != null);  // Pass whether this is an AlienTech shot
-                        }
-                    }
-                }
-            }
-
-            CurrAmmo[Active_aTech]--; // Consume one round from the active weapon's clip
-
-            if (CurrAmmo[Active_aTech] <= 0) // Clip is empty
+            if (CurrAmmo[Active_aTech] <= 0)
             {
                 if (Active_aTech == 0)
                 {
-                    CurrAmmo[Active_aTech] = MaxAmmo[Active_aTech]; // Slot 0 never runs dry - refill silently on empty
+                    CurrAmmo[Active_aTech] = MaxAmmo[Active_aTech];
                 }
                 else
                 {
-                    DestroyActiveGun(); // Revert mods, remove weapon from pool, and advance to the next
+                    DestroyActiveGun();
                 }
             }
         }

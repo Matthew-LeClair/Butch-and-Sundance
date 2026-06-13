@@ -47,7 +47,7 @@ public class PickUp_Interact : MonoBehaviour
     // Only reacts to the Player tag to avoid being triggered by enemies or projectiles.
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.transform.root.CompareTag("Player"))
         {
             Mat.material = Outline; // Swap to outline material to signal the pickup is available
             InRange = true;         // Activate the E-key listener in Update
@@ -59,7 +59,7 @@ public class PickUp_Interact : MonoBehaviour
     // Only reacts to the Player tag to mirror the enter behaviour.
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.transform.root.CompareTag("Player"))
         {
             Mat.material = OriginalMat; // Restore original material when player leaves range
             InRange = false;            // Deactivate the E-key listener in Update
