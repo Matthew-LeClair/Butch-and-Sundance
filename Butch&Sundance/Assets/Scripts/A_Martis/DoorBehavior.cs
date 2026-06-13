@@ -28,6 +28,8 @@ public class DoorBehavior : MonoBehaviour
     [SerializeField] bool requiresButton;
     [SerializeField] PressurePlate linkedPlate;
 
+    [SerializeField] bool IsPuzzleDoor;
+
     private void Start()
     {
         // Store the starting position as the closed position
@@ -44,6 +46,9 @@ public class DoorBehavior : MonoBehaviour
     void Update()
     {
         if (requiresButton && linkedPlate != null && !linkedPlate.IsActive) return;
+
+        if (IsPuzzleDoor && PuzzleManager.Instance != null && !PuzzleManager.Instance.IsSolved) return;
+
         // Allow interaction only if player is nearby and door is not moving
         if (playerInTrigger && !isMoving)
         {
@@ -134,33 +139,30 @@ public class DoorBehavior : MonoBehaviour
     // Detects the player for interactions
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            playerInTrigger = true;
-            if (!isOpen && doorButtons != null)
-            {
-                doorButtons.SetActive(true);
-            }
-        }
+        if (!other.CompareTag("Player")) return;
+
+        if (requiresButton && linkedPlate != null) return;
+
+        if (IsPuzzleDoor) return;
+
+        playerInTrigger = true;
+
+        if (!isOpen && doorButtons != null) doorButtons.SetActive(true);        
     }
 
     // Detects when player has left for interactions
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            playerInTrigger = false;
+        if (!other.CompareTag("Player")) return;
 
-            if (doorButtons != null)
-            {
-                doorButtons.SetActive(false);
-            }
+        if (requiresButton && linkedPlate != null) return;
 
-            if(isOpen && !isMoving)
-            {
-                StartCoroutine (MoveDoor(closedPos, false));
-            }
-        }
+        if (IsPuzzleDoor) return;
+
+        playerInTrigger = false;
+
+        if(doorButtons != null) doorButtons.SetActive(false);
+        if (isOpen && !isMoving) StartCoroutine(MoveDoor(closedPos, false));
     }
 
     // Detect player TOUCHING door
