@@ -25,6 +25,9 @@ public class DoorBehavior : MonoBehaviour
 
     [SerializeField] bool IsBossDoor;
 
+    [SerializeField] bool requiresButton;
+    [SerializeField] PressurePlate linkedPlate;
+
     private void Start()
     {
         // Store the starting position as the closed position
@@ -40,6 +43,7 @@ public class DoorBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (requiresButton && linkedPlate != null && !linkedPlate.IsActive) return;
         // Allow interaction only if player is nearby and door is not moving
         if (playerInTrigger && !isMoving)
         {
@@ -74,6 +78,24 @@ public class DoorBehavior : MonoBehaviour
                         doorButtons.SetActive(false);
                     }                
             }
+        }
+    }
+
+    public void SetExternalOpen(bool open)
+    {
+        if (isMoving)
+        {
+            StopAllCoroutines();
+            isMoving = false;
+        }
+
+        if (open && !isOpen)
+        {
+            StartCoroutine (MoveDoor(openPos, true));
+        }
+        else if (!open && isOpen)
+        {
+            StartCoroutine(MoveDoor(closedPos, false));
         }
     }
 
