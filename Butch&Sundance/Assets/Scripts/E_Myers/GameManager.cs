@@ -67,9 +67,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (Input.GetButtonDown("Cancel"))
-        {
-            Debug.Log("Cancel pressed, MenuActive = " + MenuActive);
-
+        { 
             if (MenuActive == null) // Check if there is no active menu
             {
                 StatePause(); // Call the method to pause the game and show the pause menu
