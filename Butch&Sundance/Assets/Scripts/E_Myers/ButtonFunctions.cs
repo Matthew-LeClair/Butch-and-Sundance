@@ -4,22 +4,22 @@ using UnityEngine.SceneManagement;
 public class ButtonFunctions : MonoBehaviour
 {
     public void Resume() 
-    { GameManager.Instance.StatePause(false); } // Unpause
+    { GameManager.Instance.StateUnpause(); } // Unpause
 
     public void Restart() 
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload Active Scene
-        GameManager.Instance.StatePause(false); // Unpause
+        GameManager.Instance.StateUnpause(); // Unpause
     }
     public void NextLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // Load Next Scene
-        GameManager.Instance.StatePause(true);
+        GameManager.Instance.StateUnpause();
     }
     public void Respawn()
     {         
         GameManager.Instance.PlayerScript.ChangeRespawnPos(); // Respawn Player
-        GameManager.Instance.StatePause(false); // Unpause
+        GameManager.Instance.StateUnpause(); // Unpause
     }
 
     public void Quit()

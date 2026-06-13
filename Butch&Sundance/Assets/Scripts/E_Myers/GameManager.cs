@@ -55,45 +55,60 @@ public class GameManager : MonoBehaviour
         TimeScale_Original = Time.timeScale; // Set Time Scale Original
         PlayerStartPos = GameObject.FindWithTag("Player Start Pos"); // Find Player Start Position GameObject by Tag
         RespawnPosition = PlayerStartPos.transform.position;
+
+        MenuPause.SetActive(false); // Ensure the pause menu is initially inactive
+
+        MenuWin.SetActive(false); // Ensure the win menu is initially inactive
+
+        MenuLose.SetActive(false); // Ensure the lose menu is initially inactive
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Cancel")) // If [Escape] is pressed
+        if (Input.GetButtonDown("Cancel"))
         {
-            if (MenuActive == null) // If MenuActive is Null...
+            Debug.Log("Cancel pressed, MenuActive = " + MenuActive);
+
+            if (MenuActive == null) // Check if there is no active menu
             {
-                StatePause(true); // Pause Game
-                MenuActive = MenuPause; // Set MenuActive as MenuPause
-                MenuActive.SetActive(true); // Set MenuActive as Active
+                StatePause(); // Call the method to pause the game and show the pause menu
+
+                MenuActive = MenuPause; // Set the active menu to the pause menu
+
+                MenuActive.SetActive(true); // Activate the pause menu GameObject to show the menu
             }
-            else if (MenuActive == MenuPause) // If Menu Active is NOT Null and instead EQUAL TO MenuPause
-            { StatePause(false); } // Resume Game
+            else if (MenuActive == MenuPause) // Check if the active menu is the pause menu
+            {
+                StateUnpause(); // Call the method to unpause the game and hide the pause menu
+            }
         }
     }
 
-    public void StatePause(bool ShouldPause) // Made Modular for Pause and Unpause || Easier for me to use and understand
+    public void StatePause()
     {
-        if (ShouldPause) // If Should Pause
-        { // Pause by...
+        IsPaused = true; // Set the menu paused flag to true
 
-            IsPaused = true; // Setting IsPaused to True
-            Time.timeScale = 0.0f; // Setting Time Scale to 0
-            Cursor.visible = true; // Making Cursor Visble
-            Cursor.lockState = CursorLockMode.None; // Unlocking the Cursor
-        }
-        else // If Should NOT Pause...
-        { // Resume by...
+        Time.timeScale = 0; // Pause the game by setting the time scale to 0
 
-            IsPaused = false; // Setting IsPaused to False
-            Time.timeScale = TimeScale_Original; // Resetting Time Scale to Original Value
-            Cursor.visible = false; // Making the Cursor Invisible
-            Cursor.lockState = CursorLockMode.Locked; // Locking the Cursor
+        Cursor.visible = true; // Make the cursor visible
 
-            MenuActive.SetActive(false); // Set Pause Menu Inactive
-            MenuActive = null; // Set Pause Menu Null
-        }
+        Cursor.lockState = CursorLockMode.None; // Unlock the cursor so it can be moved freely
+    }
+
+    public void StateUnpause()
+    {
+        IsPaused = false; // Set the menu paused flag to false
+
+        Time.timeScale = TimeScale_Original; // Restore the original time scale to resume the game
+
+        Cursor.visible = false; // Hide the cursor
+
+        Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the center of the screen
+
+        MenuActive.SetActive(false); // Deactivate the menu GameObject to hide the menu
+
+        MenuActive = null; // Clear the reference to the pause menu GameObject
     }
 
 
@@ -134,14 +149,14 @@ public class GameManager : MonoBehaviour
 
     public void YouWin()
     {
-        StatePause(true);
+        StatePause();
         MenuActive = MenuWin;
         MenuActive.SetActive(true);
     }
 
     public void YouLose() 
     {
-        StatePause(true); // Pause Game
+        StatePause(); // Pause Game
         MenuActive = MenuLose; // Set MenuActive as MenuLose
         MenuActive.SetActive(true); // Set MenuActive as Active
     }
