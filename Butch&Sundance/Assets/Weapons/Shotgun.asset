@@ -29,3 +29,13 @@ MonoBehaviour:
   SpreadAngleMax: 8
   BulletType: 0
   BulletPrefab: {fileID: 3668983745716674504, guid: 002850591ffd4c54f8032c54cd4defb6, type: 3}
+  ShootSFXVariants:
+  - {fileID: 8300000, guid: daba031a4a9b6864e9dcab4d31ac3bdd, type: 3}
+  - {fileID: 8300000, guid: 484c1faff335d5c42a8ca168c5f0e245, type: 3}
+  - {fileID: 8300000, guid: e2f3b58f2f9ff2e4cac3f2af75975051, type: 3}
+  - {fileID: 8300000, guid: f5c40170adaa2694caeb1ca54575df33, type: 3}
+  - {fileID: 8300000, guid: 90644bccfbc8a81499b31526c161d168, type: 3}
+  - {fileID: 8300000, guid: 873506e352afd8f408e26c758c058964, type: 3}
+  - {fileID: 8300000, guid: 2a27dacdf7c840040b2118da99f3f057, type: 3}
+  ShootSFX: {fileID: 0}
+  HitEffect: {fileID: 1157869097690146438, guid: 777386c8686fe554e83e26f84f2db1d2, type: 3}

@@ -29,6 +29,10 @@ public class Gun : MonoBehaviour
 
     public bool IsOut;
 
+    [SerializeField] public AudioSource AudioPlayer;
+
+    
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -73,6 +77,7 @@ public class Gun : MonoBehaviour
 
             if (!Spread)
             {
+
                 GameObject bullet = Instantiate(BulletPrefab, ShootPos.position, ShootPos.rotation);
                 Damage d = bullet.GetComponent<Damage>();
                 if (d != null) { d.DamageAmount = damage; d.OwnerTag = cOwnerTag; }
@@ -82,6 +87,7 @@ public class Gun : MonoBehaviour
                 int pelletDamage = Mathf.Clamp((damage / PelletCount) * Random.Range(2, 3), 1, 30);
 
                 for (int i = 0; i < PelletCount; i++)
+
                 {
                     float spreadX = Random.Range(-SpreadAngle, SpreadAngle);
                     float spreadY = Random.Range(-SpreadAngle, SpreadAngle);

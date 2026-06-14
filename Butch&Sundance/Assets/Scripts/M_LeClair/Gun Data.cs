@@ -38,4 +38,11 @@ public class GunData : ScriptableObject
     [Header("Projectile")]
     public ProjectileType BulletType;
     public GameObject BulletPrefab;
+
+    [Header("Audio")]
+    public AudioClip[] ShootSFXVariants;
+    [Range(0,1)] public AudioClip ShootSFX;
+
+    [Header("Visual")]
+    public GameObject HitEffect;
 }
