@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -84,7 +83,7 @@ public class AlienTech_Pickup : PickUp_Interact
 
         int FreeSlot = -1;                                  // Default to -1 meaning no free slot found
 
-        for (int index = 0; index < pGun.aTechPool.Count; index++) // Walk the pool looking for a free slot
+        for (int index = 1; index < pGun.aTechPool.Count; index++) // Walk the pool looking for a free slot
         {
             if (pGun.aTechPool[index] == null)              // Null entry means this slot is available
             { FreeSlot = index; break; }                    // Record the index and stop - first free slot is enough
@@ -97,10 +96,26 @@ public class AlienTech_Pickup : PickUp_Interact
             pGun.aTechPool[FreeSlot].typeMod = puTypeMod;                         // Set the archetype on the newly created component
             pGun.aTechPool[FreeSlot].GunLibrary = GunLibrary;
             Debug.Log("Gun Type: " + puTypeMod);                                  // Debug log for pickup confirmation
+            pGun.Active_aTech = FreeSlot;
             pGun.aTechPool[FreeSlot].SwitchGun();                                 // Apply all stat values for this archetype immediately
+            GunData data = GunLibrary.Find(g => g.GunType == puTypeMod);
+            if (data != null)
+            {
+                pGun.MaxAmmo[pGun.Active_aTech] = Random.Range(data.AmmoMin, data.AmmoMax + 1);
+                pGun.CurrAmmo[pGun.Active_aTech] = pGun.MaxAmmo[pGun.Active_aTech];
+            }
 
             for (int index = 0; index < ModCount; index++)                        // Apply each mod slot this pickup carries
             { pGun.aTechPool[FreeSlot].AddMod(); }                                // Create, register, and apply one random mod
+
+            GameManager.Instance.OnWeaponChanged(pGun.aTechPool[FreeSlot], FreeSlot);
+
+            MeshFilter mf = pGun.GetComponent<MeshFilter>();
+            if (mf != null && pGun.GunMeshes != null && (int)puTypeMod < pGun.GunMeshes.Count
+                && pGun.GunMeshes[(int)puTypeMod] != null)
+            {
+                mf.sharedMesh = pGun.GunMeshes[(int)puTypeMod];
+            }
 
             Destroy(gameObject);                                                  // Remove the pickup from the world on successful pickup
         }

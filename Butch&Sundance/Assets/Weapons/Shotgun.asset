@@ -23,9 +23,9 @@ MonoBehaviour:
   DamageMin: 10
   DamageMax: 20
   HasSpread: 1
-  PelletCountMin: 4
+  PelletCountMin: 6
   PelletCountMax: 8
-  SpreadAngleMin: 25
-  SpreadAngleMax: 45
+  SpreadAngleMin: 5
+  SpreadAngleMax: 8
   BulletType: 0
   BulletPrefab: {fileID: 3668983745716674504, guid: 002850591ffd4c54f8032c54cd4defb6, type: 3}

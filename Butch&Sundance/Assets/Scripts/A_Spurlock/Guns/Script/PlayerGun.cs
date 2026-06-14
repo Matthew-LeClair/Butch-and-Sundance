@@ -36,6 +36,7 @@ public class PlayerGun : MonoBehaviour
 
     [Header("Projectile")]
     public ProjectileType BulletType;
+    [SerializeField] GameObject DefaultBulletPrefab;
     public GameObject BulletPrefab;
 
 
@@ -116,6 +117,8 @@ public class PlayerGun : MonoBehaviour
 
     public void Shoot()
     {
+        if (CurrAmmo[Active_aTech] <= 0 && Active_aTech != 0) return;
+        Debug.Log("Shoot called - Timer: " + ShootTimer + " / " + FireRate + " | BulletPrefab: " + BulletPrefab + " | Ammo: " + CurrAmmo[Active_aTech]);
         if (ShootTimer >= FireRate)
         {
             ShootTimer = 0;
@@ -153,8 +156,8 @@ public class PlayerGun : MonoBehaviour
             {
                 for (int i = 0; i < PelletCount; i++)
                 {
-                    float spreadX = Random.Range(-SpreadAngle, SpreadAngle) * 0.01f;
-                    float spreadY = Random.Range(-SpreadAngle, SpreadAngle) * 0.01f;
+                    float spreadX = Random.Range(-SpreadAngle, SpreadAngle);
+                    float spreadY = Random.Range(-SpreadAngle, SpreadAngle);
 
                     Quaternion spreadRot = Camera.main.transform.rotation *
                         Quaternion.Euler(spreadX, spreadY, 0f);
@@ -174,9 +177,9 @@ public class PlayerGun : MonoBehaviour
                     }
                 }
             }
-
+            Debug.Log("Before shot - Active: " + Active_aTech + " | CurrAmmo: " + CurrAmmo[Active_aTech] + " | MaxAmmo: " + MaxAmmo[Active_aTech] + " | Pool count: " + aTechPool.Count);
             CurrAmmo[Active_aTech]--;
-
+            Debug.Log("After shot - CurrAmmo: " + CurrAmmo[Active_aTech]);
             if (CurrAmmo[Active_aTech] <= 0)
             {
                 if (Active_aTech == 0)
@@ -185,7 +188,7 @@ public class PlayerGun : MonoBehaviour
                 }
                 else
                 {
-                    DestroyActiveGun();
+                    CurrAmmo[Active_aTech] = 0;
                 }
             }
         }
@@ -215,33 +218,51 @@ public class PlayerGun : MonoBehaviour
     }
 
 
-    //===[Weapon Switching]===\\
-
-    // Called from PlayerController.HandleInput() on R press to manually cycle the arsenal.
-    // Walks forward from the current slot (wrapping at the end) and stops at the first non-null entry.
-    // Null slots - empty or not yet filled - are skipped entirely so the player only ever lands on real weapons.
-    // If no non-null slot exists anywhere in the pool, falls back to the base revolver mesh.
     public void SwitchWeapons()
     {
-        for (int i = 1; i <= aTechPool.Count; i++) // Start at 1 so the search always moves forward at least one slot
+        for (int i = 1; i <= aTechPool.Count; i++)
         {
-            int candidate = (Active_aTech + i) % aTechPool.Count; // Wrap-around index - keeps the search within pool bounds
+            int candidate = (Active_aTech + i) % aTechPool.Count;
 
-            if (aTechPool[candidate] != null) // Found the next occupied slot - switch to it
+            if (candidate == 0)
+            {
+                Active_aTech = 0;
+                BulletPrefab = DefaultBulletPrefab;
+                ShootDistance = 8;
+                Spread = false;
+                FireRate = .6f;
+                ReloadSpeed = .85f;
+                BaseMinDamage = Random.Range(4, 12);
+                BaseMaxDamage = (int)(BaseMinDamage * Random.Range(1.25f, 2f));
+                MinDamage = BaseMinDamage;
+                MaxDamage = BaseMaxDamage;
+                GunMeshFilter.sharedMesh = BaseMesh;
+                GM.OnWeaponChanged(null, 0);
+                gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);
+                return;
+            }
+
+            if (aTechPool[candidate] != null)
             {
                 Active_aTech = candidate;
-                aTechPool[Active_aTech].SwitchGun();                                             // Apply the new weapon's archetype stats
+                aTechPool[Active_aTech].SwitchGun();
                 GM.OnWeaponChanged(aTechPool[Active_aTech], Active_aTech);
-                GunMeshFilter.sharedMesh = GunMeshes[(int)aTechPool[Active_aTech].typeMod];      // sharedMesh assigns the asset directly - typeMod is the runtime value set by EventPickUp(), not puTypeMod which is Inspector-only
-                gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);     // Restore correct display scale after mesh swap
-                return;                                                                           // Stop searching - first non-null hit is enough
+                if (GunMeshes != null && (int)aTechPool[Active_aTech].typeMod < GunMeshes.Count
+                    && GunMeshes[(int)aTechPool[Active_aTech].typeMod] != null)
+                {
+                    GunMeshFilter.sharedMesh = GunMeshes[(int)aTechPool[Active_aTech].typeMod];
+                }
+                gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);
+                return;
             }
         }
 
-        // Every slot in the pool is null - fall back to the base revolver
-        GunMeshFilter.sharedMesh = BaseMesh;                                                     // sharedMesh assigns the asset directly - show the default revolver mesh
-        GM.OnWeaponChanged(null, 0);                                             // Notify GM - reverted to base revolver
-        gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);             // Restore correct display scale after mesh swap
+    // Nothing found anywhere - base revolver fallback
+    Active_aTech = 0;
+        BulletPrefab = DefaultBulletPrefab;
+        GunMeshFilter.sharedMesh = BaseMesh;
+        GM.OnWeaponChanged(null, 0);
+        gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);
     }
 
     // Called from Shoot() when the active weapon's CurrAmmo drops to zero or below.
@@ -282,11 +303,13 @@ public class PlayerGun : MonoBehaviour
                 // which would increment Active_aTech again and go out of range on the freshly shortened list
                 aTechPool[Active_aTech].SwitchGun();
                 // Next weapon branch:
-                aTechPool[Active_aTech].SwitchGun();
                 GM.OnWeaponChanged(aTechPool[Active_aTech], Active_aTech); // Notify GM - auto-switched after destroy
 
                 // Base revolver fallback:
-                GunMeshFilter.sharedMesh = BaseMesh;
+                if (GunMeshes != null && (int)aTechPool[Active_aTech].typeMod < GunMeshes.Count && GunMeshes[(int)aTechPool[Active_aTech].typeMod] != null)
+                {
+                    GunMeshFilter.sharedMesh = BaseMesh;
+                }
                 GM.OnWeaponChanged(null, 0); // Notify GM - arsenal empty, back to revolver
 
                 GunMeshFilter.sharedMesh = GunMeshes[(int)aTechPool[Active_aTech].typeMod]; // sharedMesh assigns the asset directly - typeMod is the runtime value set by EventPickUp(), not puTypeMod which is Inspector-only
@@ -296,6 +319,7 @@ public class PlayerGun : MonoBehaviour
         else // Arsenal is completely empty - fall back to the base revolver
         {
             Active_aTech = 0;                                                                     // Reset index ready for the next pickup
+            BulletPrefab = DefaultBulletPrefab;
             GunMeshFilter.sharedMesh = BaseMesh;                                                  // sharedMesh assigns the asset directly - show the default revolver mesh
             GM.OnWeaponChanged(null, 0);
             gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);          // Restore correct display scale after mesh swap

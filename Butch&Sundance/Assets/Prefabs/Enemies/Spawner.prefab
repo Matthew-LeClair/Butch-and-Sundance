@@ -52,6 +52,8 @@ MonoBehaviour:
   - {fileID: 213829653178883418, guid: dc295737d05a49843ab1e37e20d6f187, type: 3}
   - {fileID: 6437803058386324490, guid: 72123ec3f3ff03e47a345af002d4ffe0, type: 3}
   - {fileID: 3269333186670381982, guid: b60ac39aa1ca12d4385c5e68170632c6, type: 3}
+  - {fileID: 6437803058386324490, guid: 49c21262404576743aaf4ca5028c65ed, type: 3}
+  - {fileID: 213829653178883418, guid: 0a8b5e0357b32124d9e5629ec1b20586, type: 3}
   amountToSpawn: 5
   spawnRate: 1
   spawnDist: 5

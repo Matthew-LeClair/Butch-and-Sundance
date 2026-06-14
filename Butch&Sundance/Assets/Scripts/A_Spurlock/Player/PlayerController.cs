@@ -257,7 +257,7 @@ public class PlayerController : MonoBehaviour, I_Damage
             }
         }
 
-        if (Input.GetButton("Fire1")) { pGun.Shoot(); Shot = true; } // Mouse1 = Shoot
+        if (Input.GetButton("Fire1")) { Debug.Log("Fire1 pressed - pGun:  " + pGun); pGun.Shoot(); Shot = true; } // Mouse1 = Shoot
 
         if (HasPhaseBoots && Input.GetKeyDown(KeyCode.LeftShift) // If boots equipped and Shift pressed...
             && !IsDodging && DodgeCooldownTimer <= 0 && AlienEnergy >= DodgeEnergyCost) // And not dodging and has energy...

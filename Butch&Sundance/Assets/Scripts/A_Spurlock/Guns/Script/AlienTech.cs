@@ -42,6 +42,7 @@ public class AlienTech : AlienTech_Pickup
     // Stats are randomized within archetype-appropriate ranges to give each weapon a unique feel within its class.
     public void SwitchGun()
     {
+        Debug.Log("SwitchGun called - pGun.Active_aTech: " + pGun.Active_aTech + " | MaxAmmo count: " + pGun.MaxAmmo.Count + " | CurrAmmo count: " + pGun.CurrAmmo.Count);
         // Find the matching GunData asset for this weapon's type
         GunData data = GunLibrary.Find(g => g.GunType == typeMod);
 
@@ -58,10 +59,14 @@ public class AlienTech : AlienTech_Pickup
             eGun.ShootRate = data.FireRate;
             eGun.ReloadSpeed = data.ReloadSpeed;
             eGun.MaxAmmo = Random.Range(data.AmmoMin, data.AmmoMax + 1);
+            Debug.Log("SwitchGun set ammo - slot " + pGun.Active_aTech + " MaxAmmo: " + pGun.MaxAmmo[pGun.Active_aTech] + " CurrAmmo: " + pGun.CurrAmmo[pGun.Active_aTech]);
             eGun.DamageMin = Random.Range(data.DamageMin, data.DamageMax);
             eGun.DamageMax = (int)(eGun.DamageMin * Random.Range(1.5f, 2.5f));
-            eGun.BulletPrefab = data.BulletPrefab;
-            
+            if (data.BulletPrefab != null)
+            {
+                eGun.BulletPrefab = data.BulletPrefab;
+            }
+
             if (data.HasSpread)
             {
                 eGun.PelletCount = Random.Range(data.PelletCountMin, data.PelletCountMax + 1);
@@ -75,11 +80,12 @@ public class AlienTech : AlienTech_Pickup
             pGun.Spread = data.HasSpread;
             pGun.FireRate = data.FireRate;
             pGun.ReloadSpeed = data.ReloadSpeed;
-            pGun.MaxAmmo[pGun.Active_aTech] = Random.Range(data.AmmoMin, data.AmmoMax + 1);
-            pGun.CurrAmmo[pGun.Active_aTech] = pGun.MaxAmmo[pGun.Active_aTech];
             pGun.BaseMinDamage = Random.Range(data.DamageMin, data.DamageMax);
             pGun.BaseMaxDamage = (int)(pGun.BaseMinDamage * Random.Range(1.5f, 2.5f));
-            pGun.BulletPrefab = data.BulletPrefab;
+            if (data.BulletPrefab != null)
+            {
+                pGun.BulletPrefab = data.BulletPrefab;
+            }
 
             if (data.HasSpread)
             {

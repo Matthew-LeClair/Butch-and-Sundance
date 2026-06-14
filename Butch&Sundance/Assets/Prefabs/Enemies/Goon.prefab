@@ -1263,6 +1263,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shotgun
       objectReference: {fileID: 0}
+    - target: {fileID: 7405187486586651674, guid: 154415a30c17b6e4289ecc7057598a56, type: 3}
+      propertyPath: BulletPrefab
+      value: 
+      objectReference: {fileID: 3668983745716674504, guid: 002850591ffd4c54f8032c54cd4defb6, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

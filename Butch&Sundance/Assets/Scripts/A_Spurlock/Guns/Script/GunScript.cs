@@ -56,49 +56,41 @@ public class Gun : MonoBehaviour
 
     public void Shoot(string cOwnerTag)
     {
-        if (ShootTimer > ShootRate) 
+        if (BulletPrefab == null)
         {
-            if (CurrAmmo <= 0) { IsOut = true; }
+            Debug.LogWarning("Gun: BulletPrefab not assigned on " + gameObject.name);
+            return;
+        }
 
-            if (CurrAmmo > 0)
+        if (ShootTimer > ShootRate)
+        {
+            if (CurrAmmo <= 0) { IsOut = true; return; }
+
+            ShootTimer = 0;
+            CurrAmmo--;
+
+            int damage = Random.Range(DamageMin, DamageMax);
+
+            if (!Spread)
             {
-                ShootTimer = 0; // Reset Shoot Timer
-                CurrAmmo -= 1; // Decrement Ammo
+                GameObject bullet = Instantiate(BulletPrefab, ShootPos.position, ShootPos.rotation);
+                Damage d = bullet.GetComponent<Damage>();
+                if (d != null) { d.DamageAmount = damage; d.OwnerTag = cOwnerTag; }
+            }
+            else
+            {
+                int pelletDamage = Mathf.Clamp((damage / PelletCount) * Random.Range(2, 3), 1, 30);
 
-                BulletPrefab.GetComponent<Damage>().DamageAmount = Random.Range(DamageMin, DamageMax);
-
-                if (!Spread)
+                for (int i = 0; i < PelletCount; i++)
                 {
-                    // Spawn Bullet at the Shoot Pos at the Gun Pivot Rotation
-                    Instantiate(BulletPrefab, ShootPos.position, ShootPos.rotation);
+                    float spreadX = Random.Range(-SpreadAngle, SpreadAngle);
+                    float spreadY = Random.Range(-SpreadAngle, SpreadAngle);
+                    Quaternion spreadRot = ShootPos.rotation * Quaternion.Euler(spreadX, spreadY, 0);
+
+                    GameObject bullet = Instantiate(BulletPrefab, ShootPos.position, spreadRot);
+                    Damage d = bullet.GetComponent<Damage>();
+                    if (d != null) { d.DamageAmount = pelletDamage; d.OwnerTag = cOwnerTag; }
                 }
-                else
-                {
-                    Debug.Log(BulletPrefab.GetComponent<Damage>().DamageAmount);
-                    BulletPrefab.GetComponent<Damage>().DamageAmount = 
-                        (BulletPrefab.GetComponent<Damage>().DamageAmount / 
-                        (PelletCount)) * Random.Range(2, 3);
-
-                    BulletPrefab.GetComponent<Damage>().DamageAmount = 
-                        Mathf.Clamp(BulletPrefab.GetComponent<Damage>().DamageAmount, 1, (30));
-
-
-                    for (int i = 0; i < PelletCount; i++)
-                    {
-                        Debug.Log(BulletPrefab.GetComponent<Damage>().DamageAmount);
-                        float SpreadX = Random.Range(-SpreadAngle, SpreadAngle);
-                        float SpreadY = Random.Range(-SpreadAngle, SpreadAngle);
-
-                        Quaternion SpreadRot =
-                            ShootPos.rotation *
-                            Quaternion.Euler(SpreadX, SpreadY, 0);
-
-                        Instantiate(BulletPrefab, ShootPos.position, SpreadRot);
-                        Damage cDamage = BulletPrefab.GetComponent<Damage>();
-                        cDamage.OwnerTag = cOwnerTag;
-                    }
-                }
-
             }
         }
     }
