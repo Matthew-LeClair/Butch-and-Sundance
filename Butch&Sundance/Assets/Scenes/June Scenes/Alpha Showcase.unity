@@ -2551,15 +2551,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2556158392739396626, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2972003252696323226, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
       propertyPath: m_Name
       value: MyersEricUi
       objectReference: {fileID: 0}
+    - target: {fileID: 5423647645111937559, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
+      propertyPath: CheckpointPopup
+      value: 
+      objectReference: {fileID: 1564910316}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
+--- !u!1 &1564910316 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2556158392739396626, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
+  m_PrefabInstance: {fileID: 1543940315}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1579589137
 PrefabInstance:
   m_ObjectHideFlags: 0
