@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text AmmoCount;
     public GameObject PlayerDamage_Screen;
     public GameObject PlayerShield_Screen;
+    public GameObject LowHealth_Screen;
     public GameObject PlayerMomentum;
     
 
