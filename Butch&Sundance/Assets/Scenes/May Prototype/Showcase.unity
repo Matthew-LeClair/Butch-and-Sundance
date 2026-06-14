@@ -354,69 +354,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2242511476109349019, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 2758307325571454043, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 2776064752822907975, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
-      propertyPath: BulletPrefab
-      value: 
-      objectReference: {fileID: 3668983745716674504, guid: 002850591ffd4c54f8032c54cd4defb6, type: 3}
-    - target: {fileID: 2776064752822907975, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
-      propertyPath: DefaultBulletPrefab
-      value: 
-      objectReference: {fileID: 3668983745716674504, guid: 002850591ffd4c54f8032c54cd4defb6, type: 3}
-    - target: {fileID: 3727682976041924433, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 4386608956623407256, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 4447826174741325666, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
-      propertyPath: typeMod
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4447826174741325666, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
-      propertyPath: GunLibrary.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4447826174741325666, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
-      propertyPath: 'GunLibrary.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: c87fdd2c861a9b3499ad698d5541a81e, type: 2}
-    - target: {fileID: 4447826174741325666, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
-      propertyPath: 'GunLibrary.Array.data[1]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 8402c95666605ac479333fb77064c15b, type: 2}
-    - target: {fileID: 4447826174741325666, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
-      propertyPath: 'GunLibrary.Array.data[2]'
-      value: 
-      objectReference: {fileID: 11400000, guid: bf201e83d92cb3146bbb2b20515431a7, type: 2}
-    - target: {fileID: 4447826174741325666, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
-      propertyPath: 'GunLibrary.Array.data[3]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 6cc27b2bda485984cb69a4a9881e78fa, type: 2}
-    - target: {fileID: 4447826174741325666, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
-      propertyPath: 'GunLibrary.Array.data[4]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 6cc27b2bda485984cb69a4a9881e78fa, type: 2}
-    - target: {fileID: 8328796369497191880, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
-      propertyPath: m_TagString
-      value: Player Start Pos
-      objectReference: {fileID: 0}
     - target: {fileID: 8677270422375201963, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8893641552255450173, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
-      propertyPath: Shield
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

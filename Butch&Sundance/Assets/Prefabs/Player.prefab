@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3598406424035635336}
   m_Layer: 0
   m_Name: Leg_R
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 2063381379402263827}
   m_Layer: 0
   m_Name: Arm_R
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -242,7 +242,7 @@ GameObject:
   - component: {fileID: 9214294250713469299}
   m_Layer: 0
   m_Name: Arm_L
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -356,7 +356,7 @@ GameObject:
   - component: {fileID: 1627101773823628516}
   m_Layer: 0
   m_Name: Head
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -950,7 +950,11 @@ MonoBehaviour:
   - {fileID: -5495902117074765545, guid: d58beb3957cf7e94f9be72f605f6e440, type: 3}
   - {fileID: -5495902117074765545, guid: 10acb03013f81b6448748b14da88ddbd, type: 3}
   - {fileID: -5495902117074765545, guid: 7fff68229dc818d499d9b77d7fc6ee44, type: 3}
-  GunLibrary: []
+  GunLibrary:
+  - {fileID: 11400000, guid: c87fdd2c861a9b3499ad698d5541a81e, type: 2}
+  - {fileID: 11400000, guid: 8402c95666605ac479333fb77064c15b, type: 2}
+  - {fileID: 11400000, guid: bf201e83d92cb3146bbb2b20515431a7, type: 2}
+  - {fileID: 11400000, guid: 6cc27b2bda485984cb69a4a9881e78fa, type: 2}
   typeMod: 0
   pGun: {fileID: 2776064752822907975}
   eGun: {fileID: 0}
@@ -984,8 +988,8 @@ MonoBehaviour:
   ActiveCurrAmmo: 0
   ReloadSpeed: 0.35
   BulletType: 0
-  DefaultBulletPrefab: {fileID: 0}
-  BulletPrefab: {fileID: 0}
+  DefaultBulletPrefab: {fileID: 3668983745716674504, guid: 002850591ffd4c54f8032c54cd4defb6, type: 3}
+  BulletPrefab: {fileID: 3668983745716674504, guid: 002850591ffd4c54f8032c54cd4defb6, type: 3}
   IsAiming: 0
   PlayerCamera: {fileID: 8661160447946240342}
   aTechPool:
@@ -1077,7 +1081,7 @@ GameObject:
   - component: {fileID: 3363797759108764060}
   m_Layer: 0
   m_Name: Leg_L
-  m_TagString: Player
+  m_TagString: Player Start Pos
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1238,7 +1242,7 @@ MonoBehaviour:
   Controller: {fileID: 1156401263190982702}
   Health: 0
   HealthMax: 1000
-  Shield: 500
+  Shield: 0
   ShieldMax: 1000
   AlienEnergy: 500
   AlienEnergyMax: 500
