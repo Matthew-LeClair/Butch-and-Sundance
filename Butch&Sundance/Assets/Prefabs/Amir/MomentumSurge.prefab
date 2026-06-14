@@ -51,8 +51,8 @@ MonoBehaviour:
   duration: 5
   destroyOnPickup: 1
   momentumMultiplier: 2
-  speedBonus: 5
-  jumpBonus: 5
+  speedBonus: 15
+  jumpBonus: 10
   pickupSound: {fileID: 8300000, guid: 6f15ecb339a620541b60c9d47eb9220a, type: 3}
   volume: 1
   powerupVFX: {fileID: 3311653253390530834, guid: 4c78896683a8f4149a21d24fff08b9d7, type: 3}

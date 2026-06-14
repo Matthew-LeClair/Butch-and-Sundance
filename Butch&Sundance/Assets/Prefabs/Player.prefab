@@ -700,7 +700,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 32759
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -952,7 +952,6 @@ MonoBehaviour:
   - {fileID: -5495902117074765545, guid: 7fff68229dc818d499d9b77d7fc6ee44, type: 3}
   GunLibrary: []
   typeMod: 0
-  GunLibrary: []
   pGun: {fileID: 2776064752822907975}
   eGun: {fileID: 0}
 --- !u!114 &2776064752822907975
@@ -984,6 +983,9 @@ MonoBehaviour:
   CurrAmmo: 
   ActiveCurrAmmo: 0
   ReloadSpeed: 0.35
+  BulletType: 0
+  DefaultBulletPrefab: {fileID: 0}
+  BulletPrefab: {fileID: 0}
   IsAiming: 0
   PlayerCamera: {fileID: 8661160447946240342}
   aTechPool:
@@ -1255,7 +1257,7 @@ MonoBehaviour:
   pGun: {fileID: 2776064752822907975}
   HasPhaseBoots: 1
   HasEnergyConverter: 1
-  SpeedBase: 3
+  SpeedBase: 5
   Speed: 0
   JumpSpeedBase: 10
   WhatIsWall:
