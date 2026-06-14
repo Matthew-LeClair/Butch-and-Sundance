@@ -483,7 +483,7 @@ public class PlayerController : MonoBehaviour, I_Damage
                 GameManager.Instance.LowHealth_Screen.SetActive(true);
             }
            
-            if(Health > 20) 
+            if(Health >= 21) 
             { 
                 GameManager.Instance.LowHealth_Screen.SetActive(false);
             }
@@ -1020,6 +1020,8 @@ public class PlayerController : MonoBehaviour, I_Damage
         Controller.enabled = true;
         Physics.SyncTransforms(); // Ensure CharacterController is in sync with new position
         Health = HealthMax; // Restore Health on Respawn
+        Shield = ShieldMax; // Restore Shield on Respawn
+        AlienEnergy = AlienEnergyMax; // Restore Alien Energy on Respawn
         UpdatePlayerUI(); // Update UI to reflect restored health
     }
 }

@@ -144,6 +144,16 @@ public class GameManager : MonoBehaviour
             if (WeaponNameText != null)
                 WeaponNameText.text = "Revolver";               // Update UI with base weapon name
         }
+        UpdateAmmoUI(slotIndex); // Sync ammo on weapon switch
+    }
+
+    public void UpdateAmmoUI(int slot)
+    {
+        PlayerGun pGun = PlayerScript.pGun;
+
+        if (AmmoCount != null)
+
+            AmmoCount.text = $"{pGun.CurrAmmo[slot]} / {pGun.MaxAmmo[slot]}";
     }
 
     public void YouWin()
