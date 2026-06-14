@@ -74,7 +74,9 @@ public class EnemyBase : MonoBehaviour, I_Damage
 
     public virtual void TakeDamage(int Amount, bool AlienTech)
     {
+        Debug.Log("TakeDamage called on " + gameObject.name + " | Amount: " + Amount + " | DamageReduc: " + DamageReduc + " | CritMulti: " + CritMulti);
         CurrHealth -= (Amount * CritMulti) * DamageReduc;
+        Debug.Log("Health after: " + CurrHealth);
 
         CritMulti = 1;
 

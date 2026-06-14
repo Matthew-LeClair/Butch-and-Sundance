@@ -62,6 +62,7 @@ public class Damage : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.isTrigger) { return; }
+        if(other.gameObject.layer == gameObject.layer) { return; }
         if (other.tag != OwnerTag)
         {
             I_Damage Damage = other.GetComponent<I_Damage>();

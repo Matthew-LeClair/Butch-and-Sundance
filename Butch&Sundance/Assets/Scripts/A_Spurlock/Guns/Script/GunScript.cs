@@ -27,7 +27,7 @@ public class Gun : MonoBehaviour
 
     List<WeaponMod> Mods;
 
-    public bool IsOut;
+    public bool IsOut = false;
 
     [SerializeField] public AudioSource AudioPlayer;
 
@@ -60,6 +60,8 @@ public class Gun : MonoBehaviour
 
     public void Shoot(string cOwnerTag)
     {
+        Debug.Log("Enemy Shoot called on " + gameObject.name + " | BulletPrefab: " + BulletPrefab + " | CurrAmmo: " + CurrAmmo + " | ShootTimer: " + ShootTimer + " | ShootRate: " + ShootRate);
+
         if (BulletPrefab == null)
         {
             Debug.LogWarning("Gun: BulletPrefab not assigned on " + gameObject.name);
@@ -74,7 +76,6 @@ public class Gun : MonoBehaviour
             CurrAmmo--;
 
             int damage = Random.Range(DamageMin, DamageMax);
-
             if (!Spread)
             {
 
@@ -103,11 +104,7 @@ public class Gun : MonoBehaviour
     public void Reload() 
     {
         Debug.Log("Trying Reload");
-        if (MaxAmmo > CurrAmmo && AmmoReserve > 0) 
-        {
-            AmmoReserve = MaxAmmo - CurrAmmo;
-            CurrAmmo = MaxAmmo;
-        }
+        CurrAmmo = MaxAmmo;
         Debug.Log("Reload Results Below!");
         Debug.Log(CurrAmmo);
     }

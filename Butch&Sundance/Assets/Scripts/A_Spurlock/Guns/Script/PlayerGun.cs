@@ -140,7 +140,7 @@ public class PlayerGun : MonoBehaviour
             {
                 activeData = aTechPool[Active_aTech].GunLibrary.Find(g => g.GunType == aTechPool[Active_aTech].typeMod);
             }
-
+            Debug.Log("Spread: " + Spread + " | PelletCount: " + PelletCount + " | SpreadAngle: " + SpreadAngle + " | Active: " + Active_aTech);
             if (!Spread)
             {
                 GameObject bullet = Instantiate(
@@ -162,6 +162,7 @@ public class PlayerGun : MonoBehaviour
             {
                 for (int i = 0; i < PelletCount; i++)
                 {
+                    Debug.Log("Spawning pellet " + i);
                     float spreadX = Random.Range(-SpreadAngle, SpreadAngle);
                     float spreadY = Random.Range(-SpreadAngle, SpreadAngle);
 
@@ -180,6 +181,7 @@ public class PlayerGun : MonoBehaviour
                         if (IsAiming) { dmg.DamageAmount = (int)(dmg.DamageAmount * 1.5f); }
                         dmg.OwnerTag = "Player";
                         dmg.IsAlienTech = aTechPool[Active_aTech] != null;
+                        dmg.MaxRange = activeData != null ? activeData.MaxRange : 10f;
                     }
                 }
             }
