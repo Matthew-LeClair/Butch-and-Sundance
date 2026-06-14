@@ -29,6 +29,8 @@ public class Gun : MonoBehaviour
 
     public bool IsOut;
 
+    [SerializeField] public AudioSource AudioPlayer;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -63,9 +65,11 @@ public class Gun : MonoBehaviour
             if (CurrAmmo > 0)
             {
                 ShootTimer = 0; // Reset Shoot Timer
+                AudioPlayer.Play(); // Play Shoot SFX
                 CurrAmmo -= 1; // Decrement Ammo
 
                 BulletPrefab.GetComponent<Damage>().DamageAmount = Random.Range(DamageMin, DamageMax);
+                
 
                 if (!Spread)
                 {
