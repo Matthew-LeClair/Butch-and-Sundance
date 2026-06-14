@@ -581,7 +581,11 @@ MonoBehaviour:
   doorButtons: {fileID: 4969078794660753554}
   slideDistance: 5
   slideSpeed: 10
-  slideDirection: {x: 0, y: 0, z: 0}
+  slideDirection: {x: 0, y: 10, z: 0}
+  IsBossDoor: 0
+  requiresButton: 0
+  linkedPlate: {fileID: 0}
+  IsPuzzleDoor: 0
 --- !u!65 &2810202581569346587
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -670,7 +674,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: c8ad275965b1e6d43adaac55f79430b2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

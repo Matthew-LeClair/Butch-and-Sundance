@@ -53,6 +53,7 @@ MonoBehaviour:
   damageMult: 2
   pickupSound: {fileID: 8300000, guid: 2b02646d68196964f96abf3eccb9f0e1, type: 3}
   volume: 1
+  powerupVFX: {fileID: 1252915777441537396, guid: 59b4dfb5b54f93b4e98350b764ae48f2, type: 3}
 --- !u!33 &4255565061958986117
 MeshFilter:
   m_ObjectHideFlags: 0

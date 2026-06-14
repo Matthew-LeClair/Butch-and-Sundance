@@ -41,7 +41,7 @@ public class GunData : ScriptableObject
 
     [Header("Audio")]
     public AudioClip[] ShootSFXVariants;
-    [Range(0,1)] public AudioClip ShootSFX;
+    [Range(0,1)] public float ShootSFX;
 
     [Header("Visual")]
     public GameObject HitEffect;
