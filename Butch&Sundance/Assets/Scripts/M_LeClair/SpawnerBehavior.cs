@@ -25,19 +25,22 @@ public class Spawner : EnemyBehavior
             ai.agent.ResetPath();
         }
 
-        if (!onCooldown)
+        if (ai.seePlayer)
         {
-            spawnTimer += Time.deltaTime;
-
-            if (spawnCount < amountToSpawn && spawnTimer >= spawnRate)
+            if (!onCooldown)
             {
-                spawn();
-            }
+                spawnTimer += Time.deltaTime;
 
-            if (spawnCount >= amountToSpawn && !onCooldown)
-            {
-                onCooldown = true;
-                StartCoroutine(spawnCooldown());
+                if (spawnCount < amountToSpawn && spawnTimer >= spawnRate)
+                {
+                    spawn();
+                }
+
+                if (spawnCount >= amountToSpawn && !onCooldown)
+                {
+                    onCooldown = true;
+                    StartCoroutine(spawnCooldown());
+                }
             }
         }
     }

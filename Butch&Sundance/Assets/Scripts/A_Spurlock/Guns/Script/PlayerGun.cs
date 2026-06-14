@@ -64,6 +64,11 @@ public class PlayerGun : MonoBehaviour
     [SerializeField] public int PelletCount;   // Number of individual pellets fired per shot when Spread is true
     [SerializeField] public int SpreadAngle;   // Half-angle of the spread cone in degrees - larger = wider
 
+    [Header("Visuals")]
+    [SerializeField] GameObject GunVisual_Pistol;
+    [SerializeField] GameObject GunVisual_Shotgun;
+    [SerializeField] GameObject GunVisual_SMG;
+    [SerializeField] GameObject GunVisual_Sniper;
 
     //===[Cache]===\\
 
@@ -104,6 +109,7 @@ public class PlayerGun : MonoBehaviour
             BaseMaxDamage = (int)(BaseMinDamage * Random.Range(1.25f, 2f)); // Max is 1.25x-2x the min
         }
         GM.OnWeaponChanged(aTechPool[Active_aTech], Active_aTech);
+        UpdateGunVisual();
     }
 
     // Called every frame by Unity.
@@ -180,6 +186,7 @@ public class PlayerGun : MonoBehaviour
             Debug.Log("Before shot - Active: " + Active_aTech + " | CurrAmmo: " + CurrAmmo[Active_aTech] + " | MaxAmmo: " + MaxAmmo[Active_aTech] + " | Pool count: " + aTechPool.Count);
             CurrAmmo[Active_aTech]--;
             Debug.Log("After shot - CurrAmmo: " + CurrAmmo[Active_aTech]);
+            GameManager.Instance.PlayerScript.UpdatePlayerUI();
             if (CurrAmmo[Active_aTech] <= 0)
             {
                 if (Active_aTech == 0)
@@ -224,24 +231,6 @@ public class PlayerGun : MonoBehaviour
         {
             int candidate = (Active_aTech + i) % aTechPool.Count;
 
-            if (candidate == 0)
-            {
-                Active_aTech = 0;
-                BulletPrefab = DefaultBulletPrefab;
-                ShootDistance = 8;
-                Spread = false;
-                FireRate = .6f;
-                ReloadSpeed = .85f;
-                BaseMinDamage = Random.Range(4, 12);
-                BaseMaxDamage = (int)(BaseMinDamage * Random.Range(1.25f, 2f));
-                MinDamage = BaseMinDamage;
-                MaxDamage = BaseMaxDamage;
-                GunMeshFilter.sharedMesh = BaseMesh;
-                GM.OnWeaponChanged(null, 0);
-                gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);
-                return;
-            }
-
             if (aTechPool[candidate] != null)
             {
                 Active_aTech = candidate;
@@ -252,7 +241,8 @@ public class PlayerGun : MonoBehaviour
                 {
                     GunMeshFilter.sharedMesh = GunMeshes[(int)aTechPool[Active_aTech].typeMod];
                 }
-                gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);
+                UpdateGunVisual();
+                GameManager.Instance.PlayerScript.UpdatePlayerUI();
                 return;
             }
         }
@@ -262,7 +252,6 @@ public class PlayerGun : MonoBehaviour
         BulletPrefab = DefaultBulletPrefab;
         GunMeshFilter.sharedMesh = BaseMesh;
         GM.OnWeaponChanged(null, 0);
-        gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);
     }
 
     // Called from Shoot() when the active weapon's CurrAmmo drops to zero or below.
@@ -323,6 +312,32 @@ public class PlayerGun : MonoBehaviour
             GunMeshFilter.sharedMesh = BaseMesh;                                                  // sharedMesh assigns the asset directly - show the default revolver mesh
             GM.OnWeaponChanged(null, 0);
             gameObject.transform.localScale = new Vector3(18.75f, 11.71875f, 11.71875f);          // Restore correct display scale after mesh swap
+        }
+    }
+
+    public void UpdateGunVisual()
+    {
+        if (GunVisual_Pistol != null) GunVisual_Pistol.SetActive(false);
+        if (GunVisual_Shotgun != null) GunVisual_Shotgun.SetActive(false);
+        if (GunVisual_SMG != null) GunVisual_SMG.SetActive(false);
+        if (GunVisual_Sniper != null) GunVisual_Sniper.SetActive(false);
+
+        if (aTechPool[Active_aTech] == null) return;
+
+        switch (aTechPool[Active_aTech].typeMod)
+        {
+            case AlienTech_Pickup.GunTypeMod.Shotgun:
+                if (GunVisual_Shotgun != null) GunVisual_Shotgun.SetActive(true);
+                break;
+            case AlienTech_Pickup.GunTypeMod.SMG:
+                if (GunVisual_SMG != null) GunVisual_SMG.SetActive(true);
+                break;
+            case AlienTech_Pickup.GunTypeMod.Sniper:
+                if (GunVisual_Sniper != null) GunVisual_Sniper.SetActive(true);
+                break;
+            default:
+                if (GunVisual_Pistol != null) GunVisual_Pistol.SetActive(true);
+                break;
         }
     }
 }

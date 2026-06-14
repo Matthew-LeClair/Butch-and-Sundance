@@ -121,6 +121,7 @@ public class AlienTech_Pickup : PickUp_Interact
             }
 
             Destroy(gameObject);                                                  // Remove the pickup from the world on successful pickup
+            pGun.UpdateGunVisual();
         }
     }
 }

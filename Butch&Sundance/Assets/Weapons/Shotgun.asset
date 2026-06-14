@@ -17,7 +17,7 @@ MonoBehaviour:
   ShootDistance: 5
   FireRate: 0.8
   ReloadSpeed: 0.5
-  MaxRange: 8
+  MaxRange: 30
   AmmoMin: 1
   AmmoMax: 2
   DamageMin: 10
