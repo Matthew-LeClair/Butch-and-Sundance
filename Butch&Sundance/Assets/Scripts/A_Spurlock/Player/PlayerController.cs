@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour, I_Damage
     [SerializeField] public float HealthMax; // Max Health
     [SerializeField] public float Shield; // Current Shield
     [SerializeField] public float ShieldMax; // Max Shield
+    [SerializeField] public float LowHealth; // Threshold for low health warning (percentage)
 
     [Header("Alien Energy")]
     [SerializeField] public float AlienEnergy; // Current Alien Energy
@@ -148,6 +149,8 @@ public class PlayerController : MonoBehaviour, I_Damage
     [SerializeField] float HurtSoundVol;
     [SerializeField] AudioClip[] StepSounds;
     [SerializeField] float StepSoundVol;
+    [SerializeField] AudioClip[] ShieldSound;
+    [SerializeField] float ShieldSoundVol;
 
 
 
@@ -458,7 +461,10 @@ public class PlayerController : MonoBehaviour, I_Damage
             Amount = (int)(Amount - AbsorbedAmount); // Reduce actual damage by absorbed amount
         }
 
-        if (Shield > 0) { Shield -= Amount; } // Absorb damage with Shield first
+        if (Shield > 0) { 
+            Shield -= Amount;
+            AudioPlayer.PlayOneShot(ShieldSound[Random.Range(0, ShieldSound.Length)], ShieldSoundVol);
+        } // Absorb damage with Shield first
 
         if (Shield <= 0) // If Shield is depleted...
         {
@@ -471,6 +477,16 @@ public class PlayerController : MonoBehaviour, I_Damage
             Health -= Amount; // Subtract Health by Amount
 
             AudioPlayer.PlayOneShot(HurtSound[Random.Range(0, HurtSound.Length)], HurtSoundVol);
+
+            if (Health <= 20)
+            {
+                GameManager.Instance.LowHealth_Screen.SetActive(true);
+            }
+           
+            if(Health > 20) 
+            { 
+                GameManager.Instance.LowHealth_Screen.SetActive(false);
+            }
 
             if (Health <= 0) // If Health is Zero or less...
             {
@@ -535,6 +551,13 @@ public class PlayerController : MonoBehaviour, I_Damage
         GameManager.Instance.PlayerDamage_Screen.SetActive(true); // Activate Damage Screen
         yield return new WaitForSeconds(0.5f); // Wait half a second
         GameManager.Instance.PlayerDamage_Screen.SetActive(false); // Deactivate Damage Screen
+    }
+
+    IEnumerator LowHealthScreen()
+    {
+        GameManager.Instance.LowHealth_Screen.SetActive(true); // Activate Damage Screen
+        yield return new WaitForSeconds(0.3f); // Wait half a second
+        GameManager.Instance.LowHealth_Screen.SetActive(false); // Deactivate Damage Screen
     }
 
     // Called from TakeDamage() when shield damage is taken.
