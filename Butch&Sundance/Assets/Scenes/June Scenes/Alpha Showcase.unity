@@ -1101,81 +1101,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &500521174
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 500521175}
-  - component: {fileID: 500521177}
-  - component: {fileID: 500521176}
-  m_Layer: 5
-  m_Name: LowHealthFlash
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &500521175
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 500521174}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1863521266}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &500521176
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 500521174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.8301887, g: 0.34069067, b: 0.34069067, a: 0.392}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &500521177
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 500521174}
-  m_CullTransparentMesh: 1
 --- !u!1001 &501698769
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2650,35 +2575,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2556158392739396626, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2972003252696323226, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
       propertyPath: m_Name
       value: MyersEricUi
       objectReference: {fileID: 0}
-    - target: {fileID: 5423647645111937559, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
-      propertyPath: CheckpointPopup
-      value: 
-      objectReference: {fileID: 1564910316}
-    - target: {fileID: 5423647645111937559, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
-      propertyPath: LowHealth_Screen
-      value: 
-      objectReference: {fileID: 500521174}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 531865058692777926, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
-      insertIndex: 4
-      addedObject: {fileID: 500521175}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
---- !u!1 &1564910316 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2556158392739396626, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
-  m_PrefabInstance: {fileID: 1543940315}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1579589137
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2937,11 +2842,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2320c9c2ca062ea44b0dc98a12d69a9a, type: 3}
---- !u!224 &1863521266 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 531865058692777926, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
-  m_PrefabInstance: {fileID: 1543940315}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1946121809
 PrefabInstance:
   m_ObjectHideFlags: 0
