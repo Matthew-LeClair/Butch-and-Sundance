@@ -461,9 +461,10 @@ public class PlayerController : MonoBehaviour, I_Damage
             Amount = (int)(Amount - AbsorbedAmount); // Reduce actual damage by absorbed amount
         }
 
-        if (Shield > 0) { Shield -= Amount; } // Absorb damage with Shield first
-
-        AudioPlayer.PlayOneShot(ShieldSound[Random.Range(0, ShieldSound.Length)], ShieldSoundVol);
+        if (Shield > 0) { 
+            Shield -= Amount;
+            AudioPlayer.PlayOneShot(ShieldSound[Random.Range(0, ShieldSound.Length)], ShieldSoundVol);
+        } // Absorb damage with Shield first
 
         if (Shield <= 0) // If Shield is depleted...
         {
@@ -479,8 +480,14 @@ public class PlayerController : MonoBehaviour, I_Damage
 
             if (Health <= 20)
             {
-                StartCoroutine(LowHealthScreen());
+                GameManager.Instance.LowHealth_Screen.SetActive(true);
             }
+           
+            if(Health > 20) 
+            { 
+                GameManager.Instance.LowHealth_Screen.SetActive(false);
+            }
+
             if (Health <= 0) // If Health is Zero or less...
             {
                 GameManager.Instance.YouLose(); // Trigger Lose State
@@ -535,7 +542,7 @@ public class PlayerController : MonoBehaviour, I_Damage
     IEnumerator LowHealthScreen()
     {
         GameManager.Instance.LowHealth_Screen.SetActive(true); // Activate Damage Screen
-        yield return new WaitForSeconds(0.5f); // Wait half a second
+        yield return new WaitForSeconds(0.3f); // Wait half a second
         GameManager.Instance.LowHealth_Screen.SetActive(false); // Deactivate Damage Screen
     }
 
