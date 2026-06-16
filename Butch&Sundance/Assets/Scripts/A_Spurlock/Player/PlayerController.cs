@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour, I_Damage
     [SerializeField] public float HealthMax; // Max Health
     [SerializeField] public float Shield; // Current Shield
     [SerializeField] public float ShieldMax; // Max Shield
-    [SerializeField] public float LowHealth; // Threshold for low health warning (percentage)
+    [SerializeField] public float LowHealthThreshold; // Threshold for low health warning (percentage)
 
     [Header("Alien Energy")]
     [SerializeField] public float AlienEnergy; // Current Alien Energy
@@ -373,7 +373,6 @@ public class PlayerController : MonoBehaviour, I_Damage
     {
         if (Input.GetButtonDown("Jump") && JumpCount < 2) // If Jump pressed and under Jump Limit...
         {
-            AudioPlayer.PlayOneShot(JumpSound[Random.Range(0, JumpSound.Length)], JumpSoundVol);
             if (!IsWallRunning) // If not Wall Running...
             {
                 Jumped = true; // Set Jumped Flag
@@ -478,19 +477,10 @@ public class PlayerController : MonoBehaviour, I_Damage
 
             AudioPlayer.PlayOneShot(HurtSound[Random.Range(0, HurtSound.Length)], HurtSoundVol);
 
-            if (Health <= 20)
-            {
-                GameManager.Instance.LowHealth_Screen.SetActive(true);
-            }
-           
-            if(Health >= 21) 
-            { 
-                GameManager.Instance.LowHealth_Screen.SetActive(false);
-            }
+            GameManager.Instance.LowHealth_Screen.SetActive(Health <= LowHealthThreshold);
 
             if (Health <= 0) // If Health is Zero or less...
             {
-                GameManager.Instance.YouLose(); // Trigger Lose State
                 Death(); // Call Death Function
             }
             StartCoroutine(FlashDamageScreen()); // Flash Damage Screen

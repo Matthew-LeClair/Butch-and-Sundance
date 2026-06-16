@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2131817667121422172}
   - component: {fileID: 8497545921532881638}
   m_Layer: 0
-  m_Name: Cylinder
+  m_Name: Column R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 7350974114445828515}
   - component: {fileID: 8059462659179803657}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -241,7 +241,7 @@ GameObject:
   - component: {fileID: 2619903468364722212}
   - component: {fileID: 4217962616869310798}
   m_Layer: 0
-  m_Name: Cylinder (1)
+  m_Name: Column L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

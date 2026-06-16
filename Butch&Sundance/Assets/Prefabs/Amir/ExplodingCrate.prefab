@@ -64,8 +64,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b0c2059278888a46a374baeb8592e2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExplosionScript
-  radius: 10
-  damage: 10
+  radius: 100
+  damage: 500
   explosionFX: {fileID: 9070319601177341510, guid: 10fd16a77929ae8428ffb15e2b50711d, type: 3}
   IsAlienTech: 0
   destroyAfterExplode: 1
