@@ -2,13 +2,14 @@ using UnityEngine;
 using System.Collections;
 using Unity.VisualScripting;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 public class PlayerController : MonoBehaviour, I_Damage
 {
 
     [Header("Config")]
     [SerializeField] public CharacterController Controller;
-    float Gravity = 35; // Gravity Force
+    float Gravity = 12f; // Gravity Force
     Vector3 MoveDir; // Move Direction
     Vector3 PlayerVel; // Player Velocity
 
@@ -55,6 +56,9 @@ public class PlayerController : MonoBehaviour, I_Damage
     [SerializeField] public float JumpSpeedBase; // Base Jump Speed
     float JumpSpeed; // Current Jump Speed
     int JumpCount; // Current Jump Count
+    float JumpBufferTime = 0.15f;
+    float JumpBufferCounter;
+    bool wasGrounded;
 
     [Header("Wall Run")]
     [SerializeField] public LayerMask WhatIsWall; // Wall Layer Mask
@@ -149,9 +153,10 @@ public class PlayerController : MonoBehaviour, I_Damage
     [SerializeField] float HurtSoundVol;
     [SerializeField] AudioClip[] StepSounds;
     [SerializeField] float StepSoundVol;
+    [SerializeField] float StepInterval = 0.4f;
+    private float StepTimer;
     [SerializeField] AudioClip[] ShieldSound;
     [SerializeField] float ShieldSoundVol;
-
 
 
     //===[Basic]===\\
@@ -183,6 +188,9 @@ public class PlayerController : MonoBehaviour, I_Damage
             UpdateRopePoints(new Vector3(CamTransform.position.x, CamTransform.position.y - .5f, CamTransform.position.z), SwingJoint.connectedAnchor); // Update Rope Points with Sag to Swing Anchor
             OdmGearMovement(); // Handle ODM Gear Movement while Swinging
         }
+
+        if (Input.GetButtonDown("Jump")) JumpBufferCounter = JumpBufferTime;
+        else JumpBufferCounter -= Time.deltaTime;
 
         CheckForSwingPoints(); // Always check for swing points regardless of swing state
 
@@ -218,6 +226,11 @@ public class PlayerController : MonoBehaviour, I_Damage
             PlayerVel.y -= Gravity * Time.deltaTime; // Apply Gravity to Player Velocity
         }
         UpdatePlayerUI();
+    }
+
+    void OnAnimatorMove()
+    {
+        //INTENTIONALLY EMPTY DO NOT A
     }
 
 
@@ -334,22 +347,26 @@ public class PlayerController : MonoBehaviour, I_Damage
     // Everything the player does physically on the ground or in the air routes through here.
     void Movement()
     {
+        wasGrounded = Controller.isGrounded;
+
         HandleInput(); // Handle Input
 
-        if (Controller.isGrounded && !IsGrapple && !IsSwinging) // If Grounded and not in a rope action...
+        if (Controller.enabled && wasGrounded && !IsGrapple && !IsSwinging) // If Grounded and not in a rope action...
         {
-            PlayerVel = new Vector3(0, 0, 0); // Reset Player Velocity on Landing
+            PlayerVel = Vector3.zero; // Reset Player Velocity on Landing
             JumpCount = 0; // Reset Jump Count on Landing
         }
+
+        HandleFootsteps();
 
         Vector3 InputDir = // Calculate Input Direction
             Input.GetAxis("Horizontal") * transform.right // Horizontal Input * Player Right
             + Input.GetAxis("Vertical") * transform.forward; // Vertical Input * Player Forward
 
-        Jump(); // Call Jump Function
         HandleWallRun(); // Call Wall Run Function
+        Jump(); // Call Jump Function
 
-        if (!IsWallRunning && !IsSwinging) // Only handle normal movement if not Wall Running or Swinging
+        if (!IsWallRunning && !IsSwinging & !IsExitWallRun) // Only handle normal movement if not Wall Running or Swinging
         {
             if (InputDir.magnitude > 0.1f) // If there is Input...
             {
@@ -364,6 +381,8 @@ public class PlayerController : MonoBehaviour, I_Damage
         }
 
         HandleMomentum(InputDir); // Pass Input Direction to Momentum System
+
+        PlayerVel.y -= Gravity * Time.deltaTime;
     }
 
     // Called every frame from Movement().
@@ -371,23 +390,29 @@ public class PlayerController : MonoBehaviour, I_Damage
     // Scales jump height with current momentum so faster players jump higher.
     void Jump()
     {
-        if (Input.GetButtonDown("Jump") && JumpCount < 2) // If Jump pressed and under Jump Limit...
+        if (!Input.GetButtonDown("Jump")) return;
+        
+        bool grounded = wasGrounded;
+
+        if (IsWallRunning)
         {
-            if (!IsWallRunning) // If not Wall Running...
-            {
-                Jumped = true; // Set Jumped Flag
-                JumpCount++; // Increment Jump Count
-
-                AudioPlayer.PlayOneShot(JumpSound[Random.Range(0, JumpSound.Length)], JumpSoundVol);
-
-                float MomentumBoost = CurrMomentum / MaxMomentum; // Momentum as a Percentage
-                PlayerVel.y = JumpSpeedBase * (1f + MomentumBoost * 0.4f); // Scale Jump Height with Momentum
-
-                MomentumVelocity = new Vector3(MomentumVelocity.x, 0, MomentumVelocity.z) // Strip Y from Momentum Velocity
-                    * (1f + MomentumBoost * 0.3f); // Boost Horizontal on Jump
-            }
-            else { WallJump(); } // Call Wall Jump if Wall Running
+            WallJump();
+            JumpCount = 0;
+            return;
         }
+
+        if (!grounded && JumpCount >= 2) return;
+
+        JumpCount++; // Increment Jump Count
+
+        AudioPlayer.PlayOneShot(JumpSound[Random.Range(0, JumpSound.Length)], JumpSoundVol);
+
+        float MomentumBoost = CurrMomentum / MaxMomentum; // Momentum as a Percentage
+
+        PlayerVel.y = JumpSpeed;
+
+        MomentumVelocity = new Vector3(MomentumVelocity.x, 0, MomentumVelocity.z) // Strip Y from Momentum Velocity
+        * (1f + MomentumBoost * 0.3f); // Boost Horizontal on Jump           
     }
 
     // Called from HandleInput() when Shift is pressed and conditions are met.
@@ -443,6 +468,19 @@ public class PlayerController : MonoBehaviour, I_Damage
         float MomentumPercent = CurrMomentum / MaxMomentum; // Momentum as a Percentage
         Speed = Mathf.Lerp(SpeedBase, 10f, MomentumPercent); // Scale Speed between Base and 2x
         JumpSpeed = Mathf.Lerp(JumpSpeedBase, JumpSpeedBase * 1.5f, MomentumPercent); // Scale Jump between Base and 1.5x
+    }
+
+    void HandleFootsteps()
+    {
+        if (IsMoving && wasGrounded && !IsDodging)
+        {
+            StepTimer -= Time.deltaTime;
+            if (StepTimer <= 0f)
+            {
+                AudioPlayer.PlayOneShot(StepSounds[Random.Range(0, StepSounds.Length)], StepSoundVol);
+                StepTimer = StepInterval;
+            }
+        }
     }
 
 
@@ -668,11 +706,12 @@ public class PlayerController : MonoBehaviour, I_Damage
         IsExitWallRun = true; // Enter Exit State
         ExitTimer = 0f;
 
-        Vector3 Normal = IsRightWall ? RightWall.normal : LeftWall.normal; // Get Wall Normal
-        Vector3 ForceToApply = transform.up * UpJumpForce + Normal * OutJumpForce; // Calculate Jump Force
+        AudioPlayer.PlayOneShot(JumpSound[Random.Range(0, JumpSound.Length)], JumpSoundVol);
 
-        PlayerVel = ForceToApply; // Apply Jump Force to Player Velocity
-        MomentumVelocity = Vector3.zero; // Zero out Momentum Velocity on Wall Jump
+        Vector3 Normal = IsRightWall ? RightWall.normal : LeftWall.normal; // Get Wall Normal
+
+        PlayerVel.y = UpJumpForce; // Apply Jump Force to Player Velocity
+        MomentumVelocity = Normal * OutJumpForce; // Zero out Momentum Velocity on Wall Jump
     }
 
 
@@ -995,6 +1034,12 @@ public class PlayerController : MonoBehaviour, I_Damage
     IEnumerator InitPosition()
     {
         Controller.enabled = false;
+
+        if (GameManager.Instance == null || GameManager.Instance.PlayerStartPos == null)
+        {
+            Debug.LogError("Missing PlayerStartPos");
+            yield break;
+        }
         transform.position = GameManager.Instance.PlayerStartPos.transform.position;
         yield return null; // wait one frame before re-enabling
         Controller.enabled = true;

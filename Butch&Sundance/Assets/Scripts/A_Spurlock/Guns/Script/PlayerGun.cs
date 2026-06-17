@@ -324,7 +324,14 @@ public class PlayerGun : MonoBehaviour
         if (GunVisual_SMG != null) GunVisual_SMG.SetActive(false);
         if (GunVisual_Sniper != null) GunVisual_Sniper.SetActive(false);
 
-        if (aTechPool[Active_aTech] == null) return;
+        if (aTechPool[Active_aTech] == null)
+        {
+            if (GunVisual_Pistol != null)
+            {
+                GunVisual_Pistol.SetActive(true);
+            }
+            return;
+        }
 
         switch (aTechPool[Active_aTech].typeMod)
         {
