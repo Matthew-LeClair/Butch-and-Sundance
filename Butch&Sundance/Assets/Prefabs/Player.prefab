@@ -1252,7 +1252,7 @@ MonoBehaviour:
   HealthMax: 1000
   Shield: 0
   ShieldMax: 1000
-  LowHealth: 0
+  LowHealthThreshold: 0
   AlienEnergy: 500
   AlienEnergyMax: 500
   AlienEnergyRegenRate: 5
