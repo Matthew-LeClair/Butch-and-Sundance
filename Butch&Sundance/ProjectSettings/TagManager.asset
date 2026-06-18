@@ -7,6 +7,7 @@ TagManager:
   - Grapple
   - Player Start Pos
   - Pullable
+  - Destrucible
   layers:
   - Default
   - TransparentFX
