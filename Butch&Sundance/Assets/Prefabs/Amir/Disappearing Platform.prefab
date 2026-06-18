@@ -53,6 +53,8 @@ MonoBehaviour:
   FadeAwayDur: 1.5
   ResetTimerOnExit: 1
   DestroyAfterFade: 0
+  FlashColor: {r: 1, g: 0, b: 0, a: 1}
+  FlashDuration: 0.1
 --- !u!33 &7661302301212995414
 MeshFilter:
   m_ObjectHideFlags: 0
