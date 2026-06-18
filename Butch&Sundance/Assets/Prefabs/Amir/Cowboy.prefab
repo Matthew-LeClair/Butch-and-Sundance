@@ -3140,6 +3140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9010785019634252003}
   - component: {fileID: 8644517368152095888}
+  - component: {fileID: 7335416653928034743}
   - component: {fileID: 9159160704395410882}
   - component: {fileID: 7960945447897171479}
   - component: {fileID: 1915854483792711549}
@@ -3228,8 +3229,8 @@ MonoBehaviour:
   PredictionSphereCastRadius: 3
   PredictionPoint: {fileID: 0}
   PredictionPrefab: {fileID: 3318435204082315909, guid: 94597fbe5a041ca47bebc7f48e0d8ed7, type: 3}
-  Cam: {fileID: 7459162486821116028, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
-  CamTransform: {fileID: 2232769458087304895, guid: fb585b931f11ae243a5bb989ca24a8a8, type: 3}
+  Cam: {fileID: 1163609063951878920}
+  CamTransform: {fileID: 3997100220205687900}
   GrappleLine: {fileID: 0}
   RopePoints: 20
   RopeSag: 2
@@ -3286,6 +3287,23 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 02c5634823962db4bbba5599be162a80, type: 3}
   - {fileID: 8300000, guid: e5b56d34326e9e0429c04c64ed1d16d8, type: 3}
   ShieldSoundVol: 10
+--- !u!114 &7335416653928034743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5672705755487925581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 891edcaf678fbb5408c447c1f662aa4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LadderController
+  climbSpeed: 4
+  jumpUpForce: 5
+  jumpBackForce: 4
+  snapSpeed: 10
+  exitCooldown: 0.25
 --- !u!143 &9159160704395410882
 CharacterController:
   m_ObjectHideFlags: 0
