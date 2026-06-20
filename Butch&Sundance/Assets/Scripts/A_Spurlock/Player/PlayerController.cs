@@ -160,6 +160,9 @@ public class PlayerController : MonoBehaviour, I_Damage
 
     private LadderController ladderController;
 
+    [Header("New Swinging Physics Collider (Swinging Only)")]
+    [SerializeField] public CapsuleCollider PhysicsCollider;
+
     public void Awake()
     {
         ladderController = GetComponent<LadderController>();
@@ -770,9 +773,12 @@ public class PlayerController : MonoBehaviour, I_Damage
         GrapplePoint = PredictionHit.point; // Set Grapple Point from Prediction
 
         Controller.enabled = false; // Disable CharacterController - GrappleRB drives physics during flight
+        EnablePhysicsCollision();
         GrappleRB = gameObject.AddComponent<Rigidbody>(); // Add Rigidbody dynamically
         GrappleRB.freezeRotation = true; // Prevent Rotation
         GrappleRB.linearVelocity = MomentumVelocity; // Carry existing momentum into grapple
+        GrappleRB.interpolation = RigidbodyInterpolation.Interpolate;
+        GrappleRB.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
 
         GrappleLine.enabled = true; // Enable Grapple Line
         GrappleLine.positionCount = RopePoints; // Set Rope Points
@@ -867,9 +873,12 @@ public class PlayerController : MonoBehaviour, I_Damage
 
         Controller.enabled = false; // Disable CharacterController - let SpringJoint drive physics
 
+        EnablePhysicsCollision();
         SwingRB = gameObject.AddComponent<Rigidbody>(); // Add Rigidbody dynamically
         SwingRB.freezeRotation = true; // Prevent Rotation
         SwingRB.linearVelocity = MomentumVelocity; // Carry existing momentum into swing
+        SwingRB.interpolation = RigidbodyInterpolation.Interpolate;
+        SwingRB.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
 
         SwingJoint = gameObject.AddComponent<SpringJoint>(); // Add SpringJoint dynamically
         SwingJoint.autoConfigureConnectedAnchor = false; // Manual anchor control
@@ -903,6 +912,7 @@ public class PlayerController : MonoBehaviour, I_Damage
         if (SwingJoint != null) { Destroy(SwingJoint); SwingJoint = null; } // Remove SpringJoint
         if (SwingRB != null) { Destroy(SwingRB); SwingRB = null; } // Remove Rigidbody
 
+        DisablePhysicsCollision();
         Controller.enabled = true; // Re-enable CharacterController
 
         GrappleLine.enabled = false; // Disable Grapple Line
@@ -1081,5 +1091,14 @@ public class PlayerController : MonoBehaviour, I_Damage
         Shield = ShieldMax; // Restore Shield on Respawn
         AlienEnergy = AlienEnergyMax; // Restore Alien Energy on Respawn
         UpdatePlayerUI(); // Update UI to reflect restored health
+    }
+
+    void EnablePhysicsCollision()
+    {
+        PhysicsCollider.enabled = true;
+    }
+    void DisablePhysicsCollision()
+    {
+        PhysicsCollider.enabled = false;
     }
 }

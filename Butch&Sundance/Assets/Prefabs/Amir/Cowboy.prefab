@@ -623,6 +623,8 @@ MonoBehaviour:
   Player: {fileID: 9010785019634252003}
   Cam: {fileID: 3223465127249691067}
   PC: {fileID: 8644517368152095888}
+  recoilAmount: 2
+  recoilReturnSpeed: 8
 --- !u!20 &3223465127249691067
 Camera:
   m_ObjectHideFlags: 0
@@ -3140,6 +3142,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9010785019634252003}
   - component: {fileID: 8644517368152095888}
+  - component: {fileID: 6276706339030824738}
   - component: {fileID: 7335416653928034743}
   - component: {fileID: 9159160704395410882}
   - component: {fileID: 7960945447897171479}
@@ -3287,6 +3290,30 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 02c5634823962db4bbba5599be162a80, type: 3}
   - {fileID: 8300000, guid: e5b56d34326e9e0429c04c64ed1d16d8, type: 3}
   ShieldSoundVol: 10
+  PhysicsCollider: {fileID: 6276706339030824738}
+--- !u!136 &6276706339030824738
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5672705755487925581}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &7335416653928034743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9960,6 +9987,9 @@ MonoBehaviour:
   GunVisual_Shotgun: {fileID: 3886847343056538113}
   GunVisual_SMG: {fileID: 6493779634295530935}
   GunVisual_Sniper: {fileID: 4649411208043452379}
+  recoilAmount: 2
+  gunKickAmount: 0.1
+  gunKickReturnSpeed: 8
   damageMuliplier: 0
 --- !u!33 &1180805678107496646
 MeshFilter:
