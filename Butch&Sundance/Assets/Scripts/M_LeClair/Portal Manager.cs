@@ -5,7 +5,11 @@ public class PortalManager : MonoBehaviour
     public static PortalManager Instance;
     [SerializeField] Portals portalA;
     [SerializeField] Portals portalB;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
+    void Awake()
+    {
+        Instance = this;
+    }
     void Start()
     {
         if(portalA != null && portalB != null)

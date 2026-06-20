@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6066812594170803771}
   - component: {fileID: 4204433985084774280}
   - component: {fileID: 3155117738108492529}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Portal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,7 +81,7 @@ GameObject:
   - component: {fileID: 7757841766177666206}
   - component: {fileID: 7422972937904088892}
   - component: {fileID: 6163867544206244724}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,7 +138,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d9c171377845a174ca68ade4b2440cd9, type: 2}
+  - {fileID: 2100000, guid: 6a71dad8e783ec548bee569cda3a6df4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 5044579038270463646}
   - component: {fileID: 7987919316168339389}
   - component: {fileID: 2303250578211188156}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Column L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -250,7 +250,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d9c171377845a174ca68ade4b2440cd9, type: 2}
+  - {fileID: 2100000, guid: 6a71dad8e783ec548bee569cda3a6df4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -309,7 +309,7 @@ GameObject:
   - component: {fileID: 5507230180394884619}
   - component: {fileID: 2291471177913341208}
   - component: {fileID: 7222174997373588591}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Column R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -364,7 +364,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d9c171377845a174ca68ade4b2440cd9, type: 2}
+  - {fileID: 2100000, guid: 6a71dad8e783ec548bee569cda3a6df4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
