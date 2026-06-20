@@ -158,6 +158,12 @@ public class PlayerController : MonoBehaviour, I_Damage
     [SerializeField] AudioClip[] ShieldSound;
     [SerializeField] float ShieldSoundVol;
 
+    private LadderController ladderController;
+
+    public void Awake()
+    {
+        ladderController = GetComponent<LadderController>();
+    }
 
     //===[Basic]===\\
 
@@ -171,6 +177,20 @@ public class PlayerController : MonoBehaviour, I_Damage
         Health = HealthMax; // Set Health to Max on Start
         Shield = ShieldMax; // Set Shield to Max on Start
         SetStartPosition();
+
+        LadderController ladderController = GetComponent<LadderController>();
+        ladderController.OnLadderEnter += () =>
+        {
+            PlayerVel.y = 0f;
+        };
+        ladderController.OnLadderExit += () =>
+        {
+            PlayerVel.y = 0f;
+        };
+        ladderController.OnLadderJump += (force) =>
+        {
+            PlayerVel.y = force;
+        };
     }
 
     // Called every frame by Unity.
@@ -223,6 +243,8 @@ public class PlayerController : MonoBehaviour, I_Damage
             Controller.enabled = true; // Activate Controller
             Controller.Move(MomentumVelocity * Time.deltaTime); // Move Player using Momentum Velocity
             Controller.Move(PlayerVel * Time.deltaTime); // Move Player using Player Velocity
+
+            if (!ladderController.IsOnLadder)
             PlayerVel.y -= Gravity * Time.deltaTime; // Apply Gravity to Player Velocity
         }
         UpdatePlayerUI();
@@ -382,7 +404,8 @@ public class PlayerController : MonoBehaviour, I_Damage
 
         HandleMomentum(InputDir); // Pass Input Direction to Momentum System
 
-        PlayerVel.y -= Gravity * Time.deltaTime;
+        if (!ladderController.IsOnLadder)
+            PlayerVel.y -= Gravity * Time.deltaTime;
     }
 
     // Called every frame from Movement().
