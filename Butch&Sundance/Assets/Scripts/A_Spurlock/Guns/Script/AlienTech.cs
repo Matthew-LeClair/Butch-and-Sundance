@@ -82,6 +82,8 @@ public class AlienTech : AlienTech_Pickup
             pGun.ReloadSpeed = data.ReloadSpeed;
             pGun.BaseMinDamage = Random.Range(data.DamageMin, data.DamageMax);
             pGun.BaseMaxDamage = (int)(pGun.BaseMinDamage * Random.Range(1.5f, 2.5f));
+            pGun.recoilAmount = data.RecoilAmount;
+            pGun.gunKickAmount = data.GunKickAmount;
             if (data.BulletPrefab != null)
             {
                 pGun.BulletPrefab = data.BulletPrefab;

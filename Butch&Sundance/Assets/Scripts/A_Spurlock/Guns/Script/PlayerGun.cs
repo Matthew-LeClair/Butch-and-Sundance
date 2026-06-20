@@ -70,6 +70,13 @@ public class PlayerGun : MonoBehaviour
     [SerializeField] GameObject GunVisual_SMG;
     [SerializeField] GameObject GunVisual_Sniper;
 
+    [Header("Recoil")]
+    [SerializeField] public float recoilAmount = 2f;
+    [SerializeField] public float gunKickAmount = 0.1f;
+    [SerializeField] public float gunKickReturnSpeed = 8f;
+    Vector3 gunOriginalPos;
+    Vector3 gunCurrentKick = Vector3.zero;
+
     //===[Cache]===\\
 
     MeshFilter GunMeshFilter; // Cached MeshFilter on this GameObject - fetched once in Start() to avoid repeated GetComponent calls
@@ -108,6 +115,7 @@ public class PlayerGun : MonoBehaviour
             BaseMinDamage = Random.Range(4, 12);         // Low base damage
             BaseMaxDamage = (int)(BaseMinDamage * Random.Range(1.25f, 2f)); // Max is 1.25x-2x the min
         }
+        gunOriginalPos = transform.localPosition;
         GM.OnWeaponChanged(aTechPool[Active_aTech], Active_aTech);
         UpdateGunVisual();
     }
@@ -118,6 +126,8 @@ public class PlayerGun : MonoBehaviour
     private void Update()
     {
         ShootTimer += Time.deltaTime; // Accumulate time toward the next allowed shot
+        gunCurrentKick = Vector3.Lerp(gunCurrentKick, Vector3.zero, Time.deltaTime * gunKickReturnSpeed);
+        transform.localPosition = gunOriginalPos + gunCurrentKick;
     }
 
 
@@ -186,6 +196,8 @@ public class PlayerGun : MonoBehaviour
                 }
             }
             Debug.Log("Before shot - Active: " + Active_aTech + " | CurrAmmo: " + CurrAmmo[Active_aTech] + " | MaxAmmo: " + MaxAmmo[Active_aTech] + " | Pool count: " + aTechPool.Count);
+            CC.AddRecoil();
+            ApplyGunKick();
             CurrAmmo[Active_aTech]--;
             Debug.Log("After shot - CurrAmmo: " + CurrAmmo[Active_aTech]);
             GameManager.Instance.PlayerScript.UpdatePlayerUI();
@@ -348,5 +360,10 @@ public class PlayerGun : MonoBehaviour
                 if (GunVisual_Pistol != null) GunVisual_Pistol.SetActive(true);
                 break;
         }
+    }
+
+    public void ApplyGunKick()
+    {
+        gunCurrentKick = Vector3.back * gunKickAmount;
     }
 }

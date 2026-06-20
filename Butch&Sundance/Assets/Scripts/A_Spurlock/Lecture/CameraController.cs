@@ -20,6 +20,10 @@ public class CameraController : MonoBehaviour
     [SerializeField] PlayerController PC; // Cached Player Controller
     float CamRotX;
 
+    [Header("Recoil")]
+    [SerializeField] float recoilAmount = 2f;
+    [SerializeField] float recoilReturnSpeed = 8f;
+    float currentRecoil = 0f;
     void Start()
     {
         Cursor.visible = false;
@@ -38,6 +42,8 @@ public class CameraController : MonoBehaviour
         float MouseY = Input.GetAxisRaw("Mouse Y") * Sensitivity * Time.deltaTime;
 
         CamRotX -= MouseY;
+        CamRotX -= currentRecoil * Time.deltaTime * recoilReturnSpeed;
+        currentRecoil = Mathf.Lerp(currentRecoil, 0f, Time.deltaTime * recoilReturnSpeed);
         CamRotX = Mathf.Clamp(CamRotX, LockVertMin, LockVertMax);
 
         Player.transform.Rotate(Vector3.up * MouseX);
@@ -66,6 +72,11 @@ public class CameraController : MonoBehaviour
 
         Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, TargetFOV, WallRunTiltSpeed * Time.deltaTime);
         CurrentTilt = Mathf.Lerp(CurrentTilt, TargetTilt, WallRunTiltSpeed * Time.deltaTime);
-        transform.localRotation = Quaternion.Euler(CamRotX, 0, CurrentTilt);
+        transform.localRotation = Quaternion.Euler(CamRotX - currentRecoil, 0, CurrentTilt);
+    }
+
+    public void AddRecoil()
+    {
+        currentRecoil += recoilAmount;
     }
 }

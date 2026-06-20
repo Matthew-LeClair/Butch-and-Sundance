@@ -28,6 +28,10 @@ public class GunData : ScriptableObject
     public int DamageMin;
     public int DamageMax;
 
+    [Header("Recoil")]
+    public float RecoilAmount = 2f;
+    public float GunKickAmount = 0.1f;
+
     [Header("Spread (Shotgun only)")]
     public bool HasSpread;
     public int PelletCountMin;
