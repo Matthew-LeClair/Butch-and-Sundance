@@ -21,6 +21,7 @@ public class ExplosionScript : MonoBehaviour
     // Triggers explosion effect and applies damage
     public void Explode()
     {
+        Debug.Log("Explode called - already exploded: " + exploded);
         // Prevent multiple explosions
         if (exploded) return;
 
@@ -29,7 +30,8 @@ public class ExplosionScript : MonoBehaviour
         // Spawn explosion effect
         if (explosionFX != null)
         {
-            Instantiate(explosionFX, transform.position, Quaternion.identity);
+            ParticleSystem fx = Instantiate(explosionFX, transform.position, Quaternion.identity);
+            Destroy(fx.gameObject, fx.main.duration + fx.main.startLifetime.constantMax);
         }
 
         // Detect all colliders within radius
