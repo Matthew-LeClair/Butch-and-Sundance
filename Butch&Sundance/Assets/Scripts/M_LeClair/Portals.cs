@@ -52,8 +52,9 @@ public class Portals : MonoBehaviour
         Vector3 relativeVel = transform.InverseTransformDirection(inVel);
         Vector3 exitVel = LinkedPortal.transform.TransformDirection(relativeVel);
 
-        float angleDiff = LinkedPortal.transform.eulerAngles.y - transform.eulerAngles.y + 180f;
-        player.transform.rotation = Quaternion.Euler(0, player.transform.eulerAngles.y + angleDiff, 0);
+        Vector3 relativeDir = transform.InverseTransformDirection(player.transform.forward);
+        Vector3 exitDir = LinkedPortal.transform.TransformDirection(relativeDir);
+        player.transform.rotation = Quaternion.LookRotation(exitDir);
 
         pc.Controller.enabled = false;
         player.transform.position = exitPos;
@@ -67,10 +68,11 @@ public class Portals : MonoBehaviour
     {
         Vector3 exitPos = LinkedPortal.transform.position + LinkedPortal.transform.forward * 1.5f;
 
-        float angleDiff = LinkedPortal.transform.eulerAngles.y - transform.eulerAngles.y + 180f;
+        Vector3 relativeDir = transform.InverseTransformDirection(obj.transform.forward);
+        Vector3 exitDir = LinkedPortal.transform.TransformDirection(relativeDir);
 
         obj.transform.position = exitPos;
-        obj.transform.rotation = Quaternion.Euler(0, obj.transform.eulerAngles.y + angleDiff, 0);
+        obj.transform.rotation = Quaternion.LookRotation(exitDir);
 
         LinkedPortal.StartCooldown();
     }
