@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour, I_Damage
 {
-    [SerializeField] public Renderer Body;
-
     [SerializeField] public Color OriginalColor;
     [SerializeField] public Color FlashColor;
 
@@ -14,13 +12,10 @@ public class EnemyBase : MonoBehaviour, I_Damage
     [SerializeField] GameObject[] PowerupDrops;
     [SerializeField] float PowerupDropChance = 0.5f;
     [SerializeField] GameObject[] WeaponDrops;
-    [SerializeField] public GameObject WeaponArm_R;
-    [SerializeField] public GameObject WeaponSlot_R;
-    [SerializeField] public GameObject ActiveWeapon_R;
+
+    public GameObject ActiveWeapon_R;
+    public GameObject ActiveWeapon_L;
     public Gun Weapon_R;
-    [SerializeField] public GameObject WeaponArm_L;
-    [SerializeField] public GameObject WeaponSlot_L;
-    [SerializeField] public GameObject ActiveWeapon_L;
     public Gun Weapon_L;
 
     [SerializeField] float CritMulti;
@@ -28,6 +23,8 @@ public class EnemyBase : MonoBehaviour, I_Damage
     public float DamageReduc;
 
     public bool IsAiming;
+    public Animator anim;
+    public bool isDead;
 
     Material[] CachedMaterials;
 
@@ -38,6 +35,15 @@ public class EnemyBase : MonoBehaviour, I_Damage
 
         Renderer[] Renderers = GetComponentsInChildren<Renderer>();
 
+        if (ActiveWeapon_L != null)
+        {
+            Weapon_L = ActiveWeapon_L.GetComponent<Gun>();
+        }
+        if (ActiveWeapon_R != null)
+        {
+            Weapon_R = ActiveWeapon_R.GetComponent<Gun>();
+        }
+
         CachedMaterials = new Material[Renderers.Length];
         for (int i = 0; i < Renderers.Length; i++)
         {
@@ -45,29 +51,7 @@ public class EnemyBase : MonoBehaviour, I_Damage
             CachedMaterials[i].color = OriginalColor;
         }
 
-        if (ActiveWeapon_R != null && WeaponSlot_R != null)
-        {
-            GameObject ActiveGun_R = Instantiate(ActiveWeapon_R).gameObject;
-            ActiveGun_R.transform.SetParent(WeaponSlot_R.transform);
-            ActiveGun_R.transform.localPosition = Vector3.zero;
-            ActiveGun_R.transform.localRotation = Quaternion.identity;
-            ActiveGun_R.transform.localScale = Vector3.one;
-
-            Weapon_R = ActiveGun_R.GetComponent<Gun>();
-            Weapon_R.GunPivot = WeaponSlot_R.transform;
-        }
-
-        if (ActiveWeapon_L != null && WeaponSlot_L != null)
-        {
-            GameObject ActiveGun_L = Instantiate(ActiveWeapon_L).gameObject;
-            ActiveGun_L.transform.SetParent(WeaponSlot_L.transform);
-            ActiveGun_L.transform.localPosition = Vector3.zero;
-            ActiveGun_L.transform.localRotation = Quaternion.identity;
-            ActiveGun_L.transform.localScale = Vector3.one;
-
-            Weapon_L = ActiveGun_L.GetComponent<Gun>();
-            Weapon_L.GunPivot = WeaponSlot_L.transform;
-        }
+        anim = GetComponentInChildren<Animator>();
     }
 
     void Update() { }
@@ -99,30 +83,6 @@ public class EnemyBase : MonoBehaviour, I_Damage
 
         foreach (Material mat in CachedMaterials)
         { mat.color = OriginalColor; }
-    }
-
-    public void Aim()
-    {
-        Vector3 OriginalPos = new Vector3(.6f, .1f, 0);
-        Vector3 AimPos = new Vector3(.47f, .6f, .47f);
-
-        Vector3 OriginalRot = new Vector3(-14, 90, 0);
-        Vector3 AimRot = new Vector3(-14, 90, -90);
-
-        if (!IsAiming)
-        {
-            IsAiming = true;
-            WeaponArm_R.transform.localPosition = AimPos;
-            WeaponArm_R.transform.localRotation = Quaternion.Euler(AimRot);
-            Debug.Log("Should be aiming");
-        }
-        else
-        {
-            IsAiming = false;
-            WeaponArm_R.transform.localPosition = OriginalPos;
-            WeaponArm_R.transform.localRotation = Quaternion.Euler(OriginalRot);
-            Debug.Log("Should NOT be aiming");
-        }
     }
 
     public virtual void Death()
@@ -159,6 +119,7 @@ public class EnemyBase : MonoBehaviour, I_Damage
 
     IEnumerator DeathSequence()
     {
+        isDead = true;
         float fallDuration = 0.5f;
         float fadeDuration = 3f;
         float fadeDelay = 2f;

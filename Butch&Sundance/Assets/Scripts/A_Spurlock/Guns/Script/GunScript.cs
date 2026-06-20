@@ -68,7 +68,7 @@ public class Gun : MonoBehaviour
             return;
         }
 
-        if (ShootTimer > ShootRate)
+        if (ShootTimer >= ShootRate)
         {
             if (CurrAmmo <= 0) { IsOut = true; return; }
 
@@ -80,8 +80,13 @@ public class Gun : MonoBehaviour
             {
 
                 GameObject bullet = Instantiate(BulletPrefab, ShootPos.position, ShootPos.rotation);
+
                 Damage d = bullet.GetComponent<Damage>();
-                if (d != null) { d.DamageAmount = damage; d.OwnerTag = cOwnerTag; }
+                if (d != null) { 
+                    d.DamageAmount = damage;
+                    d.shooter = transform.root;
+                    d.MaxRange = ShootDistance;
+                }
             }
             else
             {
@@ -96,7 +101,12 @@ public class Gun : MonoBehaviour
 
                     GameObject bullet = Instantiate(BulletPrefab, ShootPos.position, spreadRot);
                     Damage d = bullet.GetComponent<Damage>();
-                    if (d != null) { d.DamageAmount = pelletDamage; d.OwnerTag = cOwnerTag; }
+                    if (d != null)
+                    {
+                        d.DamageAmount = damage;
+                        d.shooter = transform.root;
+                        d.MaxRange = ShootDistance;
+                    }
                 }
             }
         }
@@ -107,5 +117,6 @@ public class Gun : MonoBehaviour
         CurrAmmo = MaxAmmo;
         Debug.Log("Reload Results Below!");
         Debug.Log(CurrAmmo);
+        IsOut = false;
     }
 }

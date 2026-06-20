@@ -8,26 +8,21 @@ public class AverageBehavior : EnemyBehavior
         {
             ai.FOV = 180f;
             ai.agent.SetDestination(ai.player.transform.position);
-            ai.rotateToTarget();
-            bool rightInRange = ai.Weapon_R != null && ai.DistanceToPlayer < ai.Weapon_R.ShootDistance;
-            foreach (AimControl aim in ai.aimControllers)
+            if (ai.ik != null)
             {
-                aim.SetAiming(true);
-                aim.AimAtTarget(ai.player.position);
-            }
-            if (rightInRange)
-            {
-                ai.Weapon_R.Shoot("Enemy");
+                ai.ik.isAiming = true;
+                ai.ik.rightHandTarget.position = Vector3.Lerp(ai.ik.rightHandTarget.position, ai.player.position + Vector3.up * 1.2f, Time.deltaTime * 5f);
             }
         }
         else
         {
-            ai.CheckRoam();
-            ai.FOV = ai.FOVOrig;
-            foreach (AimControl aim in ai.aimControllers)
+            if (ai.ik != null)
             {
-                aim.ResetAim();
+                ai.ik.isAiming = false;
+                ai.CheckRoam();
+                ai.FOV = ai.FOVOrig;
             }
         }
+
     }
 }

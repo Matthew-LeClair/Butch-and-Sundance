@@ -1,5 +1,5 @@
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI.Table;
+
 
 public class AimControl : MonoBehaviour
 {

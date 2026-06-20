@@ -20,6 +20,7 @@ public class Damage : MonoBehaviour
     [SerializeField] public bool IsAlienTech;
     [SerializeField] float TurnRate;
     Transform SeekTarget;
+    public Transform shooter;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -62,10 +63,15 @@ public class Damage : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.isTrigger) { return; }
-        if(other.gameObject.layer == gameObject.layer) { return; }
+        if (shooter != null && other.transform.root == shooter) { return; }
+
+        Debug.Log("Bullet hit: " + other.name + " | tag: " + other.tag + " | OwnerTag: " + OwnerTag);
+
+        if (other.gameObject.layer == gameObject.layer) { return; }
         if (other.tag != OwnerTag)
         {
-            I_Damage Damage = other.GetComponent<I_Damage>();
+            I_Damage Damage = other.GetComponentInParent<I_Damage>();
+            Debug.Log("I_Damage found: " + Damage);
 
             if (Damage != null && DamageType != eDamageType.DOT)
             {
