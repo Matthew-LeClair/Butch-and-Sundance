@@ -11,7 +11,7 @@ public class MainMenuButtonFunctions : MonoBehaviour
     {
 
     }
-    public void QuitGame()
+    public void Quit()
     {
         #if UNITY_EDITOR // If in Unity Editor...
                 UnityEditor.EditorApplication.isPlaying = false; // Quit Debug
