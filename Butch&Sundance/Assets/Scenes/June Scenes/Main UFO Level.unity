@@ -211,8 +211,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: MyersEricUi
       objectReference: {fileID: 0}
+    - target: {fileID: 3033492512141190283, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Credits
+      objectReference: {fileID: 0}
+    - target: {fileID: 7299225948989752456, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
+      propertyPath: m_text
+      value: Credits
+      objectReference: {fileID: 0}
+    - target: {fileID: 8928644547367703791, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9178787657488272854, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
+      propertyPath: m_Name
+      value: Credits Button
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1952073392774839585, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}

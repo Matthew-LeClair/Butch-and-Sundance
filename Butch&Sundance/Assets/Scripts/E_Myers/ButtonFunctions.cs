@@ -30,4 +30,10 @@ public class ButtonFunctions : MonoBehaviour
                 Application.Quit(); 
         #endif
     }
+
+    public void Credits()
+    {
+        SceneManager.LoadScene("Credits");
+        GameManager.Instance.StateUnpause();
+    }
 }
