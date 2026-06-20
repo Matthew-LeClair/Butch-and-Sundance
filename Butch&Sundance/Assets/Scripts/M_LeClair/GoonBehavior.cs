@@ -18,7 +18,7 @@ public class GoonBehavior : EnemyBehavior
             if (ai.ik != null)
             {
                 ai.ik.isAiming = false;
-                ai.CheckRoam();
+                ai.CheckMovement();
                 ai.FOV = ai.FOVOrig;
             }
         }

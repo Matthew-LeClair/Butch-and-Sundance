@@ -38,7 +38,7 @@ public class KamikazeBehavior : EnemyBehavior
         {
             if (!isWindingUp)
             {
-                ai.CheckRoam();
+                ai.CheckMovement();
                 ai.FOV = ai.FOVOrig;
             }
         }

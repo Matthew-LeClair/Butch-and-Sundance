@@ -55,6 +55,7 @@ MonoBehaviour:
   amountToSpawn: 5
   spawnRate: 1
   spawnDist: 5
+  spawnFX: {fileID: 198000010585806678, guid: 96730f8640590934eacb6f860058e7f9, type: 3}
 --- !u!114 &7002240020958395647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,6 +85,7 @@ MonoBehaviour:
   DamageReducBase: 1
   DamageReduc: 1
   IsAiming: 0
+  anim: {fileID: 0}
   isDead: 0
   MoveSpeed: 5
   masks:

@@ -8,6 +8,7 @@ public class Spawner : EnemyBehavior
     [SerializeField] int amountToSpawn;
     [SerializeField] int spawnRate;
     [SerializeField] int spawnDist;
+    [SerializeField] ParticleSystem spawnFX;
 
     int spawnCount;
     float spawnTimer;
@@ -18,7 +19,7 @@ public class Spawner : EnemyBehavior
     {
         if (!ai.seePlayer)
         {
-            ai.CheckRoam();
+            ai.CheckMovement();
         }
         else
         {
@@ -56,9 +57,21 @@ public class Spawner : EnemyBehavior
         NavMeshHit hit;
         if (!NavMesh.SamplePosition(ranPos, out hit, spawnDist, 1)) { return; }
 
-        Instantiate(objectToSpawn[Random.Range(0, objectToSpawn.Length)], hit.position + Vector3.up * 0.5f, Quaternion.Euler(0, Random.Range(0, 360), 0));
+        StartCoroutine(SpawnWithEffect(hit.position + Vector3.up * 0.5f));
     }
 
+    IEnumerator SpawnWithEffect(Vector3 spawnPos)
+    {
+        if(spawnFX != null)
+        {
+            ParticleSystem fx = Instantiate(spawnFX, spawnPos, Quaternion.identity);
+            Destroy(fx.gameObject, fx.main.duration + fx.main.startLifetime.constantMax);
+
+            yield return new WaitForSeconds(1f);
+
+            GameObject enemy = Instantiate(objectToSpawn[Random.Range(0, objectToSpawn.Length)], spawnPos + Vector3.up * 0.5f, Quaternion.Euler(0, Random.Range(0, 360), 0));
+        }
+    }
     IEnumerator spawnCooldown()
     {
         if (ai.seePlayer)

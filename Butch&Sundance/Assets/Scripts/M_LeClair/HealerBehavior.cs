@@ -27,7 +27,7 @@ public class HealerBehavior : EnemyBehavior
         }
         else
         {
-            ai.CheckRoam();
+            ai.CheckMovement();
             ai.FOV = ai.FOVOrig;
         }
 

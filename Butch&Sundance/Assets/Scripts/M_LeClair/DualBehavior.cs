@@ -26,7 +26,7 @@ public class DualBehavior : EnemyBehavior
             {
                 ai.ik.isAiming = false;
             }
-            ai.CheckRoam();
+            ai.CheckMovement();
             ai.FOV = ai.FOVOrig;
         }
     }

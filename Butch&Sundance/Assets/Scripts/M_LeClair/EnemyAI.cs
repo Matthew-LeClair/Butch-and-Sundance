@@ -3,6 +3,10 @@ using UnityEngine.AI;
 
 public class EnemyAI : EnemyBase
 {
+    [SerializeField] bool useWaypoints = false;
+    [SerializeField] Transform[] waypoints;
+    int currentWaypoint = 0;
+
     public int MoveSpeed;
     public LayerMask masks;
     public Transform player;
@@ -126,6 +130,40 @@ public class EnemyAI : EnemyBase
                     agent.SetDestination(hit.position);
                 }
             }
+        }
+    }
+
+    public void CheckPatrol()
+    {
+        if (waypoints == null || waypoints.Length == 0)
+        {
+            return;
+        }
+        if (!agent.isOnNavMesh)
+        {
+            return;
+        }
+        if(!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance + 0.5f)
+        {
+            roamTimer += Time.deltaTime;
+            if(roamTimer >= RoamPauseTime)
+            {
+                roamTimer = 0f;
+                currentWaypoint = (currentWaypoint + 1) % waypoints.Length;
+                agent.SetDestination(waypoints[currentWaypoint].position);
+            }
+        }
+    }
+
+    public void CheckMovement()
+    {
+        if (useWaypoints)
+        {
+            CheckPatrol();
+        }
+        else
+        {
+            CheckRoam();
         }
     }
 
