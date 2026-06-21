@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class PuzzleSwitch : MonoBehaviour
 {
-    public enum SwitchColor { Red, Green, Blue }
+    public enum SwitchColor { Red, Green, Blue, White }
 
-    [SerializeField] SwitchColor currentColor;
+    [SerializeField] SwitchColor currentColor = SwitchColor.White;
     [SerializeField] Renderer visual;
 
     [SerializeField] SwitchColor[] cycleOrder;
-
-    bool playerInRange;
 
     public SwitchColor CurrentColor => currentColor;
     // Start is called once before the first execution of Update after the MonoBehaviour is created

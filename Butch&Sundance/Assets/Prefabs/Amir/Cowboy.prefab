@@ -3187,12 +3187,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   Controller: {fileID: 9159160704395410882}
   Health: 0
-  HealthMax: 1000
+  HealthMax: 100
   Shield: 0
-  ShieldMax: 1000
+  ShieldMax: 100
   LowHealthThreshold: 0
-  AlienEnergy: 500
-  AlienEnergyMax: 500
+  AlienEnergy: 100
+  AlienEnergyMax: 100
   AlienEnergyRegenRate: 5
   AlienEnergyRegenCap: 25
   WallRunEnergyCost: 5
@@ -3265,7 +3265,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 601d8f43d1ef44147912e05cb46fdcd9, type: 3}
   - {fileID: 8300000, guid: 3db60de246152924ca064bc24947ff5b, type: 3}
   - {fileID: 8300000, guid: 195158098ff1c3c479e3925bf5000468, type: 3}
-  JumpSoundVol: 10
+  JumpSoundVol: 1
   HurtSound:
   - {fileID: 8300000, guid: ddcf99e9288906e47ac27208d03966f2, type: 3}
   - {fileID: 8300000, guid: 12adb08f82d0d374d93f9cc4c7a950fe, type: 3}
@@ -3273,7 +3273,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c2454f56e764c9144b603dff91809d0f, type: 3}
   - {fileID: 8300000, guid: 8206f53084171aa4588f9cd390dcb624, type: 3}
   - {fileID: 8300000, guid: 7fb7174bce673f24c9427df1ed8c507a, type: 3}
-  HurtSoundVol: 10
+  HurtSoundVol: 1
   StepSounds:
   - {fileID: 8300000, guid: 277d59e34bea44d4db85bcc926fc3710, type: 3}
   - {fileID: 8300000, guid: fb26f4fa9f3d4a5439950e7772a4207e, type: 3}
@@ -3285,11 +3285,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f5c8a59ecdfff6b4b8f0144330a3a5ef, type: 3}
   - {fileID: 8300000, guid: fa1eda71db432844c8df153aa9cd45de, type: 3}
   StepSoundVol: 1
-  StepInterval: 0.4
+  StepInterval: 0.3
   ShieldSound:
   - {fileID: 8300000, guid: 02c5634823962db4bbba5599be162a80, type: 3}
   - {fileID: 8300000, guid: e5b56d34326e9e0429c04c64ed1d16d8, type: 3}
-  ShieldSoundVol: 10
+  ShieldSoundVol: 1
   PhysicsCollider: {fileID: 6276706339030824738}
 --- !u!136 &6276706339030824738
 CapsuleCollider:
@@ -3298,7 +3298,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5672705755487925581}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: f4bd46ed51452de4bafa9cb31de91927, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -3352,7 +3352,7 @@ CharacterController:
   m_Height: 2
   m_Radius: 0.5
   m_SlopeLimit: 45
-  m_StepOffset: 0.1
+  m_StepOffset: 0.4
   m_SkinWidth: 0.05
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
@@ -10006,7 +10006,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8608781705326557876}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
