@@ -121,8 +121,6 @@ public class GameManager : MonoBehaviour
         {
             ObjectiveText.text = CollectedItems + "/" + RequiredItems;
         }
-
-        Debug.Log("Collected Item: " + CollectedItems + "/" + RequiredItems);
     }
 
     public bool HasAllObjectiveItems()
@@ -134,13 +132,11 @@ public class GameManager : MonoBehaviour
     {
          if (weapon != null)
         {
-            Debug.Log($"[WeaponChanged] Slot {slotIndex}: {weapon.typeMod}");
             if (WeaponNameText != null)
                 WeaponNameText.text = weapon.typeMod.ToString(); // Update UI with AlienTech type name
         }
         else
         {
-            Debug.Log("[WeaponChanged] Slot 0: Base Revolver");
             if (WeaponNameText != null)
                 WeaponNameText.text = "Revolver";               // Update UI with base weapon name
         }

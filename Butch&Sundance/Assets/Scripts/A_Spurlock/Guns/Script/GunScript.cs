@@ -60,11 +60,9 @@ public class Gun : MonoBehaviour
 
     public void Shoot(string cOwnerTag)
     {
-        Debug.Log("Enemy Shoot called on " + gameObject.name + " | BulletPrefab: " + BulletPrefab + " | CurrAmmo: " + CurrAmmo + " | ShootTimer: " + ShootTimer + " | ShootRate: " + ShootRate);
 
         if (BulletPrefab == null)
         {
-            Debug.LogWarning("Gun: BulletPrefab not assigned on " + gameObject.name);
             return;
         }
 
@@ -113,10 +111,7 @@ public class Gun : MonoBehaviour
     }
     public void Reload() 
     {
-        Debug.Log("Trying Reload");
         CurrAmmo = MaxAmmo;
-        Debug.Log("Reload Results Below!");
-        Debug.Log(CurrAmmo);
         IsOut = false;
     }
 }

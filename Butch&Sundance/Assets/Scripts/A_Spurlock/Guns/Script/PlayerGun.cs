@@ -134,14 +134,12 @@ public class PlayerGun : MonoBehaviour
     public void Shoot()
     {
         if (CurrAmmo[Active_aTech] <= 0 && Active_aTech != 0) return;
-        Debug.Log("Shoot called - Timer: " + ShootTimer + " / " + FireRate + " | BulletPrefab: " + BulletPrefab + " | Ammo: " + CurrAmmo[Active_aTech]);
         if (ShootTimer >= FireRate)
         {
             ShootTimer = 0;
 
             if (BulletPrefab == null)
             {
-                Debug.LogWarning("No BulletPrefab assigned on PlayerGun");
                 return;
             }
 
@@ -150,7 +148,6 @@ public class PlayerGun : MonoBehaviour
             {
                 activeData = aTechPool[Active_aTech].GunLibrary.Find(g => g.GunType == aTechPool[Active_aTech].typeMod);
             }
-            Debug.Log("Spread: " + Spread + " | PelletCount: " + PelletCount + " | SpreadAngle: " + SpreadAngle + " | Active: " + Active_aTech);
             if (!Spread)
             {
                 GameObject bullet = Instantiate(
@@ -172,7 +169,6 @@ public class PlayerGun : MonoBehaviour
             {
                 for (int i = 0; i < PelletCount; i++)
                 {
-                    Debug.Log("Spawning pellet " + i);
                     float spreadX = Random.Range(-SpreadAngle, SpreadAngle);
                     float spreadY = Random.Range(-SpreadAngle, SpreadAngle);
 
@@ -195,11 +191,9 @@ public class PlayerGun : MonoBehaviour
                     }
                 }
             }
-            Debug.Log("Before shot - Active: " + Active_aTech + " | CurrAmmo: " + CurrAmmo[Active_aTech] + " | MaxAmmo: " + MaxAmmo[Active_aTech] + " | Pool count: " + aTechPool.Count);
             CC.AddRecoil();
             ApplyGunKick();
             CurrAmmo[Active_aTech]--;
-            Debug.Log("After shot - CurrAmmo: " + CurrAmmo[Active_aTech]);
             GameManager.Instance.PlayerScript.UpdatePlayerUI();
             if (CurrAmmo[Active_aTech] <= 0)
             {
@@ -280,7 +274,6 @@ public class PlayerGun : MonoBehaviour
 
         if (aTechPool[Active_aTech] == null) // Guard against a null active slot - cleans up orphaned ammo entries and returns early
         {
-            Debug.LogWarning("DestroyActiveGun: slot " + Active_aTech + " is already null - removing orphaned ammo entries.");
             MaxAmmo.RemoveAt(Active_aTech);
             CurrAmmo.RemoveAt(Active_aTech);
             aTechPool.RemoveAt(Active_aTech);

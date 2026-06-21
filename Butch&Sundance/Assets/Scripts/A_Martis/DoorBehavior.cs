@@ -64,10 +64,6 @@ public class DoorBehavior : MonoBehaviour
                             StartCoroutine(MoveDoor(openPos, true));
                         }
                     }
-                    else
-                    {
-                        Debug.Log("Need all objective items.");
-                    }
                 }
                 else
                 {

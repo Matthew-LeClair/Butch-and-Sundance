@@ -209,6 +209,8 @@ MonoBehaviour:
   PowerupDrops:
   - {fileID: 5019287632633886545, guid: 5e7919d0a5153b74cb655055f0e2351e, type: 3}
   - {fileID: 1719288878346681042, guid: 818b7d833a382b5488b2841acf9ee557, type: 3}
+  - {fileID: 6705775182677537481, guid: af6750dbca4c84b4dab08753e20abe26, type: 3}
+  - {fileID: 3264229598366972094, guid: e8087aeaca866af4fa23b89d4f30c98a, type: 3}
   PowerupDropChance: 0.5
   WeaponDrops:
   - {fileID: 5134571340909883995, guid: 18854eb3be0f8cd4b8f662294fbfa801, type: 3}
@@ -220,7 +222,10 @@ MonoBehaviour:
   DamageReducBase: 1
   DamageReduc: 1
   IsAiming: 0
+  anim: {fileID: 0}
   isDead: 0
+  useWaypoints: 0
+  waypoints: []
   MoveSpeed: 2
   masks:
     serializedVersion: 2

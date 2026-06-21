@@ -21,7 +21,6 @@ public class ExplosionScript : MonoBehaviour
     // Triggers explosion effect and applies damage
     public void Explode()
     {
-        Debug.Log("Explode called - already exploded: " + exploded);
         // Prevent multiple explosions
         if (exploded) return;
 

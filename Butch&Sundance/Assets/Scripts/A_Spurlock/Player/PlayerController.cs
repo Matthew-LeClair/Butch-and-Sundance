@@ -298,7 +298,7 @@ public class PlayerController : MonoBehaviour, I_Damage
             }
         }
 
-        if (Input.GetButton("Fire1")) { Debug.Log("Fire1 pressed - pGun:  " + pGun); pGun.Shoot(); Shot = true; } // Mouse1 = Shoot
+        if (Input.GetButton("Fire1")) {  pGun.Shoot(); Shot = true; } // Mouse1 = Shoot
 
         if (HasPhaseBoots && Input.GetKeyDown(KeyCode.LeftShift) // If boots equipped and Shift pressed...
             && !IsDodging && DodgeCooldownTimer <= 0 && AlienEnergy >= DodgeEnergyCost) // And not dodging and has energy...
@@ -560,7 +560,6 @@ public class PlayerController : MonoBehaviour, I_Damage
     // Wrapped in preprocessor directives so it works correctly in both environments.
     public void Death()
     {
-        Debug.Log(Health); // Debug Print Health
         GameManager.Instance.YouLose(); // Lose UI
         ChangeRespawnPos();
     }
@@ -783,8 +782,6 @@ public class PlayerController : MonoBehaviour, I_Damage
         GrappleLine.enabled = true; // Enable Grapple Line
         GrappleLine.positionCount = RopePoints; // Set Rope Points
         StartCoroutine(ExtendGrappleLine(GrapplePoint)); // Extend Rope to Grapple Point
-
-        Debug.Log("Grapple Started at: " + GrapplePoint); // Debug Log
     }
 
     // Called from HandleRopeInput() when Q is pressed and IsGrapple is true.
@@ -829,7 +826,6 @@ public class PlayerController : MonoBehaviour, I_Damage
         float GrappleDist = Vector3.Distance(transform.position, GrapplePoint); // Distance to Grapple Point
         float LaunchForce = GrappleDist * GrappleForceMultiplier; // Force purely based on distance
         if (GrappleRB != null) { GrappleRB.linearVelocity = GrappleDir * LaunchForce; } // Launch via Rigidbody - covers all angles uniformly
-        Debug.Log("Grapple Launch Force: " + LaunchForce); // Debug Log
     }
 
     // Called from Update() and ExtendGrappleLine() every frame while a rope is active.
@@ -893,7 +889,6 @@ public class PlayerController : MonoBehaviour, I_Damage
 
         GrappleLine.enabled = true; // Enable Grapple Line
         GrappleLine.positionCount = RopePoints; // Set Rope Points
-        Debug.Log("Swing Started at: " + PredictionHit.point); // Debug Log
     }
 
     // Called from HandleRopeInput() on Tab release while swinging, or on Q press while swinging.
@@ -917,8 +912,6 @@ public class PlayerController : MonoBehaviour, I_Damage
 
         GrappleLine.enabled = false; // Disable Grapple Line
         RopeMode = RopeModeType.None;
-
-        Debug.Log("Swing Stopped"); // Debug Log
     }
 
     // Called every frame from Update() while IsSwinging is true and SwingJoint exists.
@@ -1006,8 +999,6 @@ public class PlayerController : MonoBehaviour, I_Damage
 
     IEnumerator PullObject(PullableObject pullable)
     {
-        Debug.Log("PULL STARTED");
-
         IsGrapple = true;
 
         GrappleLine.enabled = true;
@@ -1070,7 +1061,6 @@ public class PlayerController : MonoBehaviour, I_Damage
 
         if (GameManager.Instance == null || GameManager.Instance.PlayerStartPos == null)
         {
-            Debug.LogError("Missing PlayerStartPos");
             yield break;
         }
         transform.position = GameManager.Instance.PlayerStartPos.transform.position;

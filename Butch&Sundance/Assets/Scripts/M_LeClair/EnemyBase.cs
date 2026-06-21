@@ -58,9 +58,7 @@ public class EnemyBase : MonoBehaviour, I_Damage
 
     public virtual void TakeDamage(int Amount, bool AlienTech)
     {
-        Debug.Log("TakeDamage called on " + gameObject.name + " | Amount: " + Amount + " | DamageReduc: " + DamageReduc + " | CritMulti: " + CritMulti);
         CurrHealth -= (Amount * CritMulti) * DamageReduc;
-        Debug.Log("Health after: " + CurrHealth);
 
         CritMulti = 1;
 
@@ -87,8 +85,6 @@ public class EnemyBase : MonoBehaviour, I_Damage
 
     public virtual void Death()
     {
-        Debug.Log("Blegh! I'm dead! :)");
-
         if (WeaponDrops != null && WeaponDrops.Length > 0)
         {
             int index = Random.Range(0, WeaponDrops.Length);
