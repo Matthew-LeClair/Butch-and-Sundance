@@ -6,8 +6,20 @@ using System.Collections.Generic;
 public class SettingsMenu : MonoBehaviour
 {
     public AudioMixer audioMixer; // Reference to the AudioMixer
-    public void SetVolume(float volume)
+    public void SetVolume(float Volume)
     {
-         audioMixer.SetFloat("volume", volume); // Set the volume parameter in the AudioMixer)
+        Debug.Log("Volume set to: " + Volume); // Log the volume value for debugging purposes
+
+        audioMixer.SetFloat("Volume", Volume); // Set the volume parameter in the AudioMixer)
+    }
+
+    public void SetQuality (int qualityIndex)
+    {
+        QualitySettings.SetQualityLevel(qualityIndex); // Set the quality level based on the index
+    }
+
+    public void SetFullscreen (bool isFullscreen)
+    {
+        Screen.fullScreen = isFullscreen; // Set the fullscreen mode based on the boolean value
     }
 }

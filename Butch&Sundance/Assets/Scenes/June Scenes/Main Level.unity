@@ -21892,21 +21892,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1879330307097484633, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 1879330307097484633, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 2972003252696323226, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
       propertyPath: m_Name
       value: MyersEricUi
-      objectReference: {fileID: 0}
-    - target: {fileID: 7870052801745276095, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
