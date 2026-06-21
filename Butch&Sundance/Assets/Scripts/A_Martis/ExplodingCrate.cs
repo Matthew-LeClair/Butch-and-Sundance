@@ -60,7 +60,6 @@ public class ExplodingCrate : MonoBehaviour, I_Damage
             }
             else
             {
-                Debug.Log(transform.root.name);
                 Destroy(transform.root.gameObject);
             }
         }

@@ -17,7 +17,6 @@ public class WinCon : MonoBehaviour
         // Prevent win until objective is complete
         if (!GameManager.Instance.GoalCompleted)
         {
-            Debug.Log("Objective not completed yet");
             return;
         }
 

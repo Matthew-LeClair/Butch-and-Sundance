@@ -65,13 +65,11 @@ public class Damage : MonoBehaviour
         if (other.isTrigger) { return; }
         if (shooter != null && other.transform.root == shooter) { return; }
 
-        Debug.Log("Bullet hit: " + other.name + " | tag: " + other.tag + " | OwnerTag: " + OwnerTag);
 
         if (other.gameObject.layer == gameObject.layer) { return; }
         if (other.tag != OwnerTag)
         {
             I_Damage Damage = other.GetComponentInParent<I_Damage>();
-            Debug.Log("I_Damage found: " + Damage);
 
             if (Damage != null && DamageType != eDamageType.DOT)
             {

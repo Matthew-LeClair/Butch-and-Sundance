@@ -58,7 +58,6 @@ public class WeaponMod
     public void ApplyBonus()
     {
         InitMod(); // Randomize type and amount before applying
-        Debug.Log("Mod Applied - Type: " + ModType + " | Amount: " + ModAmount); // Debug log for inspection
 
         PlayerController PC = GameManager.Instance.Player.GetComponent<PlayerController>(); // Cache PlayerController to avoid repeated GetComponent calls
 
@@ -98,7 +97,6 @@ public class WeaponMod
     // Current values are clamped to the reverted max so the player cannot retain stat overflow after losing a gun.
     public void RevertBonus()
     {
-        Debug.Log("Mod Reverted - Type: " + ModType + " | Amount: " + ModAmount); // Debug log for inspection
 
         PlayerController PC = GameManager.Instance.Player.GetComponent<PlayerController>(); // Cache PlayerController to avoid repeated GetComponent calls
 

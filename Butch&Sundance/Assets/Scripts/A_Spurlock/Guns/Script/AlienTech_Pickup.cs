@@ -98,7 +98,6 @@ public class AlienTech_Pickup : PickUp_Interact
             pGun.aTechPool[FreeSlot].pGun = pGun;                                 // Assign the PlayerGun reference so SwitchGun() and mod logic can access player stats
             pGun.aTechPool[FreeSlot].typeMod = puTypeMod;                         // Set the archetype on the newly created component
             pGun.aTechPool[FreeSlot].GunLibrary = GunLibrary;
-            Debug.Log("Gun Type: " + puTypeMod);                                  // Debug log for pickup confirmation
             pGun.Active_aTech = FreeSlot;
             pGun.aTechPool[FreeSlot].SwitchGun();                                 // Apply all stat values for this archetype immediately
             GunData data = GunLibrary.Find(g => g.GunType == puTypeMod);
