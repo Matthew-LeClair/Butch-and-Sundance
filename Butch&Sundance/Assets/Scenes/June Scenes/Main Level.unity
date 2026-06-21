@@ -21892,6 +21892,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 886333972024480367, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 886333972024480367, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 886333972024480367, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 886333972024480367, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 886333972024480367, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -265
+      objectReference: {fileID: 0}
+    - target: {fileID: 886333972024480367, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 131
+      objectReference: {fileID: 0}
     - target: {fileID: 2972003252696323226, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
       propertyPath: m_Name
       value: MyersEricUi
