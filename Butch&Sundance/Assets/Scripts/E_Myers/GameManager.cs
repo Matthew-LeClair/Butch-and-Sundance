@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     float TimeScale_Original; // Chached Original Time Scale for better setting
 
     [Header("Objective Items")]
+    public GameObject ItemsLeftPopUp;
     public int CollectedItems;
     public int RequiredItems = 3;
     public TMP_Text ObjectiveText;
@@ -184,5 +185,15 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(duration);
         CheckpointPopup.SetActive(false);
         ActiveCheckpointPopup = null;
+    }
+    public void CollectedItemsRemain(int collection)
+    {
+        if (ItemsLeftPopUp != null)
+        {
+            ItemsLeftPopUp.SetActive(true);
+
+            ItemsLeftPopUp.GetComponent<TMP_Text>().text = collection + " of " + RequiredItems + " found";
+        
+        }
     }
 }
