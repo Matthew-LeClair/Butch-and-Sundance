@@ -1594,7 +1594,13 @@ MonoBehaviour:
     Space
     Skybox:
 
-    https://assetstore.unity.com/packages/2d/textures-materials/sky/spaceskies-free-80503'
+    https://assetstore.unity.com/packages/2d/textures-materials/sky/spaceskies-free-80503
+
+
+    Boss
+    Mech:
+
+    https://assetstore.unity.com/packages/3d/characters/robots/the-assault-mech-90395#content'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
