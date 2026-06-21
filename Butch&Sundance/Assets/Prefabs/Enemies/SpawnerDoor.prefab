@@ -114,6 +114,6 @@ MonoBehaviour:
   spawnRate: 3
   masks:
     serializedVersion: 2
-    m_Bits: 32281
+    m_Bits: 15897
   spawnFX: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb, type: 3}
   player: {fileID: 0}
