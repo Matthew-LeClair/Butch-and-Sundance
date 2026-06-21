@@ -50,8 +50,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthPowerUp
   duration: 0
   destroyOnPickup: 1
-  healAmount: 50
-  allowOverheal: 1
+  healAmount: 25
+  allowOverheal: 0
   maxOverheal: 25
   pickupSound: {fileID: 8300000, guid: 6f8809af21d9fc6439bf269543a4fbaa, type: 3}
   volume: 0.61

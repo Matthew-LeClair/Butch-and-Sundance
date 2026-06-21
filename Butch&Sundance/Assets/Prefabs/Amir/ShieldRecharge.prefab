@@ -50,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShieldRecharger
   duration: 0
   destroyOnPickup: 1
-  shieldAmount: 50
+  shieldAmount: 25
   pickupSound: {fileID: 8300000, guid: cf85d26c68ef6004c9d9b76dadff6ad5, type: 3}
   volume: 1
 --- !u!33 &961137841524082716
