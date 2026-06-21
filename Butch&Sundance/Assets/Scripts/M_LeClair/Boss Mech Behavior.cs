@@ -66,6 +66,11 @@ public class BossMechBehavior : EnemyBehavior
         {
             ai.FOV = ai.FOVOrig;
         }
+
+        if(ai.CurrHealth <= 0)
+        {
+            GameManager.Instance.GoalCompleted = true;
+        }
     }
 
     IEnumerator PatternLoop()

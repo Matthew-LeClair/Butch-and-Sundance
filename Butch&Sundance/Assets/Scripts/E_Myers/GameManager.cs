@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
     public int KillCount;
     public bool GoalCompleted;
     public Vector3 RespawnPosition;
+    public bool killGoal;
 
     // Awake is called once before the first execution of Start after the MonoBehaviour is created
     void Awake()
@@ -81,6 +82,14 @@ public class GameManager : MonoBehaviour
             else if (MenuActive == MenuPause) // Check if the active menu is the pause menu
             {
                 StateUnpause(); // Call the method to unpause the game and hide the pause menu
+            }
+        }
+
+        if (killGoal)
+        {
+            if(KillCount <= 0)
+            {
+                GoalCompleted = true;
             }
         }
     }

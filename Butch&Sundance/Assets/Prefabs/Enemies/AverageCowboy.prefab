@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbc1cb29550760149b7e0c6f4c895376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
-  OriginalColor: {r: 0.16862746, g: 0.54901963, b: 0.627451, a: 0}
+  OriginalColor: {r: 1, g: 1, b: 1, a: 0}
   FlashColor: {r: 0, g: 0, b: 0, a: 0}
   CurrHealth: 10
   MaxHealth: 10

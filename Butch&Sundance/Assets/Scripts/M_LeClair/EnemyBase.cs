@@ -62,9 +62,10 @@ public class EnemyBase : MonoBehaviour, I_Damage
 
         CritMulti = 1;
 
-        if (CurrHealth <= 0)
+        if (CurrHealth <= 0 && !isDead)
         {
-            // GameManager.Instance.UpdateGameGoal(-1);
+            GameManager.Instance.KillCount -= 1;
+            isDead = true;
             Death();
         }
         else { StartCoroutine(Flash()); }
