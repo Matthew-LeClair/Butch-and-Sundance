@@ -12,7 +12,7 @@ public class EnemyAI : EnemyBase
     public Transform player;
     public bool seePlayer = false;
     public Vector3 playerDir;
-    public float DistanceToPlayer;
+    public float DistanceToPlayer = 100;
     [SerializeField] EnemyBehavior behavior;
     [SerializeField] public NavMeshAgent agent;
 
@@ -45,6 +45,7 @@ public class EnemyAI : EnemyBase
         if (player == null)
         {
             seePlayer = false;
+            DistanceToPlayer = 100;
         }
         else
         {
