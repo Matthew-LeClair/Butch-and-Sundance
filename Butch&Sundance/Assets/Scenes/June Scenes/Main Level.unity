@@ -3184,6 +3184,18 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 636767073}
+    - target: {fileID: 6465416833973864186, guid: dc295737d05a49843ab1e37e20d6f187, type: 3}
+      propertyPath: PowerupDrops.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6465416833973864186, guid: dc295737d05a49843ab1e37e20d6f187, type: 3}
+      propertyPath: 'PowerupDrops.Array.data[2]'
+      value: 
+      objectReference: {fileID: 6705775182677537481, guid: af6750dbca4c84b4dab08753e20abe26, type: 3}
+    - target: {fileID: 6465416833973864186, guid: dc295737d05a49843ab1e37e20d6f187, type: 3}
+      propertyPath: 'PowerupDrops.Array.data[3]'
+      value: 
+      objectReference: {fileID: 3264229598366972094, guid: e8087aeaca866af4fa23b89d4f30c98a, type: 3}
     - target: {fileID: 6531294399380758195, guid: dc295737d05a49843ab1e37e20d6f187, type: 3}
       propertyPath: m_LocalPosition.x
       value: 51.43911
@@ -6602,6 +6614,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7002240020958395647, guid: eaebb0c6dbd1b07429dac48b40895d92, type: 3}
+      propertyPath: PowerupDrops.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7002240020958395647, guid: eaebb0c6dbd1b07429dac48b40895d92, type: 3}
+      propertyPath: 'PowerupDrops.Array.data[2]'
+      value: 
+      objectReference: {fileID: 6705775182677537481, guid: af6750dbca4c84b4dab08753e20abe26, type: 3}
+    - target: {fileID: 7002240020958395647, guid: eaebb0c6dbd1b07429dac48b40895d92, type: 3}
+      propertyPath: 'PowerupDrops.Array.data[3]'
+      value: 
+      objectReference: {fileID: 3264229598366972094, guid: e8087aeaca866af4fa23b89d4f30c98a, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16137,6 +16161,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7002240020958395647, guid: eaebb0c6dbd1b07429dac48b40895d92, type: 3}
+      propertyPath: PowerupDrops.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7002240020958395647, guid: eaebb0c6dbd1b07429dac48b40895d92, type: 3}
+      propertyPath: 'PowerupDrops.Array.data[2]'
+      value: 
+      objectReference: {fileID: 6705775182677537481, guid: af6750dbca4c84b4dab08753e20abe26, type: 3}
+    - target: {fileID: 7002240020958395647, guid: eaebb0c6dbd1b07429dac48b40895d92, type: 3}
+      propertyPath: 'PowerupDrops.Array.data[3]'
+      value: 
+      objectReference: {fileID: 3264229598366972094, guid: e8087aeaca866af4fa23b89d4f30c98a, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16991,6 +17027,18 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 636767073}
+    - target: {fileID: 6465416833973864186, guid: dc295737d05a49843ab1e37e20d6f187, type: 3}
+      propertyPath: PowerupDrops.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6465416833973864186, guid: dc295737d05a49843ab1e37e20d6f187, type: 3}
+      propertyPath: 'PowerupDrops.Array.data[2]'
+      value: 
+      objectReference: {fileID: 6705775182677537481, guid: af6750dbca4c84b4dab08753e20abe26, type: 3}
+    - target: {fileID: 6465416833973864186, guid: dc295737d05a49843ab1e37e20d6f187, type: 3}
+      propertyPath: 'PowerupDrops.Array.data[3]'
+      value: 
+      objectReference: {fileID: 3264229598366972094, guid: e8087aeaca866af4fa23b89d4f30c98a, type: 3}
     - target: {fileID: 6531294399380758195, guid: dc295737d05a49843ab1e37e20d6f187, type: 3}
       propertyPath: m_LocalPosition.x
       value: 54.68911
@@ -22966,6 +23014,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7002240020958395647, guid: eaebb0c6dbd1b07429dac48b40895d92, type: 3}
+      propertyPath: PowerupDrops.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7002240020958395647, guid: eaebb0c6dbd1b07429dac48b40895d92, type: 3}
+      propertyPath: 'PowerupDrops.Array.data[2]'
+      value: 
+      objectReference: {fileID: 6705775182677537481, guid: af6750dbca4c84b4dab08753e20abe26, type: 3}
+    - target: {fileID: 7002240020958395647, guid: eaebb0c6dbd1b07429dac48b40895d92, type: 3}
+      propertyPath: 'PowerupDrops.Array.data[3]'
+      value: 
+      objectReference: {fileID: 3264229598366972094, guid: e8087aeaca866af4fa23b89d4f30c98a, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -28190,6 +28250,18 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 636767073}
+    - target: {fileID: 6465416833973864186, guid: dc295737d05a49843ab1e37e20d6f187, type: 3}
+      propertyPath: PowerupDrops.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6465416833973864186, guid: dc295737d05a49843ab1e37e20d6f187, type: 3}
+      propertyPath: 'PowerupDrops.Array.data[2]'
+      value: 
+      objectReference: {fileID: 6705775182677537481, guid: af6750dbca4c84b4dab08753e20abe26, type: 3}
+    - target: {fileID: 6465416833973864186, guid: dc295737d05a49843ab1e37e20d6f187, type: 3}
+      propertyPath: 'PowerupDrops.Array.data[3]'
+      value: 
+      objectReference: {fileID: 3264229598366972094, guid: e8087aeaca866af4fa23b89d4f30c98a, type: 3}
     - target: {fileID: 6531294399380758195, guid: dc295737d05a49843ab1e37e20d6f187, type: 3}
       propertyPath: m_LocalPosition.x
       value: 54.68911
