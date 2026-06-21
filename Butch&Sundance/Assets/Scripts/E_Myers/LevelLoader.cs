@@ -9,7 +9,7 @@ public class LevelLoader : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(GameManager.Instance.KillCount >= 0)
         {
             LoadNextLevel();
         }
@@ -23,7 +23,7 @@ public class LevelLoader : MonoBehaviour
     {
         Transition.SetTrigger("Start");
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(10);
 
         SceneManager.LoadScene(levelIndex);
     }
