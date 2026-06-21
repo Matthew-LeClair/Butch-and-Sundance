@@ -193,7 +193,7 @@ public class GameManager : MonoBehaviour
             ItemsLeftPopUp.SetActive(true);
 
             ItemsLeftPopUp.GetComponent<TMP_Text>().text = collection + " of " + RequiredItems + " found";
-        
+
         }
     }
 }
