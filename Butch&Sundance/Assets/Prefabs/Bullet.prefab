@@ -53,11 +53,12 @@ MonoBehaviour:
   DamageRate: 0
   BulletSpeed: 10
   BulletDeathClock: 3
-  MaxRange: 0
+  MaxRange: 100
   ImpactFX: {fileID: 0}
   OwnerTag: 
   IsAlienTech: 0
   TurnRate: 0
+  shooter: {fileID: 0}
 --- !u!54 &6099907061278772420
 Rigidbody:
   m_ObjectHideFlags: 0
