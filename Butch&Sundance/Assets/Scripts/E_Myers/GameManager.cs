@@ -171,6 +171,10 @@ public class GameManager : MonoBehaviour
 
     public void YouLose() 
     {
+        if (PlayerDamage_Screen != null) PlayerDamage_Screen.SetActive(false);
+        if (LowHealth_Screen != null) LowHealth_Screen.SetActive(false);
+        if (PlayerShield_Screen != null) PlayerShield_Screen.SetActive(false);
+
         StatePause(); // Pause Game
         MenuActive = MenuLose; // Set MenuActive as MenuLose
         MenuActive.SetActive(true); // Set MenuActive as Active

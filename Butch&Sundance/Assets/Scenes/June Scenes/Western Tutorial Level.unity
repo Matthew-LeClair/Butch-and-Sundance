@@ -575,6 +575,11 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 7702779526387289552, guid: 0b9fa9fdbeec75d43962c29f7514b400, type: 3}
+--- !u!1 &123317308 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5672705755487925581, guid: 6c7b6fa90dff83147bad42e1671897a4, type: 3}
+  m_PrefabInstance: {fileID: 1400592842}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &125419858 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3030068372062861493, guid: 0b9fa9fdbeec75d43962c29f7514b400, type: 3}
@@ -694,6 +699,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: MyersEricUi
       objectReference: {fileID: 0}
+    - target: {fileID: 5423647645111937559, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 123317308}
+    - target: {fileID: 5423647645111937559, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
+      propertyPath: PlayerScript
+      value: 
+      objectReference: {fileID: 626885109}
     - target: {fileID: 6876992872742643302, guid: 6b07068042c6da34e8bc4d2262cab624, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -2551,6 +2564,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9010785019634252003, guid: 6c7b6fa90dff83147bad42e1671897a4, type: 3}
   m_PrefabInstance: {fileID: 1400592842}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &626885109 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8644517368152095888, guid: 6c7b6fa90dff83147bad42e1671897a4, type: 3}
+  m_PrefabInstance: {fileID: 1400592842}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123317308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d73d212cf5436948bead1c0e09caa79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
 --- !u!1 &628533133 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4110676944083032858, guid: 0b9fa9fdbeec75d43962c29f7514b400, type: 3}
