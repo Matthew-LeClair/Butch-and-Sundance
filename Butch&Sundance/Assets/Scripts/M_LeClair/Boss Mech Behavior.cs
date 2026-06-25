@@ -38,7 +38,18 @@ public class BossMechBehavior : EnemyBehavior
     [SerializeField] Transform[] gunPivots;
     [SerializeField] float gunRotateSpeed = 5f;
 
+    [Header("Audilo")]
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip shootSound;
+
+    [Header("Death")]
+    [SerializeField] GameObject[] deathExplosionPrefabs;
+    [SerializeField] int explosionCount = 5;
+    [SerializeField] float explosionInterval = 0.3f;
+    [SerializeField] float deathDelay = 2f;
+
     bool patternStarted = false;
+    bool bossDeathStarted = false;
 
     public override void Tick()
     {
@@ -67,10 +78,68 @@ public class BossMechBehavior : EnemyBehavior
             ai.FOV = ai.FOVOrig;
         }
 
-        if(ai.CurrHealth <= 0)
+        if (ai.CurrHealth <= 0 && !bossDeathStarted)
         {
-            GameManager.Instance.GoalCompleted = true;
+            bossDeathStarted = true;
+            ai.StartCoroutine(BossDeathSequence());
         }
+    }
+
+    IEnumerator BossDeathSequence()
+    {
+        ai.agent.enabled = false;
+        Collider col = ai.GetComponent<Collider>();
+        if (col != null) col.enabled = false;
+
+        if (ai.anim != null) ai.anim.enabled = false;
+
+        for (int i = 0; i < explosionCount; i++)
+        {
+            if (deathExplosionPrefabs != null && deathExplosionPrefabs.Length > 0)
+            {
+                Vector3 randomOffset = new Vector3(
+                    Random.Range(-2f, 2f),
+                    Random.Range(0f, 3f),
+                    Random.Range(-2f, 2f));
+
+                Vector3 spawnPos = ai.transform.position + randomOffset;
+
+                GameObject fx = Instantiate(
+                    deathExplosionPrefabs[Random.Range(0, deathExplosionPrefabs.Length)],
+                    spawnPos,
+                    Quaternion.identity);
+
+                ParticleSystem ps = fx.GetComponent<ParticleSystem>();
+                if (ps != null)
+                    Destroy(fx, ps.main.duration + ps.main.startLifetime.constantMax);
+            }
+
+            ai.transform.position += new Vector3(
+                Random.Range(-0.1f, 0.1f), 0, Random.Range(-0.1f, 0.1f));
+
+            yield return new WaitForSeconds(explosionInterval);
+        }
+
+        if (chargeExplosion != null) chargeExplosion.Explode();
+
+        yield return new WaitForSeconds(deathDelay);
+
+        float sinkDuration = 1.5f;
+        float t = 0f;
+        Vector3 originalScale = ai.transform.localScale;
+        Vector3 sunkenScale = new Vector3(originalScale.x, 0f, originalScale.z);
+
+        while (t < sinkDuration)
+        {
+            t += Time.deltaTime;
+            ai.transform.localScale = Vector3.Lerp(originalScale, sunkenScale, t / sinkDuration);
+            yield return null;
+        }
+
+        GameManager.Instance.GoalCompleted = true;
+        GameManager.Instance.YouWin();
+
+        Destroy(ai.gameObject);
     }
 
     IEnumerator PatternLoop()
@@ -137,6 +206,9 @@ public class BossMechBehavior : EnemyBehavior
         {
             if (shootPoints != null && shootPoints.Length > 0 && bulletPrefab != null)
             {
+                if (audioSource != null && shootSound != null)
+                    audioSource.PlayOneShot(shootSound);
+
                 Transform sp = shootPoints[Random.Range(0, shootPoints.Length)];
 
                 Vector3 dir = ai.seePlayer && ai.player != null
