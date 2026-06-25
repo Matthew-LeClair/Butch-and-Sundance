@@ -398,9 +398,10 @@ MonoBehaviour:
   CollectedItems: 0
   RequiredItems: 3
   ObjectiveText: {fileID: 0}
-  KillCount: 0
+  KillCount: 8
   GoalCompleted: 0
   RespawnPosition: {x: 0, y: 0, z: 0}
+  killGoal: 1
   ActiveCheckpoint: {fileID: 0}
 --- !u!1 &934545225892413343
 GameObject:
@@ -2540,7 +2541,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6349211411011262669
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2558,8 +2559,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchoredPosition: {x: 0, y: 175}
+  m_SizeDelta: {x: 200, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7807695565018385866
 CanvasRenderer:
@@ -3154,7 +3155,6 @@ RectTransform:
   - {fileID: 2240596018452722763}
   - {fileID: 9131117556142619177}
   - {fileID: 8904640143675917983}
-  - {fileID: 7294576559218019737}
   - {fileID: 886333972024480367}
   - {fileID: 3158372926093011028}
   m_Father: {fileID: 0}
@@ -3676,9 +3676,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6349211411011262669}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 72}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -28}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5027442729956849161
@@ -6158,6 +6158,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3158372926093011028}
+  - component: {fileID: 4567420433317090322}
   - component: {fileID: 7482721313394178345}
   - component: {fileID: 2528877673829126759}
   - component: {fileID: 6716205474978265141}
@@ -6168,7 +6169,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3158372926093011028
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6188,6 +6189,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4567420433317090322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6876992872742643302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d52211e0b2fc26f4c8dacf9f5d0d2b5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelLoader
+  Transition: {fileID: 5071706972176687967}
+  TransitionTime: 1
 --- !u!222 &7482721313394178345
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8238,70 +8253,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!1 &8874259060083376765
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7294576559218019737}
-  - component: {fileID: 3560389694168640490}
-  m_Layer: 0
-  m_Name: NavMesh Surface
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7294576559218019737
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8874259060083376765}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -933.65173, y: -526.4104, z: 1034.4344}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 531865058692777926}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3560389694168640490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8874259060083376765}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
-  m_SerializedVersion: 0
-  m_AgentTypeID: 0
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_GenerateLinks: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: fcc5dbb7bcdfb8f4fa3cbab839b2b79e, type: 2}
-  m_BuildHeightMesh: 0
 --- !u!1 &8928644547367703791
 GameObject:
   m_ObjectHideFlags: 0
