@@ -8,8 +8,8 @@ public class ButtonFunctions : MonoBehaviour
 
     public void Restart() 
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload Active Scene
         GameManager.Instance.StateUnpause(); // Unpause
+        SceneManager.LoadScene(1);
     }
     public void NextLevel()
     {
