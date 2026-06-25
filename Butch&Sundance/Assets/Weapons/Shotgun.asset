@@ -39,5 +39,5 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 90644bccfbc8a81499b31526c161d168, type: 3}
   - {fileID: 8300000, guid: 873506e352afd8f408e26c758c058964, type: 3}
   - {fileID: 8300000, guid: 2a27dacdf7c840040b2118da99f3f057, type: 3}
-  ShootSFX: 0
+  ShootSFX: 1
   HitEffect: {fileID: 1157869097690146438, guid: 777386c8686fe554e83e26f84f2db1d2, type: 3}

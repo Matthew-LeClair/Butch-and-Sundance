@@ -91,6 +91,12 @@ public class AlienTech : AlienTech_Pickup
                 pGun.PelletCount = Random.Range(data.PelletCountMin, data.PelletCountMax + 1);
                 pGun.SpreadAngle = Random.Range(data.SpreadAngleMin, data.SpreadAngleMax + 1);
             }
+
+            if(data.ShootSFXVariants != null && data.ShootSFXVariants.Length > 0)
+            {
+                pGun.shootSounds = data.ShootSFXVariants;
+                pGun.shootVolume = data.ShootSFX;
+            }
         }
     }
 

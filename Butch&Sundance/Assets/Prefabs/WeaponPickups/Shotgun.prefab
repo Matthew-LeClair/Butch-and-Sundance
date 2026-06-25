@@ -9,10 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5890982671052172053}
-  - component: {fileID: 4921090118847110363}
+  - component: {fileID: -3410587087811340819}
+  - component: {fileID: 8267941103405033933}
   - component: {fileID: 1102197388372204304}
   - component: {fileID: 4887656406455601918}
   - component: {fileID: 4881168335447565953}
+  - component: {fileID: 2847520753961352067}
   m_Layer: 0
   m_Name: Shotgun
   m_TagString: Untagged
@@ -30,13 +32,14 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -16.03, y: 0, z: 1034.44}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.49999985, y: 0.50000006, z: 0.33999988}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 589382675744158300}
+  - {fileID: 6205786947962006586}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4921090118847110363
+--- !u!114 &-3410587087811340819
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 600a229e5b3080f4ab31105e9c34bf45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AlienTech_Pickup
-  Mat: {fileID: 4887656406455601918}
+  Mat: {fileID: 4887656406455601918, guid: 9988c6d51f073a047845c8707d81d7c9, type: 3}
   Outline: {fileID: 0}
   puTypeMod: 1
   ModCount: 0
@@ -62,6 +65,41 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8402c95666605ac479333fb77064c15b, type: 2}
   - {fileID: 11400000, guid: bf201e83d92cb3146bbb2b20515431a7, type: 2}
   - {fileID: 11400000, guid: 6cc27b2bda485984cb69a4a9881e78fa, type: 2}
+--- !u!114 &8267941103405033933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5134571340909883995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d87b2157408417942aa4a514029d2e6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gun
+  BulletPrefab: {fileID: 3668983745716674504, guid: 002850591ffd4c54f8032c54cd4defb6, type: 3}
+  Spread: 1
+  PelletCount: 12
+  SpreadAngle: 15
+  ShootRate: 1.5
+  GunPivot: {fileID: 0}
+  ShootPos: {fileID: 6205786947962006586}
+  ShootDistance: 10
+  CurrAmmo: 4
+  MaxAmmo: 4
+  ReloadSpeed: 3
+  DamageMin: 10
+  DamageMax: 20
+  IsOut: 0
+  audioSource: {fileID: 2847520753961352067}
+  shootSounds:
+  - {fileID: 8300000, guid: daba031a4a9b6864e9dcab4d31ac3bdd, type: 3}
+  - {fileID: 8300000, guid: e2f3b58f2f9ff2e4cac3f2af75975051, type: 3}
+  - {fileID: 8300000, guid: 484c1faff335d5c42a8ca168c5f0e245, type: 3}
+  - {fileID: 8300000, guid: f5c40170adaa2694caeb1ca54575df33, type: 3}
+  - {fileID: 8300000, guid: 873506e352afd8f408e26c758c058964, type: 3}
+  - {fileID: 8300000, guid: 90644bccfbc8a81499b31526c161d168, type: 3}
+  shootVolume: 1
 --- !u!33 &1102197388372204304
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -140,6 +178,134 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1.53
   m_Center: {x: 0, y: 0.21, z: 0.46}
+--- !u!82 &2847520753961352067
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5134571340909883995}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 50
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!1 &7587506880968634667
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6205786947962006586}
+  m_Layer: 7
+  m_Name: ShootPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6205786947962006586
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7587506880968634667}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.158, y: 0.374, z: 1.98}
+  m_LocalScale: {x: 0.040000003, y: 0.044611063, z: 0.09238575}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5890982671052172053}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2275943599368270712
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -757,14 +757,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 626885108}
-    - target: {fileID: 6465416833973864186, guid: d2a2e42e095fe5b43b3a2836d069e1bb, type: 3}
-      propertyPath: WeaponDrops.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6465416833973864186, guid: d2a2e42e095fe5b43b3a2836d069e1bb, type: 3}
-      propertyPath: PowerupDrops.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6531294399380758195, guid: d2a2e42e095fe5b43b3a2836d069e1bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -17.392014
@@ -934,14 +926,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 626885108}
-    - target: {fileID: 6465416833973864186, guid: d2a2e42e095fe5b43b3a2836d069e1bb, type: 3}
-      propertyPath: WeaponDrops.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6465416833973864186, guid: d2a2e42e095fe5b43b3a2836d069e1bb, type: 3}
-      propertyPath: PowerupDrops.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6531294399380758195, guid: d2a2e42e095fe5b43b3a2836d069e1bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -17.656424
@@ -1167,14 +1151,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 626885108}
-    - target: {fileID: 3619296124232217335, guid: 4372dcd8011d0b641b158ff0e7e0c005, type: 3}
-      propertyPath: WeaponDrops.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3619296124232217335, guid: 4372dcd8011d0b641b158ff0e7e0c005, type: 3}
-      propertyPath: PowerupDrops.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5368988498333778474, guid: 4372dcd8011d0b641b158ff0e7e0c005, type: 3}
       propertyPath: m_LocalPosition.x
       value: -29.488234
@@ -4007,14 +3983,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cowboy
       objectReference: {fileID: 0}
-    - target: {fileID: 8644517368152095888, guid: 6c7b6fa90dff83147bad42e1671897a4, type: 3}
-      propertyPath: HealthMax
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 8644517368152095888, guid: 6c7b6fa90dff83147bad42e1671897a4, type: 3}
-      propertyPath: ShieldMax
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 9010785019634252003, guid: 6c7b6fa90dff83147bad42e1671897a4, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10.081751
@@ -6226,14 +6194,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 626885108}
-    - target: {fileID: 3619296124232217335, guid: 4372dcd8011d0b641b158ff0e7e0c005, type: 3}
-      propertyPath: WeaponDrops.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3619296124232217335, guid: 4372dcd8011d0b641b158ff0e7e0c005, type: 3}
-      propertyPath: PowerupDrops.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5368988498333778474, guid: 4372dcd8011d0b641b158ff0e7e0c005, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.389987

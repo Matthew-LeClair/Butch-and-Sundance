@@ -77,6 +77,11 @@ public class PlayerGun : MonoBehaviour
     Vector3 gunOriginalPos;
     Vector3 gunCurrentKick = Vector3.zero;
 
+    [Header("Audio")]
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] public AudioClip[] shootSounds;
+    [SerializeField] public float shootVolume = 1f;
+
     //===[Cache]===\\
 
     MeshFilter GunMeshFilter; // Cached MeshFilter on this GameObject - fetched once in Start() to avoid repeated GetComponent calls
@@ -155,6 +160,11 @@ public class PlayerGun : MonoBehaviour
                     Camera.main.transform.position + Camera.main.transform.forward,
                     Camera.main.transform.rotation);
 
+                if (audioSource != null && shootSounds != null && shootSounds.Length > 0)
+                {
+                    audioSource.PlayOneShot(shootSounds[Random.Range(0, shootSounds.Length)], shootVolume);
+                }
+
                 Damage dmg = bullet.GetComponent<Damage>();
                 if (dmg != null)
                 {
@@ -179,6 +189,11 @@ public class PlayerGun : MonoBehaviour
                         BulletPrefab,
                         Camera.main.transform.position + Camera.main.transform.forward,
                         spreadRot);
+
+                    if (audioSource != null && shootSounds != null && shootSounds.Length > 0)
+                    {
+                        audioSource.PlayOneShot(shootSounds[Random.Range(0, shootSounds.Length)], shootVolume);
+                    }
 
                     Damage dmg = bullet.GetComponent<Damage>();
                     if (dmg != null)

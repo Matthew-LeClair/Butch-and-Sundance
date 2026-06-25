@@ -968,37 +968,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &5329483456273335990
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8705219921957773739}
-  m_Layer: 7
-  m_Name: ShootPos
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8705219921957773739
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5329483456273335990}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.158, y: 0.374, z: 1.98}
-  m_LocalScale: {x: 0.040000003, y: 0.044611063, z: 0.09238575}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2295914787166014539}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7684518775371172260
 GameObject:
   m_ObjectHideFlags: 0
@@ -1271,18 +1240,6 @@ PrefabInstance:
       value: Shotgun
       objectReference: {fileID: 0}
     - target: {fileID: 5890982671052172053, guid: 63ca9afcbc1b05f44a0f265934f08c02, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.49999985
-      objectReference: {fileID: 0}
-    - target: {fileID: 5890982671052172053, guid: 63ca9afcbc1b05f44a0f265934f08c02, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.50000006
-      objectReference: {fileID: 0}
-    - target: {fileID: 5890982671052172053, guid: 63ca9afcbc1b05f44a0f265934f08c02, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.33999988
-      objectReference: {fileID: 0}
-    - target: {fileID: 5890982671052172053, guid: 63ca9afcbc1b05f44a0f265934f08c02, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.07833048
       objectReference: {fileID: 0}
@@ -1322,54 +1279,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 96.219
       objectReference: {fileID: 0}
-    - target: {fileID: 5890982671052172053, guid: 63ca9afcbc1b05f44a0f265934f08c02, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4921090118847110363, guid: 63ca9afcbc1b05f44a0f265934f08c02, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 5890982671052172053, guid: 63ca9afcbc1b05f44a0f265934f08c02, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8705219921957773739}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5134571340909883995, guid: 63ca9afcbc1b05f44a0f265934f08c02, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 7640789597986128369}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63ca9afcbc1b05f44a0f265934f08c02, type: 3}
 --- !u!1 &674953614854624517 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5134571340909883995, guid: 63ca9afcbc1b05f44a0f265934f08c02, type: 3}
   m_PrefabInstance: {fileID: 5628448206306355038}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7640789597986128369
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 674953614854624517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d87b2157408417942aa4a514029d2e6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gun
-  BulletPrefab: {fileID: 3668983745716674504, guid: 002850591ffd4c54f8032c54cd4defb6, type: 3}
-  Spread: 1
-  PelletCount: 12
-  SpreadAngle: 15
-  ShootRate: 1.5
-  GunPivot: {fileID: 0}
-  ShootPos: {fileID: 8705219921957773739}
-  ShootDistance: 10
-  CurrAmmo: 4
-  MaxAmmo: 4
-  ReloadSpeed: 3
-  DamageMin: 10
-  DamageMax: 20
-  IsOut: 0
-  AudioPlayer: {fileID: 0}
 --- !u!4 &2295914787166014539 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5890982671052172053, guid: 63ca9afcbc1b05f44a0f265934f08c02, type: 3}

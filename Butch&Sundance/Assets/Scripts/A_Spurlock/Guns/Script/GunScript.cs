@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Rendering;
 
 public class Gun : MonoBehaviour
@@ -29,7 +30,9 @@ public class Gun : MonoBehaviour
 
     public bool IsOut = false;
 
-    [SerializeField] public AudioSource AudioPlayer;
+    [SerializeField] public AudioSource audioSource;
+    [SerializeField] public AudioClip[] shootSounds;
+    [SerializeField] public float shootVolume = 1f;
 
     
 
@@ -78,6 +81,14 @@ public class Gun : MonoBehaviour
             {
 
                 GameObject bullet = Instantiate(BulletPrefab, ShootPos.position, ShootPos.rotation);
+                Debug.Log("Audio check - audioSource: " + audioSource +
+          " | shootSounds length: " + (shootSounds != null ? shootSounds.Length.ToString() : "null") +
+          " | clip: " + (shootSounds != null && shootSounds.Length > 0 ? shootSounds[0]?.name : "empty"));
+
+                if (audioSource != null && shootSounds != null && shootSounds.Length > 0)
+                {
+                    audioSource.PlayOneShot(shootSounds[Random.Range(0, shootSounds.Length)], shootVolume);
+                }
 
                 Damage d = bullet.GetComponent<Damage>();
                 if (d != null) { 
@@ -98,6 +109,12 @@ public class Gun : MonoBehaviour
                     Quaternion spreadRot = ShootPos.rotation * Quaternion.Euler(spreadX, spreadY, 0);
 
                     GameObject bullet = Instantiate(BulletPrefab, ShootPos.position, spreadRot);
+
+                    if (audioSource != null && shootSounds != null && shootSounds.Length > 0)
+                    {
+                        audioSource.PlayOneShot(shootSounds[Random.Range(0, shootSounds.Length)], shootVolume);
+                    }
+
                     Damage d = bullet.GetComponent<Damage>();
                     if (d != null)
                     {
