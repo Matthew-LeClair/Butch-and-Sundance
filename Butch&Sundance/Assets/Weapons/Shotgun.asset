@@ -19,7 +19,7 @@ MonoBehaviour:
   ReloadSpeed: 0.5
   MaxRange: 30
   AmmoMin: 1
-  AmmoMax: 2
+  AmmoMax: 10
   DamageMin: 10
   DamageMax: 20
   RecoilAmount: 5

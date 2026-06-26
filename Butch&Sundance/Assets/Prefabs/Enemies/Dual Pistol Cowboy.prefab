@@ -895,8 +895,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
   OriginalColor: {r: 1, g: 0.98340356, b: 0, a: 1}
   FlashColor: {r: 0, g: 0, b: 0, a: 0}
-  CurrHealth: 10
-  MaxHealth: 10
+  CurrHealth: 50
+  MaxHealth: 50
   PowerupDrops:
   - {fileID: 5019287632633886545, guid: 5e7919d0a5153b74cb655055f0e2351e, type: 3}
   PowerupDropChance: 0.5

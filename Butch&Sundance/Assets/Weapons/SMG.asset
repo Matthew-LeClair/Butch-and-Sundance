@@ -20,8 +20,8 @@ MonoBehaviour:
   MaxRange: 30
   AmmoMin: 28
   AmmoMax: 32
-  DamageMin: 10
-  DamageMax: 17
+  DamageMin: 5
+  DamageMax: 8
   RecoilAmount: 2
   GunKickAmount: 0.1
   HasSpread: 0
