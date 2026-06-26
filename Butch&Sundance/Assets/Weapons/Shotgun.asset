@@ -18,7 +18,7 @@ MonoBehaviour:
   FireRate: 0.8
   ReloadSpeed: 0.5
   MaxRange: 30
-  AmmoMin: 1
+  AmmoMin: 10
   AmmoMax: 10
   DamageMin: 10
   DamageMax: 20
