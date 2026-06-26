@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject MenuPause; // Pause Menu
     [SerializeField] GameObject MenuWin; // Win Screen
     [SerializeField] GameObject MenuLose; // Lose Screen
+    [SerializeField] GameObject MenuControls;
 
     
 

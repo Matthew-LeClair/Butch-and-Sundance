@@ -21,7 +21,11 @@ public class ButtonFunctions : MonoBehaviour
         GameManager.Instance.PlayerScript.ChangeRespawnPos(); // Respawn Player
         GameManager.Instance.StateUnpause(); // Unpause
     }
-
+    public void Controls()
+    {
+        SceneManager.LoadScene("Controls");
+        GameManager.Instance.StateUnpause();
+    }
     public void Quit()
     {
         #if UNITY_EDITOR // If in Unity Editor...
